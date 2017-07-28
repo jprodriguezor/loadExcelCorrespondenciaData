@@ -9,7 +9,7 @@ import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.Mas
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.domain.MassiveRecordContext;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.executor.LoaderExecutor;
 import co.com.foundation.soaint.documentmanager.persistence.entity.AdmSerSubserTpg;
-import com.foundation.soaint.massiveloader.web.domain.AsociacionVO;
+import com.foundation.soaint.massiveloader.deprecated.web.domain.AsociacionVO;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.MasiveLoaderResponse;
 import com.foundation.soaint.massiveloader.web.infrastructure.massiveloader.MassiveLoaderController;
 import co.com.foundation.soaint.infrastructure.transformer.Transformer;

@@ -20,16 +20,16 @@ import co.com.foundation.soaint.infrastructure.exceptions.BusinessException;
 import co.com.foundation.soaint.infrastructure.exceptions.SystemException;
 import co.com.foundation.soaint.documentmanager.persistence.entity.AdmConfigCcd;
 import co.com.foundation.soaint.documentmanager.persistence.entity.constants.EstadoInstrumentoEnum;
-import com.foundation.soaint.massiveloader.web.domain.CcdVO;
+import com.foundation.soaint.massiveloader.deprecated.web.domain.CcdVO;
 import co.com.foundation.soaint.documentmanager.infrastructure.builder.entity.EntityAdmCcdConfigBuilder;
 
-import com.foundation.soaint.massiveloader.web.infrastructure.builder.generic.CcdVoBuilder;
-import com.foundation.soaint.massiveloader.web.infrastructure.builder.generic.HTTPResponseBuilder;
-import com.foundation.soaint.massiveloader.web.infrastructure.builder.generic.TableResponseBuilder;
+import com.foundation.soaint.massiveloader.deprecated.web.infrastructure.builder.generic.CcdVoBuilder;
+import com.foundation.soaint.massiveloader.deprecated.web.infrastructure.builder.generic.HTTPResponseBuilder;
+import com.foundation.soaint.massiveloader.deprecated.web.infrastructure.builder.generic.TableResponseBuilder;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.HTTPResponse;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.TableResponse;
 import com.foundation.soaint.massiveloader.web.infrastructure.util.HTMLUtil;
-import com.foundation.soaint.massiveloader.web.infrastructure.util.constants.InstrumentosEnum;
+import com.foundation.soaint.massiveloader.deprecated.web.infrastructure.util.constants.InstrumentosEnum;
 
 import java.math.BigInteger;
 import java.util.Date;

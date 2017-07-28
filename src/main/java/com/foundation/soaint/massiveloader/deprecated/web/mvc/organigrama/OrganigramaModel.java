@@ -1,7 +1,7 @@
 package com.foundation.soaint.massiveloader.deprecated.web.mvc.organigrama;
 
 import co.com.foundation.soaint.documentmanager.domain.OrganigramaTreeVO;
-import com.foundation.soaint.massiveloader.web.domain.ConfiguracionInstrumentoVO;
+import com.foundation.soaint.massiveloader.deprecated.web.domain.ConfiguracionInstrumentoVO;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.SelectItem;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

@@ -5,7 +5,7 @@
  */
 package com.foundation.soaint.massiveloader.deprecated.web.mvc.motivosDoc;
 
-import com.foundation.soaint.massiveloader.web.domain.MotivosDocVO;
+import com.foundation.soaint.massiveloader.deprecated.web.domain.MotivosDocVO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

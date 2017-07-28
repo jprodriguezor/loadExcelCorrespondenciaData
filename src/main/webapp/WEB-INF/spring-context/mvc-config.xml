@@ -11,10 +11,10 @@
    http://www.springframework.org/schema/context
    http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="co.com.foundation.soaint.documentmanager.web.mvc"/>
-    <context:component-scan base-package="co.com.foundation.soaint.documentmanager.web.infrastructure.exceptionhandler"/>
-    <context:component-scan base-package="co.com.foundation.soaint.documentmanager.web.infrastructure.transformer"/>
-    <context:component-scan base-package="co.com.foundation.soaint.documentmanager.web.infrastructure.reports" />
+    <context:component-scan base-package="com.foundation.soaint.massiveloader.web.mvc"/>
+    <context:component-scan base-package="com.foundation.soaint.massiveloader.web.infrastructure.exceptionhandler"/>
+    <context:component-scan base-package="com.foundation.soaint.massiveloader.web.infrastructure.transformer"/>
+    <context:component-scan base-package="com.foundation.soaint.massiveloader.deprecated.web.reports" />
 
     <context:component-scan base-package="co.com.foundation.soaint.security.wui.mvc"/>
 

@@ -2,8 +2,8 @@ package com.foundation.soaint.massiveloader.deprecated.web.mvc.home;
 
 import co.com.foundation.soaint.documentmanager.adapter.SecurityClientAdapter;
 
-import com.foundation.soaint.massiveloader.web.domain.LoginInfoVO;
-import com.foundation.soaint.massiveloader.web.infrastructure.builder.generic.HTTPResponseBuilder;
+import com.foundation.soaint.massiveloader.deprecated.web.domain.LoginInfoVO;
+import com.foundation.soaint.massiveloader.deprecated.web.infrastructure.builder.generic.HTTPResponseBuilder;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.HTTPResponse;
 import co.com.foundation.soaint.infrastructure.common.MessageUtil;
 import co.com.foundation.soaint.infrastructure.exceptions.BusinessException;

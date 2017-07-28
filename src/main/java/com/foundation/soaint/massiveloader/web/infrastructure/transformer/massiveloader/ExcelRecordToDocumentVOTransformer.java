@@ -1,45 +1,62 @@
 package com.foundation.soaint.massiveloader.web.infrastructure.transformer.massiveloader;
 
-import com.foundation.soaint.massiveloader.web.infrastructure.builder.generic.SerieVoBuilder;
 import co.com.foundation.soaint.infrastructure.transformer.Transformer;
-import com.foundation.soaint.massiveloader.web.domain.SerieVO;
+import com.foundation.soaint.massiveloader.deprecated.web.domain.SerieVO;
+import com.foundation.soaint.massiveloader.web.domain.DocumentVO;
+import com.foundation.soaint.massiveloader.deprecated.web.infrastructure.builder.generic.SerieVoBuilder;
+import com.foundation.soaint.massiveloader.web.infrastructure.builder.generic.DocumentVoBuilder;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by administrador_1 on 06/10/2016.
  */
 
 @Component
-public class ExcelRecordToDocumentVOTransformer implements Transformer<CSVRecord, SerieVO> {
+public class ExcelRecordToDocumentVOTransformer implements Transformer<Row, DocumentVO> {
 
-    public static final String ACT_ADMINISTRATIVO = "ACTO_ADMINISTRATIVO_CREACION";
-    public static final String CAR_ADMINISTRATIVA = "CARACTE_ADMINISTRATIVA";
-    public static final String CAR_LEGAL = "CARACTE_LEGAL";
-    public static final String CAR_TECNICA = "CARACTE_TECNICA";
-    public static final String COD_SERIE = "CODIGO";
-    public static final String EST_SERIE = "ESTADO_SERIE";
-    public static final String FUE_BIBLIOGRAFICA = "FUENTE_BIBLIOGRAFICA";
-    public static final String NOMB_SERIE = "NOMBRE_SERIE";
-    public static final String NOT_ALCANCE = "NOTA_ALCANCE";
-    public static final String ID_MOTIVO = "MOTIVO_CREACION";
+    public static final int NO_RADICADO = 0;
+    public static final int FECHA_RADICACION = 1;
+    public static final int TIPO_COMUNICACION = 2;
+    public static final int TIPOLOGIA_DOCUMENTAL = 3;
+    public static final int NO_FOLIOS = 4;
+    public static final int NO_ANEXOS = 5;
+    public static final int ASUNTO = 6;
+    public static final int REQUIERE_DIGITALIZAR = 7;
+    public static final int REQUIERE_DISTRIBUCIONFISICA = 8;
+
+    public static void main(String[] args) throws Exception {
+
+        //parseExcel();
+
+    }
+    /*
+    */
 
     @Override
-    public SerieVO transform(CSVRecord record) {
-
-        return SerieVoBuilder.newBuilder()
-                .withCodSerie(record.get(COD_SERIE))
-                .withNomSerie(record.get(NOMB_SERIE))
-                .withCarLegal(record.get(CAR_LEGAL))
-                .withCarAdministrativa(record.get(CAR_ADMINISTRATIVA))
-                .withCarTecnica(record.get(CAR_TECNICA))
-                .withActAdministrativo(record.get(ACT_ADMINISTRATIVO))
-                .withIdMotivo(new BigInteger(record.get(ID_MOTIVO)))
-                .withNotAlcance(record.get(NOT_ALCANCE))
-                .withFueBibliografica(record.get(FUE_BIBLIOGRAFICA))
-                .withEstSerie(record.get(EST_SERIE))
+    public DocumentVO transform(Row row) {
+        return DocumentVoBuilder.newBuilder()
+                .withNoRadicado(row.getCell(NO_RADICADO).getStringCellValue())
+                .withFechaRadicacion(row.getCell(FECHA_RADICACION).getDateCellValue())
+                .withTipoComunicacion(row.getCell(TIPO_COMUNICACION).getStringCellValue())
+                .withTipologiaDocumental(row.getCell(TIPOLOGIA_DOCUMENTAL).getStringCellValue())
+                .withNoFolios(row.getCell(NO_FOLIOS).getNumericCellValue())
+                .withNoAnexos(row.getCell(NO_ANEXOS).getNumericCellValue())
+                .withAsunto(row.getCell(ASUNTO).getStringCellValue())
+                .withRequiereDigitalizar(row.getCell(REQUIERE_DIGITALIZAR).getStringCellValue().equalsIgnoreCase("TRUE"))
+                .withRequiereDistribucionFisica(row.getCell(REQUIERE_DISTRIBUCIONFISICA).getStringCellValue().equalsIgnoreCase("TRUE"))
                 .build();
     }
 

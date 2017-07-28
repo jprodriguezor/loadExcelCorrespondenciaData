@@ -5,7 +5,7 @@
  */
 package com.foundation.soaint.massiveloader.deprecated.web.mvc.disposicionFinal;
 
-import com.foundation.soaint.massiveloader.web.domain.DisposicionFinalVO;
+import com.foundation.soaint.massiveloader.deprecated.web.domain.DisposicionFinalVO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

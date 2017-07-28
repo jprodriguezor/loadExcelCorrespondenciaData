@@ -5,7 +5,7 @@
 */
 package com.foundation.soaint.massiveloader.deprecated.web.mvc.ccd;
 
-import com.foundation.soaint.massiveloader.web.domain.CcdVO;
+import com.foundation.soaint.massiveloader.deprecated.web.domain.CcdVO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

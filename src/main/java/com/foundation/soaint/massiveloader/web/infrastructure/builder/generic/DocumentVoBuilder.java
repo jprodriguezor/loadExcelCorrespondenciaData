@@ -6,94 +6,82 @@
 package com.foundation.soaint.massiveloader.web.infrastructure.builder.generic;
 
 import co.com.foundation.soaint.infrastructure.builder.Builder;
-import com.foundation.soaint.massiveloader.deprecated.web.domain.AsociacionVO;
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import com.foundation.soaint.massiveloader.web.domain.DocumentVO;
+
 import java.util.Date;
 
 /**
- *
  * @author malzate on 11/09/2016.
  */
-public class DocumentVoBuilder implements Builder<AsociacionVO> {
+public class DocumentVoBuilder implements Builder<DocumentVO> {
 
-    private Date fecCambio;
-    private Date fecCreacion;
-    private BigInteger ideUsuarioCambio;
-    private String ideUuid;
-    private Integer nivEscritura;
-    private Integer nivLectura;
-    private BigDecimal ideRelSst;
-    private BigInteger ideSerie;
-    private BigInteger ideSubserie;
-    private BigInteger ideTpgDoc;
+    String noRadicado;
+    Date fechaRadicacion;
+    String tipoComunicacion;
+    String tipologiaDocumental;
+    Double noFolios;
+    Double noAnexos;
+    String asunto;
+    Boolean requiereDigitalizar;
+    Boolean requiereDistribucionFisica;
 
+    public DocumentVoBuilder withNoRadicado(String noRadicado) {
+        this.noRadicado = noRadicado;
+        return this;
+    }
+
+    public DocumentVoBuilder withFechaRadicacion(Date fechaRadicacion) {
+        this.fechaRadicacion = fechaRadicacion;
+        return this;
+    }
+
+    public DocumentVoBuilder withTipoComunicacion(String tipoComunicacion) {
+        this.tipoComunicacion = tipoComunicacion;
+        return this;
+    }
+
+    public DocumentVoBuilder withTipologiaDocumental(String tipologiaDocumental) {
+        this.tipologiaDocumental = tipologiaDocumental;
+        return this;
+    }
+
+    public DocumentVoBuilder withNoFolios(Double noFolios) {
+        this.noFolios = noFolios;
+        return this;
+    }
+
+    public DocumentVoBuilder withNoAnexos(Double noAnexos) {
+        this.noAnexos = noAnexos;
+        return this;
+    }
+
+    public DocumentVoBuilder withAsunto(String asunto) {
+        this.asunto = asunto;
+        return this;
+    }
+
+    public DocumentVoBuilder withRequiereDigitalizar(Boolean requiereDigitalizar) {
+        this.requiereDigitalizar = requiereDigitalizar;
+        return this;
+    }
+
+    public DocumentVoBuilder withRequiereDistribucionFisica(Boolean requiereDistribucionFisica) {
+        this.requiereDistribucionFisica = requiereDistribucionFisica;
+        return this;
+    }
 
     public DocumentVoBuilder() {
     }
-    
+
     public static DocumentVoBuilder newBuilder() {
         return new DocumentVoBuilder();
     }
-    
-    public DocumentVoBuilder withFecCambio(Date fecCambio) {
-        this.fecCambio = fecCambio;
-        return this;
-    }
-    
-    public DocumentVoBuilder withFecCreacion(Date fecCreacion) {
-        this.fecCreacion = fecCreacion;
-        return this;
-    }
-    
-    public DocumentVoBuilder withIdeUsuarioCambio(BigInteger ideUsuarioCambio) {
-        this.ideUsuarioCambio = ideUsuarioCambio;
-        return this;
-    }
-    
-    public DocumentVoBuilder withIdeUuid(String ideUuid) {
-        this.ideUuid = ideUuid;
-        return this;
-    }
-    
-    public DocumentVoBuilder withNivEscritura(Integer nivEscritura) {
-        this.nivEscritura = nivEscritura;
-        return this;
-    }
-    
-    public DocumentVoBuilder withNivLectura(Integer nivLectura) {
-        this.nivLectura = nivLectura;
-        return this;
-    }
-    
-    public DocumentVoBuilder withIdeRelSst(BigDecimal ideRelSst) {
-        this.ideRelSst = ideRelSst;
-        return this;
-    }
-    
-    public DocumentVoBuilder withIdeSerie(BigInteger ideSerie) {
-        this.ideSerie = ideSerie;
-        return this;
-    }
-    
-    public DocumentVoBuilder withIdeSubserie(BigInteger ideSubserie) {
-        this.ideSubserie = ideSubserie;
-        return this;
-    }
-    
-    public DocumentVoBuilder withIdeTpgDoc(BigInteger ideTpgDoc) {
-        this.ideTpgDoc = ideTpgDoc;
-        return this;
-    }
-
-
-
-
 
     @Override
-    public AsociacionVO build() {
-        return new AsociacionVO(fecCambio, fecCreacion, ideUsuarioCambio, ideUuid, nivEscritura, nivLectura, ideRelSst, ideSerie, ideSubserie, ideTpgDoc);
+    public DocumentVO build() {
+        return new DocumentVO(noRadicado, fechaRadicacion, tipoComunicacion, tipologiaDocumental,
+                noFolios, noAnexos, asunto, requiereDigitalizar,
+                requiereDistribucionFisica);
     }
 
-    
 }

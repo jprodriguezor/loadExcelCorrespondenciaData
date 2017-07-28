@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>Massive-Loader</artifactId>
-    <groupId>co.com.foundation.soaint.massiveloader</groupId>
+    <groupId>com.foundation.soaint.massiveloader</groupId>
     <packaging>war</packaging>
     <version>1.0.0</version>
 

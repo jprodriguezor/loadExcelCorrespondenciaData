@@ -5,8 +5,8 @@
  */
 package com.foundation.soaint.massiveloader.deprecated.web.mvc.asosersubtpg;
 
-import com.foundation.soaint.massiveloader.web.domain.AsociacionGroupVO;
-import com.foundation.soaint.massiveloader.web.domain.AsociacionVO;
+import com.foundation.soaint.massiveloader.deprecated.web.domain.AsociacionGroupVO;
+import com.foundation.soaint.massiveloader.deprecated.web.domain.AsociacionVO;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.context.annotation.Scope;

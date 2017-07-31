@@ -1,11 +1,14 @@
 package com.foundation.soaint.massiveloader.web.domain;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
  * Created by g2o on 24-Jul-17.
  */
+@Data
 public class DocumentVO {
     @NotNull
     String noRadicado;
@@ -15,7 +18,6 @@ public class DocumentVO {
     String tipoComunicacion;
     @NotNull
     String tipologiaDocumental;
-
     @NotNull
     Double noFolios;
     @NotNull
@@ -23,9 +25,61 @@ public class DocumentVO {
     @NotNull
     String asunto;
     @NotNull
-    Boolean requiereDigitalizar;
+    String requiereDigitalizar;
     @NotNull
-    Boolean requiereDistribucionFisica;
+    String requiereDistribucionFisica;
+
+    //Remitente externo
+    String personaRemite;
+    String razonSocial;
+    String nombre;
+
+    //Remitente interno
+    String sedeAdministrativaRemitenteInterno;
+    String dependenciaRemitenteInterno;
+
+    //Destinatario
+    String sedeAdministrativaDestinatario;
+    String dependenciaDestinatario;
+
+    public DocumentVO() {
+    }
+
+    public DocumentVO(String noRadicado, Date fechaRadicacion, String tipoComunicacion, String tipologiaDocumental,
+                      Double noFolios, Double noAnexos, String asunto, String requiereDigitalizar,
+                      String requiereDistribucionFisica) {
+        this.noRadicado = noRadicado;
+        this.fechaRadicacion = fechaRadicacion;
+        this.tipoComunicacion = tipoComunicacion;
+        this.tipologiaDocumental = tipologiaDocumental;
+        this.noFolios = noFolios;
+        this.noAnexos = noAnexos;
+        this.asunto = asunto;
+        this.requiereDigitalizar = requiereDigitalizar;
+        this.requiereDistribucionFisica = requiereDistribucionFisica;
+    }
+
+    public DocumentVO(String noRadicado, Date fechaRadicacion, String tipoComunicacion, String tipologiaDocumental,
+                      Double noFolios, Double noAnexos, String asunto, String requiereDigitalizar,
+                      String requiereDistribucionFisica, String personaRemite, String razonSocial, String nombre,
+                      String sedeAdministrativaRemitenteInterno, String dependenciaRemitenteInterno, String sedeAdministrativaDestinatario, String dependenciaDestinatario) {
+        this.noRadicado = noRadicado;
+        this.fechaRadicacion = fechaRadicacion;
+        this.tipoComunicacion = tipoComunicacion;
+        this.tipologiaDocumental = tipologiaDocumental;
+        this.noFolios = noFolios;
+        this.noAnexos = noAnexos;
+        this.asunto = asunto;
+        this.requiereDigitalizar = requiereDigitalizar;
+        this.requiereDistribucionFisica = requiereDistribucionFisica;
+        this.personaRemite = personaRemite;
+        this.razonSocial = razonSocial;
+        this.nombre = nombre;
+        this.sedeAdministrativaRemitenteInterno = sedeAdministrativaRemitenteInterno;
+        this.dependenciaRemitenteInterno = dependenciaRemitenteInterno;
+        this.sedeAdministrativaDestinatario = sedeAdministrativaDestinatario;
+        this.dependenciaDestinatario = dependenciaDestinatario;
+    }
 
     public String getNoRadicado() {
         return noRadicado;
@@ -83,36 +137,75 @@ public class DocumentVO {
         this.asunto = asunto;
     }
 
-    public Boolean getRequiereDigitalizar() {
+    public String getRequiereDigitalizar() {
         return requiereDigitalizar;
     }
 
-    public void setRequiereDigitalizar(Boolean requiereDigitalizar) {
+    public void setRequiereDigitalizar(String requiereDigitalizar) {
         this.requiereDigitalizar = requiereDigitalizar;
     }
 
-    public Boolean getRequiereDistribucionFisica() {
+    public String getRequiereDistribucionFisica() {
         return requiereDistribucionFisica;
     }
 
-    public void setRequiereDistribucionFisica(Boolean requiereDistribucionFisica) {
+    public void setRequiereDistribucionFisica(String requiereDistribucionFisica) {
         this.requiereDistribucionFisica = requiereDistribucionFisica;
     }
 
-    public DocumentVO() {
+    public String getPersonaRemite() {
+        return personaRemite;
     }
 
-    public DocumentVO(String noRadicado, Date fechaRadicacion, String tipoComunicacion, String tipologiaDocumental,
-                      Double noFolios, Double noAnexos, String asunto, Boolean requiereDigitalizar,
-                      Boolean requiereDistribucionFisica) {
-        this.noRadicado = noRadicado;
-        this.fechaRadicacion = fechaRadicacion;
-        this.tipoComunicacion = tipoComunicacion;
-        this.tipologiaDocumental = tipologiaDocumental;
-        this.noFolios = noFolios;
-        this.noAnexos = noAnexos;
-        this.asunto = asunto;
-        this.requiereDigitalizar = requiereDigitalizar;
-        this.requiereDistribucionFisica = requiereDistribucionFisica;
+    public void setPersonaRemite(String personaRemite) {
+        this.personaRemite = personaRemite;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getSedeAdministrativaRemitenteInterno() {
+        return sedeAdministrativaRemitenteInterno;
+    }
+
+    public void setSedeAdministrativaRemitenteInterno(String sedeAdministrativaRemitenteInterno) {
+        this.sedeAdministrativaRemitenteInterno = sedeAdministrativaRemitenteInterno;
+    }
+
+    public String getDependenciaRemitenteInterno() {
+        return dependenciaRemitenteInterno;
+    }
+
+    public void setDependenciaRemitenteInterno(String dependenciaRemitenteInterno) {
+        this.dependenciaRemitenteInterno = dependenciaRemitenteInterno;
+    }
+
+    public String getSedeAdministrativaDestinatario() {
+        return sedeAdministrativaDestinatario;
+    }
+
+    public void setSedeAdministrativaDestinatario(String sedeAdministrativaDestinatario) {
+        this.sedeAdministrativaDestinatario = sedeAdministrativaDestinatario;
+    }
+
+    public String getDependenciaDestinatario() {
+        return dependenciaDestinatario;
+    }
+
+    public void setDependenciaDestinatario(String dependenciaDestinatario) {
+        this.dependenciaDestinatario = dependenciaDestinatario;
     }
 }

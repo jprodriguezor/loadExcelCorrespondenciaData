@@ -1,24 +1,10 @@
 package com.foundation.soaint.massiveloader.web.infrastructure.transformer.massiveloader;
 
 import co.com.foundation.soaint.infrastructure.transformer.Transformer;
-import com.foundation.soaint.massiveloader.deprecated.web.domain.SerieVO;
 import com.foundation.soaint.massiveloader.web.domain.DocumentVO;
-import com.foundation.soaint.massiveloader.deprecated.web.infrastructure.builder.generic.SerieVoBuilder;
 import com.foundation.soaint.massiveloader.web.infrastructure.builder.generic.DocumentVoBuilder;
-import org.apache.commons.csv.CSVRecord;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by administrador_1 on 06/10/2016.
@@ -55,8 +41,8 @@ public class ExcelRecordToDocumentVOTransformer implements Transformer<Row, Docu
                 .withNoFolios(row.getCell(NO_FOLIOS).getNumericCellValue())
                 .withNoAnexos(row.getCell(NO_ANEXOS).getNumericCellValue())
                 .withAsunto(row.getCell(ASUNTO).getStringCellValue())
-                .withRequiereDigitalizar(row.getCell(REQUIERE_DIGITALIZAR).getStringCellValue().equalsIgnoreCase("TRUE"))
-                .withRequiereDistribucionFisica(row.getCell(REQUIERE_DISTRIBUCIONFISICA).getStringCellValue().equalsIgnoreCase("TRUE"))
+                .withRequiereDigitalizar(row.getCell(REQUIERE_DIGITALIZAR).getStringCellValue())
+                .withRequiereDistribucionFisica(row.getCell(REQUIERE_DISTRIBUCIONFISICA).getStringCellValue())
                 .build();
     }
 

@@ -22,8 +22,8 @@ public class DocumentVoBuilder implements Builder<DocumentVO> {
     Double noFolios;
     Double noAnexos;
     String asunto;
-    Boolean requiereDigitalizar;
-    Boolean requiereDistribucionFisica;
+    String requiereDigitalizar;
+    String requiereDistribucionFisica;
 
     public DocumentVoBuilder withNoRadicado(String noRadicado) {
         this.noRadicado = noRadicado;
@@ -60,12 +60,12 @@ public class DocumentVoBuilder implements Builder<DocumentVO> {
         return this;
     }
 
-    public DocumentVoBuilder withRequiereDigitalizar(Boolean requiereDigitalizar) {
+    public DocumentVoBuilder withRequiereDigitalizar(String requiereDigitalizar) {
         this.requiereDigitalizar = requiereDigitalizar;
         return this;
     }
 
-    public DocumentVoBuilder withRequiereDistribucionFisica(Boolean requiereDistribucionFisica) {
+    public DocumentVoBuilder withRequiereDistribucionFisica(String requiereDistribucionFisica) {
         this.requiereDistribucionFisica = requiereDistribucionFisica;
         return this;
     }

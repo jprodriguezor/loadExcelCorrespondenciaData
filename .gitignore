@@ -1,3 +1,5 @@
-.idea/
-target/
 *.iml
+/Document-Manager-Root/Core-Modules/target/
+/Document-Manager-Root/Web-Modules/target/
+/Document-Manager-Root/target/
+/Security-Foundation/Cartridge-Modules/WUI-Security/target/

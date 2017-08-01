@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_business-artifacts" default="compile.module.business-artifacts">
+  <dirname property="module.business-artifacts.basedir" file="${ant.file.module_business-artifacts}"/>
+  
+  <property name="module.jdk.home.business-artifacts" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.business-artifacts" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.business-artifacts" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.business-artifacts" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="business-artifacts.output.dir" value="${module.business-artifacts.basedir}/target/classes"/>
+  <property name="business-artifacts.testoutput.dir" value="${module.business-artifacts.basedir}/target/test-classes"/>
+  
+  <path id="business-artifacts.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="business-artifacts.module.production.classpath">
+    <path refid="${module.jdk.classpath.business-artifacts}"/>
+    <path refid="library.maven:_co.com.foundation.soaint:foundation-framework:1.0-snapshot.classpath"/>
+    <path refid="library.maven:_co.com.foundation.soaint.security:wui-security:1.0-snapshot.classpath"/>
+    <path refid="library.maven:_javax.servlet:jstl:1.2.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-web:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-webmvc:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-expression:4.3.2.release.classpath"/>
+    <path refid="library.maven:_co.com.foundation.soaint.documentmanager:clientintegration-artifacts:1.0-snapshot.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-core:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-context:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-beans:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-frontend-jaxws:3.1.7.classpath"/>
+    <path refid="library.maven:_xml-resolver:xml-resolver:1.2.classpath"/>
+    <path refid="library.maven:_org.ow2.asm:asm:5.0.4.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-core:3.1.7.classpath"/>
+    <path refid="library.maven:_org.codehaus.woodstox:woodstox-core-asl:4.4.1.classpath"/>
+    <path refid="library.maven:_org.codehaus.woodstox:stax2-api:3.1.4.classpath"/>
+    <path refid="library.maven:_org.apache.ws.xmlschema:xmlschema-core:2.2.1.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-bindings-soap:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-wsdl:3.1.7.classpath"/>
+    <path refid="library.maven:_wsdl4j:wsdl4j:1.6.3.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-databinding-jaxb:3.1.7.classpath"/>
+    <path refid="library.maven:_com.sun.xml.bind:jaxb-impl:2.2.11.classpath"/>
+    <path refid="library.maven:_com.sun.xml.bind:jaxb-core:2.2.11.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-bindings-xml:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-frontend-simple:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-ws-addr:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-ws-policy:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.neethi:neethi:3.0.3.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-transports-http:3.1.7.classpath"/>
+    <path refid="library.maven:_javax:javaee-web-api:7.0.classpath"/>
+    <path refid="library.maven:_org.springframework.data:spring-data-jpa:1.10.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework.data:spring-data-commons:1.12.2.release.classpath"/>
+    <path refid="library.maven:_org.aspectj:aspectjrt:1.8.9.classpath"/>
+    <path refid="library.maven:_org.slf4j:slf4j-api:1.7.21.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-orm:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-jdbc:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-aop:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-aspects:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.aspectj:aspectjweaver:1.8.9.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-tx:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-entitymanager:5.2.2.final.classpath"/>
+    <path refid="library.maven:_org.jboss.logging:jboss-logging:3.3.0.final.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-core:5.2.2.final.classpath"/>
+    <path refid="library.maven:_antlr:antlr:2.7.7.classpath"/>
+    <path refid="library.maven:_org.jboss:jandex:2.0.0.final.classpath"/>
+    <path refid="library.maven:_javax.enterprise:cdi-api:1.1.classpath"/>
+    <path refid="library.maven:_javax.el:el-api:2.2.classpath"/>
+    <path refid="library.maven:_org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.1_spec:1.0.0.beta1.classpath"/>
+    <path refid="library.maven:_javax.annotation:jsr250-api:1.0.classpath"/>
+    <path refid="library.maven:_javax.inject:javax.inject:1.classpath"/>
+    <path refid="library.maven:_dom4j:dom4j:1.6.1.classpath"/>
+    <path refid="library.maven:_org.hibernate.common:hibernate-commons-annotations:5.0.1.final.classpath"/>
+    <path refid="library.maven:_org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.final.classpath"/>
+    <path refid="library.maven:_org.javassist:javassist:3.20.0-ga.classpath"/>
+    <path refid="library.maven:_org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-validator:5.2.2.final.classpath"/>
+    <path refid="library.maven:_com.fasterxml:classmate:1.1.0.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-validator-annotation-processor:5.2.2.final.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-ehcache:5.2.2.final.classpath"/>
+    <path refid="library.maven:_net.sf.ehcache:ehcache:2.10.1.classpath"/>
+    <path refid="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath"/>
+    <path refid="library.maven:_org.apache.logging.log4j:log4j-api:2.0.2.classpath"/>
+    <path refid="library.maven:_org.apache.logging.log4j:log4j-core:2.0.2.classpath"/>
+    <path refid="library.maven:_javax.validation:validation-api:1.1.0.final.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-lang3:3.5.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-dbcp2:2.1.1.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-pool2:2.4.2.classpath"/>
+    <path refid="library.maven:_commons-logging:commons-logging:1.2.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.8.1.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.8.1.classpath"/>
+    <path refid="library.maven:_org.projectlombok:lombok:1.16.16.classpath"/>
+    <path refid="library.maven:_io.jsonwebtoken:jjwt:0.7.0.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.8.2.classpath"/>
+  </path>
+  
+  <path id="business-artifacts.runtime.production.module.classpath">
+    <pathelement location="${business-artifacts.output.dir}"/>
+    <path refid="library.maven:_co.com.foundation.soaint:foundation-framework:1.0-snapshot.classpath"/>
+    <path refid="library.maven:_co.com.foundation.soaint.security:wui-security:1.0-snapshot.classpath"/>
+    <path refid="library.maven:_javax.servlet:jstl:1.2.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-web:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-webmvc:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-expression:4.3.2.release.classpath"/>
+    <path refid="library.maven:_co.com.foundation.soaint.documentmanager:clientintegration-artifacts:1.0-snapshot.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-core:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-context:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-beans:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-frontend-jaxws:3.1.7.classpath"/>
+    <path refid="library.maven:_xml-resolver:xml-resolver:1.2.classpath"/>
+    <path refid="library.maven:_org.ow2.asm:asm:5.0.4.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-core:3.1.7.classpath"/>
+    <path refid="library.maven:_org.codehaus.woodstox:woodstox-core-asl:4.4.1.classpath"/>
+    <path refid="library.maven:_org.codehaus.woodstox:stax2-api:3.1.4.classpath"/>
+    <path refid="library.maven:_org.apache.ws.xmlschema:xmlschema-core:2.2.1.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-bindings-soap:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-wsdl:3.1.7.classpath"/>
+    <path refid="library.maven:_wsdl4j:wsdl4j:1.6.3.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-databinding-jaxb:3.1.7.classpath"/>
+    <path refid="library.maven:_com.sun.xml.bind:jaxb-impl:2.2.11.classpath"/>
+    <path refid="library.maven:_com.sun.xml.bind:jaxb-core:2.2.11.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-bindings-xml:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-frontend-simple:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-ws-addr:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-ws-policy:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.neethi:neethi:3.0.3.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-transports-http:3.1.7.classpath"/>
+    <path refid="library.maven:_org.springframework.data:spring-data-jpa:1.10.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework.data:spring-data-commons:1.12.2.release.classpath"/>
+    <path refid="library.maven:_org.aspectj:aspectjrt:1.8.9.classpath"/>
+    <path refid="library.maven:_org.slf4j:slf4j-api:1.7.21.classpath"/>
+    <path refid="library.maven:_org.slf4j:jcl-over-slf4j:1.7.21.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-orm:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-jdbc:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-aop:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-aspects:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.aspectj:aspectjweaver:1.8.9.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-tx:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-entitymanager:5.2.2.final.classpath"/>
+    <path refid="library.maven:_org.jboss.logging:jboss-logging:3.3.0.final.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-core:5.2.2.final.classpath"/>
+    <path refid="library.maven:_antlr:antlr:2.7.7.classpath"/>
+    <path refid="library.maven:_org.jboss:jandex:2.0.0.final.classpath"/>
+    <path refid="library.maven:_javax.enterprise:cdi-api:1.1.classpath"/>
+    <path refid="library.maven:_javax.el:el-api:2.2.classpath"/>
+    <path refid="library.maven:_org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.1_spec:1.0.0.beta1.classpath"/>
+    <path refid="library.maven:_javax.annotation:jsr250-api:1.0.classpath"/>
+    <path refid="library.maven:_javax.inject:javax.inject:1.classpath"/>
+    <path refid="library.maven:_dom4j:dom4j:1.6.1.classpath"/>
+    <path refid="library.maven:_org.hibernate.common:hibernate-commons-annotations:5.0.1.final.classpath"/>
+    <path refid="library.maven:_org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.final.classpath"/>
+    <path refid="library.maven:_org.javassist:javassist:3.20.0-ga.classpath"/>
+    <path refid="library.maven:_org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-validator:5.2.2.final.classpath"/>
+    <path refid="library.maven:_com.fasterxml:classmate:1.1.0.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-validator-annotation-processor:5.2.2.final.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-ehcache:5.2.2.final.classpath"/>
+    <path refid="library.maven:_net.sf.ehcache:ehcache:2.10.1.classpath"/>
+    <path refid="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath"/>
+    <path refid="library.maven:_org.apache.logging.log4j:log4j-api:2.0.2.classpath"/>
+    <path refid="library.maven:_org.apache.logging.log4j:log4j-core:2.0.2.classpath"/>
+    <path refid="library.maven:_javax.validation:validation-api:1.1.0.final.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-lang3:3.5.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-dbcp2:2.1.1.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-pool2:2.4.2.classpath"/>
+    <path refid="library.maven:_commons-logging:commons-logging:1.2.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.8.1.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.8.1.classpath"/>
+    <path refid="library.maven:_org.projectlombok:lombok:1.16.16.classpath"/>
+    <path refid="library.maven:_io.jsonwebtoken:jjwt:0.7.0.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.8.2.classpath"/>
+  </path>
+  
+  <path id="business-artifacts.module.classpath">
+    <path refid="${module.jdk.classpath.business-artifacts}"/>
+    <pathelement location="${business-artifacts.output.dir}"/>
+    <path refid="library.maven:_co.com.foundation.soaint:foundation-framework:1.0-snapshot.classpath"/>
+    <path refid="library.maven:_co.com.foundation.soaint.security:wui-security:1.0-snapshot.classpath"/>
+    <path refid="library.maven:_javax.servlet:jstl:1.2.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-web:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-webmvc:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-expression:4.3.2.release.classpath"/>
+    <path refid="library.maven:_co.com.foundation.soaint.documentmanager:clientintegration-artifacts:1.0-snapshot.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-core:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-context:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-beans:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-frontend-jaxws:3.1.7.classpath"/>
+    <path refid="library.maven:_xml-resolver:xml-resolver:1.2.classpath"/>
+    <path refid="library.maven:_org.ow2.asm:asm:5.0.4.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-core:3.1.7.classpath"/>
+    <path refid="library.maven:_org.codehaus.woodstox:woodstox-core-asl:4.4.1.classpath"/>
+    <path refid="library.maven:_org.codehaus.woodstox:stax2-api:3.1.4.classpath"/>
+    <path refid="library.maven:_org.apache.ws.xmlschema:xmlschema-core:2.2.1.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-bindings-soap:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-wsdl:3.1.7.classpath"/>
+    <path refid="library.maven:_wsdl4j:wsdl4j:1.6.3.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-databinding-jaxb:3.1.7.classpath"/>
+    <path refid="library.maven:_com.sun.xml.bind:jaxb-impl:2.2.11.classpath"/>
+    <path refid="library.maven:_com.sun.xml.bind:jaxb-core:2.2.11.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-bindings-xml:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-frontend-simple:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-ws-addr:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-ws-policy:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.neethi:neethi:3.0.3.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-transports-http:3.1.7.classpath"/>
+    <path refid="library.maven:_javax:javaee-web-api:7.0.classpath"/>
+    <path refid="library.maven:_org.springframework.data:spring-data-jpa:1.10.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework.data:spring-data-commons:1.12.2.release.classpath"/>
+    <path refid="library.maven:_org.aspectj:aspectjrt:1.8.9.classpath"/>
+    <path refid="library.maven:_org.slf4j:slf4j-api:1.7.21.classpath"/>
+    <path refid="library.maven:_org.slf4j:jcl-over-slf4j:1.7.21.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-orm:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-jdbc:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-aop:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-aspects:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.aspectj:aspectjweaver:1.8.9.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-tx:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-entitymanager:5.2.2.final.classpath"/>
+    <path refid="library.maven:_org.jboss.logging:jboss-logging:3.3.0.final.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-core:5.2.2.final.classpath"/>
+    <path refid="library.maven:_antlr:antlr:2.7.7.classpath"/>
+    <path refid="library.maven:_org.jboss:jandex:2.0.0.final.classpath"/>
+    <path refid="library.maven:_javax.enterprise:cdi-api:1.1.classpath"/>
+    <path refid="library.maven:_javax.el:el-api:2.2.classpath"/>
+    <path refid="library.maven:_org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.1_spec:1.0.0.beta1.classpath"/>
+    <path refid="library.maven:_javax.annotation:jsr250-api:1.0.classpath"/>
+    <path refid="library.maven:_javax.inject:javax.inject:1.classpath"/>
+    <path refid="library.maven:_dom4j:dom4j:1.6.1.classpath"/>
+    <path refid="library.maven:_org.hibernate.common:hibernate-commons-annotations:5.0.1.final.classpath"/>
+    <path refid="library.maven:_org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.final.classpath"/>
+    <path refid="library.maven:_org.javassist:javassist:3.20.0-ga.classpath"/>
+    <path refid="library.maven:_org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-validator:5.2.2.final.classpath"/>
+    <path refid="library.maven:_com.fasterxml:classmate:1.1.0.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-validator-annotation-processor:5.2.2.final.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-ehcache:5.2.2.final.classpath"/>
+    <path refid="library.maven:_net.sf.ehcache:ehcache:2.10.1.classpath"/>
+    <path refid="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath"/>
+    <path refid="library.maven:_org.apache.logging.log4j:log4j-api:2.0.2.classpath"/>
+    <path refid="library.maven:_org.apache.logging.log4j:log4j-core:2.0.2.classpath"/>
+    <path refid="library.maven:_javax.validation:validation-api:1.1.0.final.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-lang3:3.5.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-dbcp2:2.1.1.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-pool2:2.4.2.classpath"/>
+    <path refid="library.maven:_commons-logging:commons-logging:1.2.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.8.1.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.8.1.classpath"/>
+    <path refid="library.maven:_org.projectlombok:lombok:1.16.16.classpath"/>
+    <path refid="library.maven:_io.jsonwebtoken:jjwt:0.7.0.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.8.2.classpath"/>
+  </path>
+  
+  <path id="business-artifacts.runtime.module.classpath">
+    <pathelement location="${business-artifacts.testoutput.dir}"/>
+    <pathelement location="${business-artifacts.output.dir}"/>
+    <path refid="library.maven:_co.com.foundation.soaint:foundation-framework:1.0-snapshot.classpath"/>
+    <path refid="library.maven:_co.com.foundation.soaint.security:wui-security:1.0-snapshot.classpath"/>
+    <path refid="library.maven:_javax.servlet:jstl:1.2.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-web:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-webmvc:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-expression:4.3.2.release.classpath"/>
+    <path refid="library.maven:_co.com.foundation.soaint.documentmanager:clientintegration-artifacts:1.0-snapshot.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-core:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-context:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-beans:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-frontend-jaxws:3.1.7.classpath"/>
+    <path refid="library.maven:_xml-resolver:xml-resolver:1.2.classpath"/>
+    <path refid="library.maven:_org.ow2.asm:asm:5.0.4.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-core:3.1.7.classpath"/>
+    <path refid="library.maven:_org.codehaus.woodstox:woodstox-core-asl:4.4.1.classpath"/>
+    <path refid="library.maven:_org.codehaus.woodstox:stax2-api:3.1.4.classpath"/>
+    <path refid="library.maven:_org.apache.ws.xmlschema:xmlschema-core:2.2.1.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-bindings-soap:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-wsdl:3.1.7.classpath"/>
+    <path refid="library.maven:_wsdl4j:wsdl4j:1.6.3.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-databinding-jaxb:3.1.7.classpath"/>
+    <path refid="library.maven:_com.sun.xml.bind:jaxb-impl:2.2.11.classpath"/>
+    <path refid="library.maven:_com.sun.xml.bind:jaxb-core:2.2.11.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-bindings-xml:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-frontend-simple:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-ws-addr:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-ws-policy:3.1.7.classpath"/>
+    <path refid="library.maven:_org.apache.neethi:neethi:3.0.3.classpath"/>
+    <path refid="library.maven:_org.apache.cxf:cxf-rt-transports-http:3.1.7.classpath"/>
+    <path refid="library.maven:_javax:javaee-web-api:7.0.classpath"/>
+    <path refid="library.maven:_org.springframework.data:spring-data-jpa:1.10.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework.data:spring-data-commons:1.12.2.release.classpath"/>
+    <path refid="library.maven:_org.aspectj:aspectjrt:1.8.9.classpath"/>
+    <path refid="library.maven:_org.slf4j:slf4j-api:1.7.21.classpath"/>
+    <path refid="library.maven:_org.slf4j:jcl-over-slf4j:1.7.21.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-orm:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-jdbc:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-aop:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-aspects:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.aspectj:aspectjweaver:1.8.9.classpath"/>
+    <path refid="library.maven:_org.springframework:spring-tx:4.3.2.release.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-entitymanager:5.2.2.final.classpath"/>
+    <path refid="library.maven:_org.jboss.logging:jboss-logging:3.3.0.final.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-core:5.2.2.final.classpath"/>
+    <path refid="library.maven:_antlr:antlr:2.7.7.classpath"/>
+    <path refid="library.maven:_org.jboss:jandex:2.0.0.final.classpath"/>
+    <path refid="library.maven:_javax.enterprise:cdi-api:1.1.classpath"/>
+    <path refid="library.maven:_javax.el:el-api:2.2.classpath"/>
+    <path refid="library.maven:_org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.1_spec:1.0.0.beta1.classpath"/>
+    <path refid="library.maven:_javax.annotation:jsr250-api:1.0.classpath"/>
+    <path refid="library.maven:_javax.inject:javax.inject:1.classpath"/>
+    <path refid="library.maven:_dom4j:dom4j:1.6.1.classpath"/>
+    <path refid="library.maven:_org.hibernate.common:hibernate-commons-annotations:5.0.1.final.classpath"/>
+    <path refid="library.maven:_org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.final.classpath"/>
+    <path refid="library.maven:_org.javassist:javassist:3.20.0-ga.classpath"/>
+    <path refid="library.maven:_org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-validator:5.2.2.final.classpath"/>
+    <path refid="library.maven:_com.fasterxml:classmate:1.1.0.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-validator-annotation-processor:5.2.2.final.classpath"/>
+    <path refid="library.maven:_org.hibernate:hibernate-ehcache:5.2.2.final.classpath"/>
+    <path refid="library.maven:_net.sf.ehcache:ehcache:2.10.1.classpath"/>
+    <path refid="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath"/>
+    <path refid="library.maven:_org.apache.logging.log4j:log4j-api:2.0.2.classpath"/>
+    <path refid="library.maven:_org.apache.logging.log4j:log4j-core:2.0.2.classpath"/>
+    <path refid="library.maven:_javax.validation:validation-api:1.1.0.final.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-lang3:3.5.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-dbcp2:2.1.1.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-pool2:2.4.2.classpath"/>
+    <path refid="library.maven:_commons-logging:commons-logging:1.2.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.8.1.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.8.1.classpath"/>
+    <path refid="library.maven:_org.projectlombok:lombok:1.16.16.classpath"/>
+    <path refid="library.maven:_io.jsonwebtoken:jjwt:0.7.0.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.8.2.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.business-artifacts">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.business-artifacts">
+    <patternset refid="excluded.from.module.business-artifacts"/>
+  </patternset>
+  
+  <path id="business-artifacts.module.sourcepath">
+    <dirset dir="${module.business-artifacts.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.business-artifacts" depends="compile.module.business-artifacts.production,compile.module.business-artifacts.tests" description="Compile module Business-Artifacts"/>
+  
+  <target name="compile.module.business-artifacts.production" depends="register.custom.compilers" description="Compile module Business-Artifacts; production classes">
+    <mkdir dir="${business-artifacts.output.dir}"/>
+    <javac2 destdir="${business-artifacts.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.business-artifacts}/javac">
+      <compilerarg line="${compiler.args.business-artifacts}"/>
+      <bootclasspath refid="business-artifacts.module.bootclasspath"/>
+      <classpath refid="business-artifacts.module.production.classpath"/>
+      <src refid="business-artifacts.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.business-artifacts"/>
+    </javac2>
+    
+    <copy todir="${business-artifacts.output.dir}">
+      <fileset dir="${module.business-artifacts.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.business-artifacts.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.business-artifacts.tests" depends="register.custom.compilers,compile.module.business-artifacts.production" description="compile module Business-Artifacts; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.business-artifacts" description="cleanup module">
+    <delete dir="${business-artifacts.output.dir}"/>
+    <delete dir="${business-artifacts.testoutput.dir}"/>
+  </target>
+</project>

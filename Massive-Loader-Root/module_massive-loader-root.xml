@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_massive-loader-root" default="compile.module.massive-loader-root">
+  <dirname property="module.massive-loader-root.basedir" file="${ant.file.module_massive-loader-root}"/>
+  
+  <property name="module.jdk.home.massive-loader-root" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.massive-loader-root" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.massive-loader-root" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.massive-loader-root" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="massive-loader-root.output.dir" value="${module.massive-loader-root.basedir}/target/classes"/>
+  <property name="massive-loader-root.testoutput.dir" value="${module.massive-loader-root.basedir}/target/test-classes"/>
+  
+  <path id="massive-loader-root.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="massive-loader-root.module.production.classpath">
+    <path refid="${module.jdk.classpath.massive-loader-root}"/>
+  </path>
+  
+  <path id="massive-loader-root.runtime.production.module.classpath">
+    <pathelement location="${massive-loader-root.output.dir}"/>
+  </path>
+  
+  <path id="massive-loader-root.module.classpath">
+    <path refid="${module.jdk.classpath.massive-loader-root}"/>
+    <pathelement location="${massive-loader-root.output.dir}"/>
+  </path>
+  
+  <path id="massive-loader-root.runtime.module.classpath">
+    <pathelement location="${massive-loader-root.testoutput.dir}"/>
+    <pathelement location="${massive-loader-root.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.massive-loader-root">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.massive-loader-root">
+    <patternset refid="excluded.from.module.massive-loader-root"/>
+  </patternset>
+  
+  
+  <target name="compile.module.massive-loader-root" depends="compile.module.massive-loader-root.production,compile.module.massive-loader-root.tests" description="Compile module Massive-Loader-Root"/>
+  
+  <target name="compile.module.massive-loader-root.production" depends="register.custom.compilers" description="Compile module Massive-Loader-Root; production classes"/>
+  
+  <target name="compile.module.massive-loader-root.tests" depends="register.custom.compilers,compile.module.massive-loader-root.production" description="compile module Massive-Loader-Root; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.massive-loader-root" description="cleanup module">
+    <delete dir="${massive-loader-root.output.dir}"/>
+    <delete dir="${massive-loader-root.testoutput.dir}"/>
+  </target>
+</project>

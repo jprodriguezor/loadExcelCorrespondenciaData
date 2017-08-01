@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_web-modules" default="compile.module.web-modules">
+  <dirname property="module.web-modules.basedir" file="${ant.file.module_web-modules}"/>
+  
+  <property name="module.jdk.home.web-modules" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.web-modules" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.web-modules" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.web-modules" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="web-modules.output.dir" value="${module.web-modules.basedir}/target/classes"/>
+  <property name="web-modules.testoutput.dir" value="${module.web-modules.basedir}/target/test-classes"/>
+  
+  <path id="web-modules.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="web-modules.module.production.classpath">
+    <path refid="${module.jdk.classpath.web-modules}"/>
+  </path>
+  
+  <path id="web-modules.runtime.production.module.classpath">
+    <pathelement location="${web-modules.output.dir}"/>
+  </path>
+  
+  <path id="web-modules.module.classpath">
+    <path refid="${module.jdk.classpath.web-modules}"/>
+    <pathelement location="${web-modules.output.dir}"/>
+  </path>
+  
+  <path id="web-modules.runtime.module.classpath">
+    <pathelement location="${web-modules.testoutput.dir}"/>
+    <pathelement location="${web-modules.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.web-modules">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.web-modules">
+    <patternset refid="excluded.from.module.web-modules"/>
+  </patternset>
+  
+  
+  <target name="compile.module.web-modules" depends="compile.module.web-modules.production,compile.module.web-modules.tests" description="Compile module Web-Modules"/>
+  
+  <target name="compile.module.web-modules.production" depends="register.custom.compilers" description="Compile module Web-Modules; production classes"/>
+  
+  <target name="compile.module.web-modules.tests" depends="register.custom.compilers,compile.module.web-modules.production" description="compile module Web-Modules; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.web-modules" description="cleanup module">
+    <delete dir="${web-modules.output.dir}"/>
+    <delete dir="${web-modules.testoutput.dir}"/>
+  </target>
+</project>

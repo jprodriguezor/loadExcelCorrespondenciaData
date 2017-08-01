@@ -1,0 +1,98 @@
+.treeview input {
+    position: absolute;
+    opacity: 0;
+}
+
+.treeview input ~ ul {
+    display: none;
+}
+
+.treeview label,
+.treeview label::before {
+    cursor: pointer;
+    padding-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.treeview input:disabled + label {
+    cursor: default;
+    opacity: .6;
+}
+
+.treeview input:checked:not(:disabled) ~ ul {
+    display: block;
+}
+
+.treeview a {
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.treeview label::before {
+    display: inline-block;
+    height: 16px;
+    line-height: 16px;
+    vertical-align: middle;
+}
+
+.treeview label::before {
+    content: "";
+    width: 16px;
+    vertical-align: middle;
+    background-position: -384px -120px;
+}
+
+.treeview input:checked + label::before {
+    background-position: -408px -120px;
+}
+
+/* webkit adjacent element selector bugfix */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    /*  .treeview {
+          -webkit-animation: webkit-adjacent-element-selector-bugfix infinite 1s;
+        }*/
+    @-webkit-keyframes webkit-adjacent-element-selector-bugfix {
+        from {
+            padding: 0;
+        }
+        to {
+            padding: 0;
+        }
+    }
+}
+
+.treeview li.active > label,
+.treeview li.active > label:hover,
+.treeview li.active > a,
+.treeview li.active > a:hover {
+    color: #ffffff;
+    display: inline-block;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+    background-color: #0088cc;
+}
+
+.treeview li > label:hover {
+    text-decoration: none;
+    background-color: #eeeeee;
+}
+
+.treeview ul {
+    padding-left: 25px;
+}
+
+.treeview li > label,
+.treeview li > a {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.treeview li > a:focus {
+    outline: none;
+}
+
+.treeview li.nav-header {
+    color: #428BCA;
+    font-weight: bold;
+}

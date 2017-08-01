@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="classpath:spring/crosscutting-config.xml"/>
+    <import resource="classpath:spring/persistence-config.xml"/>
+    <import resource="classpath:spring/integration-config.xml"/>
+    <import resource="classpath:spring/client-integration-config.xml"/>
+    <!--Import Time Out -->
+    <import resource="classpath:spring/client-timeout-config.xml"/>
+
+</beans>

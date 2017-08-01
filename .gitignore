@@ -3,3 +3,5 @@
 /Document-Manager-Root/Web-Modules/target/
 /Document-Manager-Root/target/
 /Security-Foundation/Cartridge-Modules/WUI-Security/target/
+.idea/**
+target/**

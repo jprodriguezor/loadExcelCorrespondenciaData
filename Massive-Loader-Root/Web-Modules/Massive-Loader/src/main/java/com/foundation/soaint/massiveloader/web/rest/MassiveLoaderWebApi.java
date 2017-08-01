@@ -2,6 +2,7 @@ package com.foundation.soaint.massiveloader.web.rest;
 
 import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.interfaces.ComunicacionOficialManagerProxy;
 import co.com.foundation.soaint.documentmanager.business.series.interfaces.SeriesManagerProxy;
+import co.com.foundation.soaint.documentmanager.domain.bd.ComunicacionOficialDTO;
 import co.com.foundation.soaint.documentmanager.infrastructure.builder.massiveloader.CallerContextBuilder;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.MassiveLoaderType;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.domain.MassiveRecordContext;
@@ -31,7 +32,7 @@ import javax.ws.rs.core.Response;
 @Controller
 @Scope("request")
 @RequestMapping(value = "/carga-masiva-web-api")
-public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, MassiveRecordContext<AdmSerie>> {
+public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, MassiveRecordContext<ComunicacionOficialDTO>> {
 
     private static Logger logger = LogManager.getLogger(MassiveLoaderWebApi.class.getName());
 

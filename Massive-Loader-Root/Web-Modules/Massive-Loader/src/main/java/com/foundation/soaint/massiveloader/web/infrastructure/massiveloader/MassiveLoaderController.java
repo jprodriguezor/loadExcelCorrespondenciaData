@@ -13,6 +13,7 @@ import com.foundation.soaint.massiveloader.web.infrastructure.parser.DocumentPar
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintViolation;
@@ -35,10 +36,6 @@ public abstract class MassiveLoaderController<O, E> {
     @Autowired
     protected LoaderAsyncWorker<E> asyncWorker;
 
-    @Autowired
-    protected DocumentParserFactory<O> documentParserFactory;
-
-
     //[generic load processing] ------------------------------
 
     protected MasiveLoaderResponse processGenericLoad(final MultipartFile file, final LoaderExecutor<E> executor,
@@ -49,6 +46,7 @@ public abstract class MassiveLoaderController<O, E> {
 
         MasiveLoaderResponse response;
 
+        DocumentParserFactory<O> documentParserFactory = new DocumentParserFactory<>();
         DocumentParser documentParser = documentParserFactory.getDocumentParser(file);
 
         try {

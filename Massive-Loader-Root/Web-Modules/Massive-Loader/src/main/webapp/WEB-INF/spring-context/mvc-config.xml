@@ -12,7 +12,6 @@
    http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.foundation.soaint.massiveloader.web.infrastructure.transformer"/>
-    <context:component-scan base-package="co.com.foundation.soaint.security.wui.mvc"/>
     <context:component-scan base-package="com.foundation.soaint.massiveloader.web.rest"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

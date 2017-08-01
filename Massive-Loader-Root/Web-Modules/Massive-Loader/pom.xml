@@ -301,10 +301,11 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <url>http://localhost:9091/manager/text</url>
+                    <url>http://localhost:5900/manager/text</url>
                     <server>tomcat-server</server>
                     <username>admin</username>
-                    <password>qwerty</password>
+                    <password>admin</password>
+                    <port>5900</port>
                 </configuration>
             </plugin>
 

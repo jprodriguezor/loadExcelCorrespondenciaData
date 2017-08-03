@@ -10,6 +10,7 @@ import co.com.foundation.soaint.infrastructure.exceptions.ExceptionBuilder;
 import co.com.foundation.soaint.infrastructure.exceptions.SystemException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +29,14 @@ public class ComunicacionOficialManager implements ComunicacionOficialManagerPro
     // [fields] -----------------------------------
     private static Logger LOGGER = LogManager.getLogger(ComunicacionOficialManager.class.getName());
 
+    @Autowired
+    CorrespondenciaClient correspondenciaClient;
+
     public ComunicacionOficialManager() {
     }
 
     @Override
     public void gestionarComunicacionOficial(ComunicacionOficialDTO oficialDTO) throws SystemException, BusinessException {
-
+        correspondenciaClient.radicar(oficialDTO);
     }
 }

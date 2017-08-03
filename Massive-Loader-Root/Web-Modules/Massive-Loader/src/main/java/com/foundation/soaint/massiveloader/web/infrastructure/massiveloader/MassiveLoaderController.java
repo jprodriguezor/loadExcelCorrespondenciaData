@@ -13,7 +13,6 @@ import com.foundation.soaint.massiveloader.web.infrastructure.parser.DocumentPar
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintViolation;
@@ -34,7 +33,7 @@ public abstract class MassiveLoaderController<O, E> {
     private static Logger LOGGER = LogManager.getLogger(MassiveLoaderController.class.getName());
 
     @Autowired
-    protected LoaderAsyncWorker<E> asyncWorker;
+    protected LoaderAsyncWorker<E> loaderAsyncWorker;
 
     //[generic load processing] ------------------------------
 
@@ -61,8 +60,7 @@ public abstract class MassiveLoaderController<O, E> {
                 records.stream().forEach((O vo) -> {
                     contextInfoList.add(massiveRecordTransformer.transform(vo));
                 });
-
-                asyncWorker.process(executor, contextInfoList, type, callerContext);
+                loaderAsyncWorker.process(executor, contextInfoList, type, callerContext);
             }
 
         } catch (BusinessException be) {
@@ -100,7 +98,7 @@ public abstract class MassiveLoaderController<O, E> {
             index++;
         }
 
-        String baseMessage = errors ? MessageUtil.getMessage("massiveloader.structure.error") : "";
+        String baseMessage = errors ? "Hay errores de estructura y/o tipos de datos en el archivo, revise el contenido"/*MessageUtil.getMessage("massiveloader.structure.error")*/ : "";
         return baseMessage + messageResponse.toString();
     }
 

@@ -45,19 +45,19 @@
 
     <!-- security -->
 
-    <filter>
-        <filter-name>SecurityFilter</filter-name>
-        <filter-class>co.com.foundation.soaint.security.wui.filter.SecurityFilter</filter-class>
-        <init-param>
-            <param-name>URIS_TO_SKIP_SECURITY</param-name>
-            <param-value>/login,/resources,security/processLogin,security/processLogout,/integration-services,/carga-masiva-web-api
-            </param-value>
-        </init-param>
-    </filter>
+    <!--<filter>-->
+        <!--<filter-name>SecurityFilter</filter-name>-->
+        <!--<filter-class>co.com.foundation.soaint.security.wui.filter.SecurityFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>URIS_TO_SKIP_SECURITY</param-name>-->
+            <!--<param-value>/login,/resources,security/processLogin,security/processLogout,/integration-services,/carga-masiva-web-api-->
+            <!--</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
 
-    <filter-mapping>
-        <filter-name>SecurityFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>SecurityFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 
 </web-app>

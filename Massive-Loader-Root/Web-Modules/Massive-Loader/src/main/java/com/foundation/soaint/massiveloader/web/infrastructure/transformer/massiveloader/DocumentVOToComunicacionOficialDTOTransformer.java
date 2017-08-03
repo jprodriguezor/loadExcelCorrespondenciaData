@@ -48,9 +48,10 @@ public class DocumentVOToComunicacionOficialDTOTransformer implements Transforme
     public ComunicacionOficialDTO transform(DocumentVO documentVO) {
 
         AgenteDTO agenteDTO = new AgenteDTO();
-        if (documentVO.getSedeAdministrativaRemitenteInterno().isEmpty()) {
+        String sedeAdministrativaRemitenteInterno = documentVO.getSedeAdministrativaRemitenteInterno();
+        if (sedeAdministrativaRemitenteInterno != null && sedeAdministrativaRemitenteInterno.isEmpty()) {
             agenteDTO.setCodDependencia(documentVO.getDependenciaDestinatario());
-            agenteDTO.setCodSede(documentVO.getSedeAdministrativaRemitenteInterno());
+            agenteDTO.setCodSede(sedeAdministrativaRemitenteInterno);
         } else {
             agenteDTO.setRazonSocial(documentVO.getRazonSocial());
             agenteDTO.setNombre(documentVO.getNombre());
@@ -68,8 +69,8 @@ public class DocumentVOToComunicacionOficialDTOTransformer implements Transforme
 
         PpdDocumentoDTO ppdDocumentoDTO = new PpdDocumentoDTO();
         ppdDocumentoDTO.setAsunto(documentVO.getAsunto());
-        ppdDocumentoDTO.setNroAnexos(Long.valueOf(documentVO.getNoAnexos().toString()));
-        ppdDocumentoDTO.setNroFolios(Long.valueOf(documentVO.getNoFolios().toString()));
+        ppdDocumentoDTO.setNroAnexos(documentVO.getNoAnexos().longValue());
+        ppdDocumentoDTO.setNroFolios(documentVO.getNoFolios().longValue());
 
 
         return ComunicacionOficialDTOBuilder.newBuilder()

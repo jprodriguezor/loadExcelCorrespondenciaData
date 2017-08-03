@@ -3,9 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>Web-Modules</artifactId>
-        <groupId>co.com.foundation.soaint.documentmanager</groupId>
+        <groupId>co.com.foundation.soaint.massiveloader</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>Massive-Loader</artifactId>
@@ -52,17 +53,10 @@
         <!-- ~~~~~~~~~~~~~~~~~ module depenencies -->
 
         <dependency>
-            <groupId>co.com.foundation.soaint.documentmanager</groupId>
+            <groupId>co.com.foundation.soaint.massiveloader</groupId>
             <artifactId>Business-Artifacts</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
-        <dependency>
-            <groupId>co.com.foundation.soaint.documentmanager</groupId>
-            <artifactId>Integration-Artifacts</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
 
         <!-- ~~~~~~~~~~~~~~~~~ spring core -->
 
@@ -98,6 +92,39 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <!-- ~~~~~~~~~~~~~~~~~ spring test -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- ~~~~~~~~~~~~~~~~~ spring test -->
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-web</artifactId>-->
+            <!--<version>1.5.6.RELEASE</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.springframework.boot</groupId>-->
+                    <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-test</artifactId>-->
+            <!--<version>1.5.6.RELEASE</version>-->
+            <!--<scope>test</scope>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.springframework.boot</groupId>-->
+                    <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+
         <!--  ~~~~~~~~~~~~~~~~~ json databind dependencies -->
 
         <dependency>
@@ -107,18 +134,20 @@
         </dependency>
 
 
-        <!-- ~~~~~~~~~~~~~~~~~ apache cxf -->
+        <!-- ~~~~~~~~~~~~~~~~~ apache cxf-->
 
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
             <version>${cxf.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http</artifactId>
             <version>${cxf.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- ~~~~~~~~~~~~~~~~~ apache commons-->

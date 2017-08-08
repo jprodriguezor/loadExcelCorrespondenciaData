@@ -12,9 +12,7 @@ import javax.ws.rs.core.Response;
 @ApiDelegator
 public class CorrespondenciaClient {
 
-
-
-    @Value("${backapi.endpoint.url}")
+    @Value("${correspondencia.endpoint.url}")
     private String endpoint = "";
 
     public CorrespondenciaClient() {

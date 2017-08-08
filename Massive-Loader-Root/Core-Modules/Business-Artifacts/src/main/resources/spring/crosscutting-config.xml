@@ -18,7 +18,10 @@
     <!-- ~~~~~~~~~~~~~~~~~ core component scanning -->
 
     <context:annotation-config/>
+
+    <context:property-placeholder location="classpath:carga-masiva-service.properties" />
     <context:component-scan base-package="co.com.foundation.soaint.documentmanager.business"/>
     <context:component-scan base-package="co.com.foundation.soaint.documentmanager.infrastructure"/>
+    <context:component-scan base-package="co.com.foundation.soaint.documentmanager.jms"/>
 
 </beans>

@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType
 public enum EstadosEnum {
-
     CREADO, LISTO, RESERVADO, ENPROGRESO, SUSPENDIDO, COMPLETADO, FALLIDO, ERROR, SALIDO, OBSOLETO
 
 }

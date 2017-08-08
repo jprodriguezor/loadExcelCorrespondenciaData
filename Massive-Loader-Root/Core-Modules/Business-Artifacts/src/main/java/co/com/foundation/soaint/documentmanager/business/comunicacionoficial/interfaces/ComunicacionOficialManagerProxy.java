@@ -1,10 +1,13 @@
 package co.com.foundation.soaint.documentmanager.business.comunicacionoficial.interfaces;
 
+import co.com.foundation.soaint.documentmanager.domain.ComunicacionOficialContainerDTO;
 import co.com.foundation.soaint.documentmanager.domain.bd.ComunicacionOficialDTO;
 import co.com.foundation.soaint.documentmanager.persistence.entity.AdmSerie;
 import co.com.foundation.soaint.infrastructure.exceptions.BusinessException;
 import co.com.foundation.soaint.infrastructure.exceptions.SystemException;
 
+import javax.jms.JMSException;
+import javax.naming.NamingException;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -14,6 +17,6 @@ import java.util.List;
 
 public interface ComunicacionOficialManagerProxy {
 
-    void gestionarComunicacionOficial(ComunicacionOficialDTO oficialDTO) throws SystemException, BusinessException;
+    void gestionarComunicacionOficial(ComunicacionOficialContainerDTO comunicacionOficialContainerDTO) throws SystemException, BusinessException, JMSException, NamingException;
 
 }

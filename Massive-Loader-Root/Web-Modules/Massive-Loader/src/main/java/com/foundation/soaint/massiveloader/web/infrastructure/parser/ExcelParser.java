@@ -2,6 +2,9 @@ package com.foundation.soaint.massiveloader.web.infrastructure.parser;
 
 import co.com.foundation.soaint.infrastructure.exceptions.BusinessException;
 import co.com.foundation.soaint.infrastructure.transformer.Transformer;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.format.CellFormatType;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -37,8 +40,11 @@ public class ExcelParser<O> extends DocumentParser<O, Row> {
             rowIterator.next(); // ignore the first x cell.getStringCellValue()s
         }
         List<O> excelDomainList = new ArrayList();
-        while (rowIterator.hasNext())
-            excelDomainList.add(transformer.transform(rowIterator.next()));
+        while (rowIterator.hasNext()) {
+            Row next = rowIterator.next();
+            if (checkIfRowIsEmpty(next))
+                excelDomainList.add(transformer.transform(next));
+        }
 
         /*if (excelDomainList.size() != excelDomainList.size())
             throw ExceptionBuilder.newBuilder()
@@ -46,5 +52,21 @@ public class ExcelParser<O> extends DocumentParser<O, Row> {
                     .buildBusinessException();*/
 
         return excelDomainList;
+    }
+
+    private boolean checkIfRowIsEmpty(Row row) {
+        if (row == null) {
+            return true;
+        }
+        if (row.getLastCellNum() <= 0) {
+            return true;
+        }
+        for (int cellNum = row.getFirstCellNum(); cellNum < row.getLastCellNum(); cellNum++) {
+            Cell cell = row.getCell(cellNum);
+            if (cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK  && StringUtils.isNotBlank(cell.toString())) {
+                return false;
+            }
+        }
+        return true;
     }
 }

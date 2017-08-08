@@ -5,8 +5,19 @@
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/spring-context/core-config.xml</param-value>
+    </context-param>
+
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
     <servlet>
-        <servlet-name>MVC</servlet-name>
+        <servlet-name>appServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
@@ -16,24 +27,16 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>MVC</servlet-name>
+        <servlet-name>appServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/spring-context/core-config.xml</param-value>
-    </context-param>
-
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
 
 
-    <!-- Session Configuration -->
-    <session-config>
-        <session-timeout>10</session-timeout>
-    </session-config>
+    <!--&lt;!&ndash; Session Configuration &ndash;&gt;-->
+    <!--<session-config>-->
+        <!--<session-timeout>10</session-timeout>-->
+    <!--</session-config>-->
 
     <!-- Config Connection Pool  -->
     <resource-ref>
@@ -42,6 +45,16 @@
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
+
+
+    <!--<filter>-->
+        <!--<filter-name>multipartFilter</filter-name>-->
+        <!--<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>multipartFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 
     <!-- security -->
 

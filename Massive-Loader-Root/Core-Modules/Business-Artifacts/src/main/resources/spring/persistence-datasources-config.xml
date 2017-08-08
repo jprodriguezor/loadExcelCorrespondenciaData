@@ -8,38 +8,6 @@
        http://www.springframework.org/schema/jee
        http://www.springframework.org/schema/jee/spring-jee.xsd">
 
-
     <jee:jndi-lookup id="dataSource" jndi-name="java:/DocumentManagerDS"/>
-    <!--&lt;!&ndash; ~~~~~~~~~~~~~~~~~ dev environment &ndash;&gt;-->
-
-    <!--<beans profile="dev">-->
-        <!--<jee:jndi-lookup id="dataSource" jndi-name="jdbc/docmanager"/>-->
-    <!--</beans>-->
-
-    <!--&lt;!&ndash; ~~~~~~~~~~~~~~~~~ dev environment &ndash;&gt;-->
-
-    <!--<beans profile="dev_sql">-->
-        <!--<jee:jndi-lookup id="dataSource" jndi-name="jdbc/docmanager"/>-->
-    <!--</beans>-->
-
-
-    <!--&lt;!&ndash; ~~~~~~~~~~~~~~~~~ test environment &ndash;&gt;-->
-
-    <!--<beans profile="test">-->
-        <!--<jee:jndi-lookup id="dataSource" jndi-name="jdbc/docmanager"/>-->
-    <!--</beans>-->
-
-    <!--&lt;!&ndash; ~~~~~~~~~~~~~~~~~ uat environment &ndash;&gt;-->
-
-    <!--<beans profile="uat">-->
-
-        <!--<jee:jndi-lookup id="dataSource" jndi-name="jdbc/docmanager"/>-->
-    <!--</beans>-->
-
-    <!--&lt;!&ndash; ~~~~~~~~~~~~~~~~~ prod environment &ndash;&gt;-->
-
-    <!--<beans profile="prod">-->
-        <!--<jee:jndi-lookup id="dataSource" jndi-name="jdbc/docmanager"/>-->
-    <!--</beans>-->
 
 </beans>

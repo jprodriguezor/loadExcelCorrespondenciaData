@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.w3c.dom.Entity;
 
 import javax.jms.JMSException;
 import javax.naming.NamingException;

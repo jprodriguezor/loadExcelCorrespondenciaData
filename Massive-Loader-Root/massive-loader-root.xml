@@ -156,9 +156,7 @@
     <pathelement location="${path.variable.maven_repository}/com/lowagie/itext/2.1.7.js5/itext-2.1.7.js5.jar"/>
   </path>
   
-  <path id="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath">
-    <pathelement location="${path.variable.maven_repository}/com/microsoft/sqljdbc/sqljdbc4/4/sqljdbc4-4.jar"/>
-  </path>
+
   
   <path id="library.maven:_com.sun.xml.bind:jaxb-core:2.2.11.classpath">
     <pathelement location="${path.variable.maven_repository}/com/sun/xml/bind/jaxb-core/2.2.11/jaxb-core-2.2.11.jar"/>
@@ -665,7 +663,6 @@
     <copy file="${path.variable.maven_repository}/org/apache/geronimo/specs/geronimo-jta_1.1_spec/1.1.1/geronimo-jta_1.1_spec-1.1.1.jar" tofile="${artifact.output.document-manager:war_exploded}/WEB-INF/lib/geronimo-jta_1.1_spec-1.1.1.jar"/>
     <copy file="${path.variable.maven_repository}/org/hibernate/hibernate-ehcache/5.2.2.Final/hibernate-ehcache-5.2.2.Final.jar" tofile="${artifact.output.document-manager:war_exploded}/WEB-INF/lib/hibernate-ehcache-5.2.2.Final.jar"/>
     <copy file="${path.variable.maven_repository}/net/sf/ehcache/ehcache/2.10.1/ehcache-2.10.1.jar" tofile="${artifact.output.document-manager:war_exploded}/WEB-INF/lib/ehcache-2.10.1.jar"/>
-    <copy file="${path.variable.maven_repository}/com/microsoft/sqljdbc/sqljdbc4/4/sqljdbc4-4.jar" tofile="${artifact.output.document-manager:war_exploded}/WEB-INF/lib/sqljdbc4-4.jar"/>
     <copy file="${path.variable.maven_repository}/org/apache/commons/commons-dbcp2/2.1.1/commons-dbcp2-2.1.1.jar" tofile="${artifact.output.document-manager:war_exploded}/WEB-INF/lib/commons-dbcp2-2.1.1.jar"/>
     <copy file="${path.variable.maven_repository}/org/apache/commons/commons-pool2/2.4.2/commons-pool2-2.4.2.jar" tofile="${artifact.output.document-manager:war_exploded}/WEB-INF/lib/commons-pool2-2.4.2.jar"/>
     <copy file="${path.variable.maven_repository}/com/fasterxml/jackson/core/jackson-core/2.8.1/jackson-core-2.8.1.jar" tofile="${artifact.output.document-manager:war_exploded}/WEB-INF/lib/jackson-core-2.8.1.jar"/>
@@ -796,7 +793,6 @@
     <copy file="${path.variable.maven_repository}/org/apache/geronimo/specs/geronimo-jta_1.1_spec/1.1.1/geronimo-jta_1.1_spec-1.1.1.jar" tofile="${artifact.output.massive-loader:war_exploded}/WEB-INF/lib/geronimo-jta_1.1_spec-1.1.1.jar"/>
     <copy file="${path.variable.maven_repository}/org/hibernate/hibernate-ehcache/5.2.2.Final/hibernate-ehcache-5.2.2.Final.jar" tofile="${artifact.output.massive-loader:war_exploded}/WEB-INF/lib/hibernate-ehcache-5.2.2.Final.jar"/>
     <copy file="${path.variable.maven_repository}/net/sf/ehcache/ehcache/2.10.1/ehcache-2.10.1.jar" tofile="${artifact.output.massive-loader:war_exploded}/WEB-INF/lib/ehcache-2.10.1.jar"/>
-    <copy file="${path.variable.maven_repository}/com/microsoft/sqljdbc/sqljdbc4/4/sqljdbc4-4.jar" tofile="${artifact.output.massive-loader:war_exploded}/WEB-INF/lib/sqljdbc4-4.jar"/>
     <copy file="${path.variable.maven_repository}/org/apache/commons/commons-dbcp2/2.1.1/commons-dbcp2-2.1.1.jar" tofile="${artifact.output.massive-loader:war_exploded}/WEB-INF/lib/commons-dbcp2-2.1.1.jar"/>
     <copy file="${path.variable.maven_repository}/org/apache/commons/commons-pool2/2.4.2/commons-pool2-2.4.2.jar" tofile="${artifact.output.massive-loader:war_exploded}/WEB-INF/lib/commons-pool2-2.4.2.jar"/>
     <copy file="${path.variable.maven_repository}/com/fasterxml/jackson/core/jackson-core/2.8.1/jackson-core-2.8.1.jar" tofile="${artifact.output.massive-loader:war_exploded}/WEB-INF/lib/jackson-core-2.8.1.jar"/>

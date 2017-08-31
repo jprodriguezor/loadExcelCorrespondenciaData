@@ -42,7 +42,7 @@ public class ExcelParser<O> extends DocumentParser<O, Row> {
         List<O> excelDomainList = new ArrayList();
         while (rowIterator.hasNext()) {
             Row next = rowIterator.next();
-            if (checkIfRowIsEmpty(next))
+            if (!checkIfRowIsEmpty(next))
                 excelDomainList.add(transformer.transform(next));
         }
 

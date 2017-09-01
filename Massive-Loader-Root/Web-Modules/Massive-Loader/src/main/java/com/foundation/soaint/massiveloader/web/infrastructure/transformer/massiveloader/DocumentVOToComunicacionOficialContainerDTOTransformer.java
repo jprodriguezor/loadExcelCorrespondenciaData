@@ -6,6 +6,7 @@ import co.com.foundation.soaint.documentmanager.domain.bd.ComunicacionOficialDTO
 import co.com.foundation.soaint.documentmanager.domain.bd.CorrespondenciaDTO;
 import co.com.foundation.soaint.documentmanager.domain.bd.PpdDocumentoDTO;
 import co.com.foundation.soaint.documentmanager.domain.bpm.EntradaProcesoDTO;
+import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.domain.MassiveRecordContext;
 import co.com.foundation.soaint.infrastructure.transformer.Transformer;
 import com.foundation.soaint.massiveloader.web.domain.DocumentVO;
 import com.foundation.soaint.massiveloader.web.infrastructure.builder.generic.ComunicacionOficialContainerDTOBuilder;
@@ -22,17 +23,18 @@ import java.util.Objects;
  */
 
 @Component
-public class DocumentVOToComunicacionOficialContainerDTOTransformer implements Transformer<DocumentVO, ComunicacionOficialContainerDTO> {
+public class DocumentVOToComunicacionOficialContainerDTOTransformer implements Transformer<DocumentVO, MassiveRecordContext<ComunicacionOficialContainerDTO>> {
 
 
     @Override
-    public ComunicacionOficialContainerDTO transform(DocumentVO documentVO) {
+    public MassiveRecordContext<ComunicacionOficialContainerDTO> transform(DocumentVO documentVO) {
         ComunicacionOficialDTO comunicacionOficialDTO = builComunicacionOficialDTO(documentVO);
         EntradaProcesoDTO entradaProcesoDTO = buildEntradaProcesoDTO(documentVO);
-
-        return ComunicacionOficialContainerDTOBuilder.newBuilder()
+        ComunicacionOficialContainerDTOBuilder builder = ComunicacionOficialContainerDTOBuilder.newBuilder()
                 .withComunicacionOficialContainerDTO(comunicacionOficialDTO)
-                .withEntradaProcesoDTO(entradaProcesoDTO).build();
+                .withEntradaProcesoDTO(entradaProcesoDTO);
+        MassiveRecordContext<ComunicacionOficialContainerDTO>  recordContext = new MassiveRecordContext<>(documentVO.toString(), builder.build());
+        return recordContext;
     }
 
     private EntradaProcesoDTO buildEntradaProcesoDTO(DocumentVO documentVO) {

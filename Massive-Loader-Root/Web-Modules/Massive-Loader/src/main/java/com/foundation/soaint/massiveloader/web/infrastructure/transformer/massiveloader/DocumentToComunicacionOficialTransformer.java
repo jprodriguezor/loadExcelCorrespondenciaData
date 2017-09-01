@@ -38,9 +38,18 @@ public class DocumentToComunicacionOficialTransformer implements Transformer<Doc
     private EntradaProcesoDTO buildEntradaProcesoDTO(DocumentVO documentVO) {
         EntradaProcesoDTO entradaProcesoDTO = new EntradaProcesoDTO();
         HashMap parametros = new HashMap();
-        parametros.put("nroRadicado", documentVO.getNoRadicado());
-        parametros.put("requiereDigitalizacion", documentVO.getRequiereDigitalizar());
-        parametros.put("requiereDistribucion", documentVO.getRequiereDistribucionFisica());
+        parametros.put("numeroRadicado", documentVO.getNoRadicado());
+        if("TRUE".equalsIgnoreCase(documentVO.getRequiereDigitalizar())){
+            parametros.put("requiereDigitalizacion", "1");
+        }else{
+            parametros.put("requiereDigitalizacion", "0");
+        }
+
+        if ("TRUE".equalsIgnoreCase(documentVO.getRequiereDistribucionFisica())){
+            parametros.put("requiereDistribucion", "1");
+        } else{
+            parametros.put("requiereDistribucion", "0");
+        }
         entradaProcesoDTO.setParametros(parametros);
         return entradaProcesoDTO;
     }
@@ -79,15 +88,16 @@ public class DocumentToComunicacionOficialTransformer implements Transformer<Doc
         agenteDTODestinatario.setIndOriginal("TP-DESP");
         listadoAgentes.add(agenteDTODestinatario);
         CorrespondenciaDTO correspondenciaDTO = new CorrespondenciaDTO();
+        correspondenciaDTO.setDescripcion("Procesamiento Masivo de Datos");
         correspondenciaDTO.setNroRadicado(documentVO.getNoRadicado());
         correspondenciaDTO.setFecRadicado(documentVO.getFechaRadicacion());
         correspondenciaDTO.setCodTipoCmc(this.getValueStringCode(documentVO.getTipoComunicacion(), BEFORE));
         correspondenciaDTO.setCodTipoDoc(this.getValueStringCode(documentVO.getTipologiaDocumental(), BEFORE));
 
         //TODO: aqui se debe invocar a la regla para llenar los 3 campos debajo
-        correspondenciaDTO.setTiempoRespuesta("");
-        correspondenciaDTO.setCodUnidadTiempo("");
-        correspondenciaDTO.setInicioConteo("");
+        correspondenciaDTO.setTiempoRespuesta("27");
+        correspondenciaDTO.setCodUnidadTiempo("UNID-TIH");
+        correspondenciaDTO.setInicioConteo("DHR");
 
         if("TRUE".equalsIgnoreCase(documentVO.getRequiereDigitalizar())) {
             correspondenciaDTO.setReqDigita("1");
@@ -106,6 +116,7 @@ public class DocumentToComunicacionOficialTransformer implements Transformer<Doc
         ppdDocumentoDTO.setNroAnexos(Long.valueOf(documentVO.getNoAnexos().longValue()));
         ppdDocumentoDTO.setNroFolios(Long.valueOf(documentVO.getNoFolios().longValue()));
         ppdDocumentoDTO.setCodTipoDoc(this.getValueStringCode(documentVO.getTipologiaDocumental(), BEFORE));
+        ppdDocumentoDTO.setFecDocumento(documentVO.getFechaRadicacion());
         return ComunicacionOficialDTOBuilder.newBuilder().withAgenteList(listadoAgentes).withCorrespondencia(correspondenciaDTO).withPpdDocumentoList(Arrays.asList(new PpdDocumentoDTO[]{ppdDocumentoDTO})).build();
     }
 }

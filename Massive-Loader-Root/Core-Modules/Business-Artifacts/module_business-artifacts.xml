@@ -77,7 +77,6 @@
     <path refid="library.maven:_org.hibernate:hibernate-validator-annotation-processor:5.2.2.final.classpath"/>
     <path refid="library.maven:_org.hibernate:hibernate-ehcache:5.2.2.final.classpath"/>
     <path refid="library.maven:_net.sf.ehcache:ehcache:2.10.1.classpath"/>
-    <path refid="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath"/>
     <path refid="library.maven:_org.apache.logging.log4j:log4j-api:2.0.2.classpath"/>
     <path refid="library.maven:_org.apache.logging.log4j:log4j-core:2.0.2.classpath"/>
     <path refid="library.maven:_javax.validation:validation-api:1.1.0.final.classpath"/>
@@ -154,7 +153,6 @@
     <path refid="library.maven:_org.hibernate:hibernate-validator-annotation-processor:5.2.2.final.classpath"/>
     <path refid="library.maven:_org.hibernate:hibernate-ehcache:5.2.2.final.classpath"/>
     <path refid="library.maven:_net.sf.ehcache:ehcache:2.10.1.classpath"/>
-    <path refid="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath"/>
     <path refid="library.maven:_org.apache.logging.log4j:log4j-api:2.0.2.classpath"/>
     <path refid="library.maven:_org.apache.logging.log4j:log4j-core:2.0.2.classpath"/>
     <path refid="library.maven:_javax.validation:validation-api:1.1.0.final.classpath"/>
@@ -233,7 +231,6 @@
     <path refid="library.maven:_org.hibernate:hibernate-validator-annotation-processor:5.2.2.final.classpath"/>
     <path refid="library.maven:_org.hibernate:hibernate-ehcache:5.2.2.final.classpath"/>
     <path refid="library.maven:_net.sf.ehcache:ehcache:2.10.1.classpath"/>
-    <path refid="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath"/>
     <path refid="library.maven:_org.apache.logging.log4j:log4j-api:2.0.2.classpath"/>
     <path refid="library.maven:_org.apache.logging.log4j:log4j-core:2.0.2.classpath"/>
     <path refid="library.maven:_javax.validation:validation-api:1.1.0.final.classpath"/>
@@ -312,7 +309,6 @@
     <path refid="library.maven:_org.hibernate:hibernate-validator-annotation-processor:5.2.2.final.classpath"/>
     <path refid="library.maven:_org.hibernate:hibernate-ehcache:5.2.2.final.classpath"/>
     <path refid="library.maven:_net.sf.ehcache:ehcache:2.10.1.classpath"/>
-    <path refid="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath"/>
     <path refid="library.maven:_org.apache.logging.log4j:log4j-api:2.0.2.classpath"/>
     <path refid="library.maven:_org.apache.logging.log4j:log4j-core:2.0.2.classpath"/>
     <path refid="library.maven:_javax.validation:validation-api:1.1.0.final.classpath"/>

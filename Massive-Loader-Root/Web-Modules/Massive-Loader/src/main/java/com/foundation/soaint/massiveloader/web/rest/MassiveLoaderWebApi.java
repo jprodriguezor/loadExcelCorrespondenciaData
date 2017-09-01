@@ -10,31 +10,29 @@ import co.com.foundation.soaint.infrastructure.transformer.Transformer;
 import com.foundation.soaint.massiveloader.web.domain.DocumentVO;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.MasiveLoaderResponse;
 import com.foundation.soaint.massiveloader.web.infrastructure.massiveloader.MassiveLoaderController;
-import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.*;
-
 
 
 @Controller
 public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, MassiveRecordContext<ComunicacionOficialContainerDTO>> {
 
-    private static Logger logger = LogManager.getLogger(MassiveLoaderWebApi.class.getName());
+    private static Logger log = LogManager.getLogger(MassiveLoaderWebApi.class.getName());
 
     @Autowired
     @Qualifier("genericLoaderExecutor")
     private LoaderExecutor genericExecutor;
 
     @Autowired
-    @Qualifier("documentVOToComunicacionOficialContainerDTOTransformer")
+    @Qualifier("documentToComunicacionOficialTransformer")
     private Transformer massiveRecordTransformer;
 
     @Autowired
@@ -42,6 +40,7 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
     private Transformer voTransformer;
 
     public MassiveLoaderWebApi() {
+        //Constructor por defecto.
 
     }
 
@@ -49,8 +48,8 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
     //[upload service] ------------------------------
     @ResponseBody
     @RequestMapping(value = "/cargar-fichero", method = RequestMethod.POST)
-     public MasiveLoaderResponse cargarFichero(@RequestParam("file") MultipartFile file)
-    {
+    public MasiveLoaderResponse cargarFichero(@RequestParam("file") MultipartFile file) {
+        log.info("Cargando el fichero");
         CallerContextBuilder ccBuilder = CallerContextBuilder.newBuilder();
         ccBuilder.withBeanName("comunicacionOficialManager");
         ccBuilder.withMethodName("gestionarComunicacionOficial");

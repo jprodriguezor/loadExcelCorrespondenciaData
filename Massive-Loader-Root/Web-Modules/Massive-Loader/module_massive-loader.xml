@@ -47,7 +47,6 @@
     <path refid="library.maven:_org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1.classpath"/>
     <path refid="library.maven:_org.hibernate:hibernate-ehcache:5.2.2.final.classpath"/>
     <path refid="library.maven:_net.sf.ehcache:ehcache:2.10.1.classpath"/>
-    <path refid="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath"/>
     <path refid="library.maven:_org.apache.commons:commons-dbcp2:2.1.1.classpath"/>
     <path refid="library.maven:_org.apache.commons:commons-pool2:2.4.2.classpath"/>
     <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.8.1.classpath"/>
@@ -163,7 +162,6 @@
     <path refid="library.maven:_org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1.classpath"/>
     <path refid="library.maven:_org.hibernate:hibernate-ehcache:5.2.2.final.classpath"/>
     <path refid="library.maven:_net.sf.ehcache:ehcache:2.10.1.classpath"/>
-    <path refid="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath"/>
     <path refid="library.maven:_org.apache.commons:commons-dbcp2:2.1.1.classpath"/>
     <path refid="library.maven:_org.apache.commons:commons-pool2:2.4.2.classpath"/>
     <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.8.1.classpath"/>
@@ -282,7 +280,6 @@
     <path refid="library.maven:_org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1.classpath"/>
     <path refid="library.maven:_org.hibernate:hibernate-ehcache:5.2.2.final.classpath"/>
     <path refid="library.maven:_net.sf.ehcache:ehcache:2.10.1.classpath"/>
-    <path refid="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath"/>
     <path refid="library.maven:_org.apache.commons:commons-dbcp2:2.1.1.classpath"/>
     <path refid="library.maven:_org.apache.commons:commons-pool2:2.4.2.classpath"/>
     <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.8.1.classpath"/>
@@ -400,7 +397,6 @@
     <path refid="library.maven:_org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1.classpath"/>
     <path refid="library.maven:_org.hibernate:hibernate-ehcache:5.2.2.final.classpath"/>
     <path refid="library.maven:_net.sf.ehcache:ehcache:2.10.1.classpath"/>
-    <path refid="library.maven:_com.microsoft.sqljdbc:sqljdbc4:4.classpath"/>
     <path refid="library.maven:_org.apache.commons:commons-dbcp2:2.1.1.classpath"/>
     <path refid="library.maven:_org.apache.commons:commons-pool2:2.4.2.classpath"/>
     <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.8.1.classpath"/>

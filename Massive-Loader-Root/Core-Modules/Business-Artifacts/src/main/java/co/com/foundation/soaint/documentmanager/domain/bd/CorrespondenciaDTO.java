@@ -45,6 +45,7 @@ public class CorrespondenciaDTO implements Serializable {
     private String nroGuia;
     private Date fecVenGestion;
     private String codEstado;
+    private String inicioConteo;
 
     public CorrespondenciaDTO() {
         super();
@@ -54,7 +55,7 @@ public class CorrespondenciaDTO implements Serializable {
                               String codUnidadTiempo, String codMedioRecepcion, Date fecRadicado, String nroRadicado,
                               Date fecDocumento, String codTipoDoc, String codTipoCmc, String reqDistFisica,
                               String ideInstancia, String codFuncRadica, String codSede, String codDependencia,
-                              String reqDigita, String nroGuia, String codEmpMsj, Date fecVenGestion, String codEstado) {
+                              String reqDigita, String nroGuia, String codEmpMsj, Date fecVenGestion, String codEstado, String inicioConteo) {
         this.ideDocumento = ideDocumento;
         this.descripcion = descripcion;
         this.tiempoRespuesta = tiempoRespuesta;
@@ -75,13 +76,14 @@ public class CorrespondenciaDTO implements Serializable {
         this.codEmpMsj = codEmpMsj;
         this.fecVenGestion = fecVenGestion;
         this.codEstado = codEstado;
+        this.inicioConteo = inicioConteo;
     }
 
     public CorrespondenciaDTO(BigInteger ideDocumento, String descripcion, String tiempoRespuesta,
                               String codUnidadTiempo, String codMedioRecepcion, Date fecRadicado, String nroRadicado,
                               String codTipoCmc, String reqDistFisica,
                               String ideInstancia, String codFuncRadica, String codSede, String codDependencia,
-                              String reqDigita, String nroGuia, String codEmpMsj, Date fecVenGestion, String codEstado){
+                              String reqDigita, String nroGuia, String codEmpMsj, Date fecVenGestion, String codEstado, String inicioConteo){
         this.ideDocumento = ideDocumento;
         this.descripcion = descripcion;
         this.tiempoRespuesta = tiempoRespuesta;
@@ -100,5 +102,6 @@ public class CorrespondenciaDTO implements Serializable {
         this.codEmpMsj = codEmpMsj;
         this.fecVenGestion = fecVenGestion;
         this.codEstado = codEstado;
+        this.inicioConteo = inicioConteo;
     }
 }

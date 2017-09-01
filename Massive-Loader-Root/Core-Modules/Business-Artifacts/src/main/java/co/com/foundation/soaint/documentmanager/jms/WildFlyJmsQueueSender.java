@@ -14,8 +14,11 @@ import java.io.IOException;
  */
 @Component
 public class WildFlyJmsQueueSender {
-    public final static String JMS_CONNECTION_FACTORY_JNDI = "jms/RemoteConnectionFactory";
-    public final static String JMS_QUEUE_JNDI = "jms/queue/documentsQueue";
+    @Value("${jms.connection.factory.jndi}")
+    public String JMS_CONNECTION_FACTORY_JNDI = "jms/RemoteConnectionFactory";
+
+    @Value("${jms_queue_jndi}")
+    public String JMS_QUEUE_JNDI = "jms/queue/documentsQueue";
 
     @Autowired
     InitialContextContextLoader initialContextContextLoader;
@@ -46,11 +49,11 @@ public class WildFlyJmsQueueSender {
     }*/
 
     public void init() throws NamingException, JMSException {
-        init(JMS_QUEUE_JNDI);
+        init(this.JMS_QUEUE_JNDI);
     }
     public void init(String queueName) throws NamingException, JMSException {
         Context ctx = initialContextContextLoader.getInitialContext();
-        qconFactory = (QueueConnectionFactory) ctx.lookup(JMS_CONNECTION_FACTORY_JNDI);
+        qconFactory = (QueueConnectionFactory) ctx.lookup(this.JMS_CONNECTION_FACTORY_JNDI);
 
         //  If you won't pass jms credential here then you will get
         // [javax.jms.JMSSecurityException: HQ119031: Unable to validate user: null]

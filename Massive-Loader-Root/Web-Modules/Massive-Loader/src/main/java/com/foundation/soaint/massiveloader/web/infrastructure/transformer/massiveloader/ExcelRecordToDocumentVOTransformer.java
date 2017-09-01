@@ -20,8 +20,20 @@ public class ExcelRecordToDocumentVOTransformer implements Transformer<Row, Docu
     public static final int NO_FOLIOS = 4;
     public static final int NO_ANEXOS = 5;
     public static final int ASUNTO = 6;
-    public static final int REQUIERE_DIGITALIZAR = 7;
-    public static final int REQUIERE_DISTRIBUCIONFISICA = 8;
+    public static final int REQUIERE_DIGITALIZAR = 7;  //Si es true = 1, si es false = 0
+    public static final int REQUIERE_DISTRIBUCIONFISICA = 8; //Si es true = 1, si es false = 0
+
+    /*
+    * Para el caso de los remitentes, debe ser uno externo o interno
+    *
+    * */
+    public static final int REMITENTE_EXTERNO_PERSONA_QUE_REMITE = 9;
+    public static final int REMITENTE_EXTERNO_RAZON_SOCIAL = 10;
+    public static final int REMITENTE_EXTERNO_NOMBRE_PERSONA_QUE_REMITE = 11;
+    public static final int REMITENTE_INTERNO_SEDE_ADMINISTRATIVA = 12;
+    public static final int REMITENTE_INTERNO_DEPENDENCIA = 13;
+    public static final int DESTINATARIO_SEDE_ADMINISTRATIVA = 14;
+    public static final int DESTINATARIO_DEPENDENCIA = 15;
 
     @Override
     public DocumentVO transform(Row row) {
@@ -35,6 +47,13 @@ public class ExcelRecordToDocumentVOTransformer implements Transformer<Row, Docu
                 .withAsunto(row.getCell(ASUNTO).getStringCellValue())
                 .withRequiereDigitalizar(row.getCell(REQUIERE_DIGITALIZAR).getStringCellValue())
                 .withRequiereDistribucionFisica(row.getCell(REQUIERE_DISTRIBUCIONFISICA).getStringCellValue())
+                .withPersonaRemite(row.getCell(REMITENTE_EXTERNO_PERSONA_QUE_REMITE).getStringCellValue())
+                .withRazonSocial(row.getCell(REMITENTE_EXTERNO_RAZON_SOCIAL).getStringCellValue())
+                .withNombre(row.getCell(REMITENTE_EXTERNO_NOMBRE_PERSONA_QUE_REMITE).getStringCellValue())
+                .withSedeAdministrativaRemitenteInterno(row.getCell(REMITENTE_INTERNO_SEDE_ADMINISTRATIVA).getStringCellValue())
+                .withDependenciaRemitenteInterno(row.getCell(REMITENTE_INTERNO_DEPENDENCIA).getStringCellValue())
+                .withSedeAdministrativaDestinatario(row.getCell(DESTINATARIO_SEDE_ADMINISTRATIVA).getStringCellValue())
+                .withDependenciaDestinatario(row.getCell(DESTINATARIO_DEPENDENCIA).getStringCellValue())
                 .build();
     }
 

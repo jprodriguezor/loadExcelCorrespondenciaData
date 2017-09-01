@@ -32,4 +32,12 @@ public class ComunicacionOficialContainerDTO implements Serializable {
 
     private ComunicacionOficialDTO comunicacionOficialDTO;
     private EntradaProcesoDTO entradaProcesoDTO;
+
+    @Override
+    public String toString() {
+        return "ComunicacionOficialContainerDTO{"
+                + "comunicacionOficialDTO=" + comunicacionOficialDTO.toString()
+                + ", entradaProcesoDTO='" + entradaProcesoDTO.toString() + '\''
+                + '}';
+    }
 }

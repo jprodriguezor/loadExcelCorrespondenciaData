@@ -235,12 +235,12 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.0.2</version>
                 <configuration>
-                    <excludes>
+                    <!--excludes>
                         <exclude>messages.properties</exclude>
                         <exclude>log4j2.xml</exclude>
                         <exclude>spring/</exclude>
                         <exclude>thirdparty-lib/</exclude>
-                    </excludes>
+                    </excludes-->
                 </configuration>
             </plugin>
         </plugins>

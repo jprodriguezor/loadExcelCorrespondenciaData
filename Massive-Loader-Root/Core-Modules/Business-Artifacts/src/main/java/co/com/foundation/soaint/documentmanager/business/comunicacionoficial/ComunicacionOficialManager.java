@@ -22,7 +22,7 @@ import javax.naming.NamingException;
 public class ComunicacionOficialManager implements ComunicacionOficialManagerProxy {
 
     // [fields] -----------------------------------
-    private static Logger LOGGER = LogManager.getLogger(ComunicacionOficialManager.class.getName());
+    private static Logger log = LogManager.getLogger(ComunicacionOficialManager.class.getName());
 
     @Autowired
     CorrespondenciaClient correspondenciaClient;
@@ -32,13 +32,13 @@ public class ComunicacionOficialManager implements ComunicacionOficialManagerPro
 
     @Override
     public void gestionarComunicacionOficial(ComunicacionOficialContainerDTO comunicacionOficialContainerDTO) throws SystemException, BusinessException, JMSException, NamingException {
-        LOGGER.debug("Gestionando la comunicacion");
+        log.debug("Gestionando la comunicacion");
         correspondenciaClient.radicar(comunicacionOficialContainerDTO.getComunicacionOficialDTO());
         Gson gson = new Gson();
         String message = gson.toJson(comunicacionOficialContainerDTO.getEntradaProcesoDTO());
         wildFlyJmsQueueSender.init();
         wildFlyJmsQueueSender.send(message);
         wildFlyJmsQueueSender.close();
-        LOGGER.debug("Gestionando la comunicacion");
+        log.debug("Gestionando la comunicacion");
     }
 }

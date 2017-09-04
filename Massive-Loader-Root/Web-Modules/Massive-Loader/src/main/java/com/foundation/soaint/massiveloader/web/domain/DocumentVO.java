@@ -5,7 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -16,22 +19,31 @@ import java.util.Date;
 @Builder(builderMethodName = "newInstance")
 public class DocumentVO {
     @NotNull
+    @Size(min = 1, message = "El campo de radicado no puede estar vacio")
     String noRadicado;
     @NotNull
+    @Past
     Date fechaRadicacion;
     @NotNull
+    @Size(min = 1, message = "El campo tipoComunicacion no puede estar vacio")
     String tipoComunicacion;
     @NotNull
+    @Size(min = 1, message = "El campo tipologiaDocumental no puede estar vacio")
     String tipologiaDocumental;
     @NotNull
+    @Min(value = 0, message = "El campo noFolios no puede estar vacio")
     Double noFolios;
     @NotNull
+    @Min(value = 0, message = "El campo noAnexos no puede estar vacio")
     Double noAnexos;
     @NotNull
+    @Size(min = 1, message = "El campo asunto no puede estar vacio")
     String asunto;
     @NotNull
+    @Size(min = 1, message = "El campo requiereDigitalizar no puede estar vacio")
     String requiereDigitalizar;
     @NotNull
+    @Size(min = 1, message = "El campo requiereDistribucionFisica no puede estar vacio")
     String requiereDistribucionFisica;
 
     //Remitente externo

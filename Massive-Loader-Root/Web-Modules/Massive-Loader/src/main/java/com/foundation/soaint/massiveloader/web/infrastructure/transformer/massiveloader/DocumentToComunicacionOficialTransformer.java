@@ -39,15 +39,15 @@ public class DocumentToComunicacionOficialTransformer implements Transformer<Doc
         EntradaProcesoDTO entradaProcesoDTO = new EntradaProcesoDTO();
         HashMap parametros = new HashMap();
         parametros.put("numeroRadicado", documentVO.getNoRadicado());
-        if("TRUE".equalsIgnoreCase(documentVO.getRequiereDigitalizar())){
+        if ("TRUE".equalsIgnoreCase(documentVO.getRequiereDigitalizar())) {
             parametros.put("requiereDigitalizacion", "1");
-        }else{
+        } else {
             parametros.put("requiereDigitalizacion", "0");
         }
 
-        if ("TRUE".equalsIgnoreCase(documentVO.getRequiereDistribucionFisica())){
+        if ("TRUE".equalsIgnoreCase(documentVO.getRequiereDistribucionFisica())) {
             parametros.put("requiereDistribucion", "1");
-        } else{
+        } else {
             parametros.put("requiereDistribucion", "0");
         }
         entradaProcesoDTO.setParametros(parametros);
@@ -56,7 +56,7 @@ public class DocumentToComunicacionOficialTransformer implements Transformer<Doc
 
     private String getValueStringCode(String data, String position) {
         String[] split = data.split("/");
-        return BEFORE.equalsIgnoreCase(position)?split[0]:split[1];
+        return BEFORE.equalsIgnoreCase(position) ? split[0] : split[1];
     }
 
     private ComunicacionOficialDTO builComunicacionOficialDTO(DocumentVO documentVO) {
@@ -65,17 +65,22 @@ public class DocumentToComunicacionOficialTransformer implements Transformer<Doc
         //TODO: externalizar
         agenteDTORemitente.setCodTipAgent("TP-AGEE");
         String sedeAdministrativaRemitenteInterno = documentVO.getSedeAdministrativaRemitenteInterno();
-        if(sedeAdministrativaRemitenteInterno != null && sedeAdministrativaRemitenteInterno.isEmpty()) {
-            agenteDTORemitente.setCodDependencia(this.getValueStringCode(documentVO.getDependenciaDestinatario(), AFTER));
-            agenteDTORemitente.setCodSede(sedeAdministrativaRemitenteInterno);
+        if (sedeAdministrativaRemitenteInterno != null && !sedeAdministrativaRemitenteInterno.isEmpty()) {
+            //Remitente interno
+            agenteDTORemitente.setCodDependencia(this.getValueStringCode(documentVO.getDependenciaRemitenteInterno(), AFTER));
+            agenteDTORemitente.setCodSede(this.getValueStringCode(documentVO.getSedeAdministrativaRemitenteInterno(), AFTER));
             //TODO: externalizar
             agenteDTORemitente.setCodTipoRemite("TP-REMI");
         } else {
+            //Remitente externo
             agenteDTORemitente.setRazonSocial(this.getValueStringCode(documentVO.getRazonSocial(), BEFORE));
             agenteDTORemitente.setNombre(documentVO.getNombre());
             agenteDTORemitente.setCodTipoPers(this.getValueStringCode(documentVO.getPersonaRemite(), BEFORE));
+            agenteDTORemitente.setCodDependencia("");
+            agenteDTORemitente.setCodSede("");
             //TODO: externalizar
             agenteDTORemitente.setCodTipoRemite("TP-REME");
+
         }
 
         listadoAgentes.add(agenteDTORemitente);
@@ -99,13 +104,13 @@ public class DocumentToComunicacionOficialTransformer implements Transformer<Doc
         correspondenciaDTO.setCodUnidadTiempo("UNID-TIH");
         correspondenciaDTO.setInicioConteo("DHR");
 
-        if("TRUE".equalsIgnoreCase(documentVO.getRequiereDigitalizar())) {
+        if ("TRUE".equalsIgnoreCase(documentVO.getRequiereDigitalizar())) {
             correspondenciaDTO.setReqDigita("1");
         } else {
             correspondenciaDTO.setReqDigita("0");
         }
 
-        if("TRUE".equalsIgnoreCase(documentVO.getRequiereDistribucionFisica())) {
+        if ("TRUE".equalsIgnoreCase(documentVO.getRequiereDistribucionFisica())) {
             correspondenciaDTO.setReqDistFisica("1");
         } else {
             correspondenciaDTO.setReqDistFisica("0");

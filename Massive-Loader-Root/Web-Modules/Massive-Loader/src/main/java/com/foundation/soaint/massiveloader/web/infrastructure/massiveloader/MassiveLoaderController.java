@@ -1,8 +1,10 @@
 package com.foundation.soaint.massiveloader.web.infrastructure.massiveloader;
 
+import co.com.foundation.soaint.documentmanager.domain.ComunicacionOficialContainerDTO;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.LoaderAsyncWorker;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.MassiveLoaderType;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.domain.CallerContext;
+import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.domain.MassiveRecordContext;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.executor.LoaderExecutor;
 import co.com.foundation.soaint.infrastructure.common.MessageUtil;
 import co.com.foundation.soaint.infrastructure.exceptions.BusinessException;
@@ -41,7 +43,7 @@ public abstract class MassiveLoaderController<O, E> {
                                                       final MassiveLoaderType type,
                                                       final Transformer voTransformer,
                                                       final Transformer<O, E> massiveRecordTransformer,
-                                                      final CallerContext callerContext) {
+                                                      final CallerContext callerContext, String codigoSede, String codigoDependencia) {
 
         MasiveLoaderResponse response;
 
@@ -58,7 +60,10 @@ public abstract class MassiveLoaderController<O, E> {
 
                 List<E> contextInfoList = new ArrayList<>();
                 records.stream().forEach((O vo) -> {
-                    contextInfoList.add(massiveRecordTransformer.transform(vo));
+                    MassiveRecordContext<ComunicacionOficialContainerDTO> data = (MassiveRecordContext<ComunicacionOficialContainerDTO>) massiveRecordTransformer.transform(vo);
+                    data.getDomainItem().getComunicacionOficialDTO().getCorrespondencia().setCodDependencia(codigoDependencia);
+                    data.getDomainItem().getComunicacionOficialDTO().getCorrespondencia().setCodSede(codigoSede);
+                    contextInfoList.add((E) data);
                 });
                 loaderAsyncWorker.process(executor, contextInfoList, type, callerContext);
             }

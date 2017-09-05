@@ -7,8 +7,7 @@ import co.com.foundation.soaint.infrastructure.annotations.BusinessBoundary;
 import co.com.foundation.soaint.infrastructure.exceptions.BusinessException;
 import co.com.foundation.soaint.infrastructure.exceptions.SystemException;
 import com.google.gson.Gson;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.jms.JMSException;
@@ -19,10 +18,10 @@ import javax.naming.NamingException;
  */
 
 @BusinessBoundary
+@Log4j2
 public class ComunicacionOficialManager implements ComunicacionOficialManagerProxy {
 
     // [fields] -----------------------------------
-    private static Logger log = LogManager.getLogger(ComunicacionOficialManager.class.getName());
 
     @Autowired
     CorrespondenciaClient correspondenciaClient;
@@ -36,6 +35,7 @@ public class ComunicacionOficialManager implements ComunicacionOficialManagerPro
         correspondenciaClient.radicar(comunicacionOficialContainerDTO.getComunicacionOficialDTO());
         Gson gson = new Gson();
         String message = gson.toJson(comunicacionOficialContainerDTO.getEntradaProcesoDTO());
+        log.info("Mensaje a encolar: " + message);
         wildFlyJmsQueueSender.init();
         wildFlyJmsQueueSender.send(message);
         wildFlyJmsQueueSender.close();

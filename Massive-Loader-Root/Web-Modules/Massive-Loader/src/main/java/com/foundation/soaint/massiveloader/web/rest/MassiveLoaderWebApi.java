@@ -10,8 +10,7 @@ import co.com.foundation.soaint.infrastructure.transformer.Transformer;
 import com.foundation.soaint.massiveloader.web.domain.DocumentVO;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.MasiveLoaderResponse;
 import com.foundation.soaint.massiveloader.web.infrastructure.massiveloader.MassiveLoaderController;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -23,9 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
+@Log4j2
 public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, MassiveRecordContext<ComunicacionOficialContainerDTO>> {
 
-    private static Logger log = LogManager.getLogger(MassiveLoaderWebApi.class.getName());
+    //private static Logger log = LogManager.getLogger(MassiveLoaderWebApi.class.getName());
 
     @Autowired
     @Qualifier("genericLoaderExecutor")

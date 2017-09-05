@@ -12,8 +12,7 @@ import co.com.foundation.soaint.infrastructure.transformer.Transformer;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.MasiveLoaderResponse;
 import com.foundation.soaint.massiveloader.web.infrastructure.parser.DocumentParser;
 import com.foundation.soaint.massiveloader.web.infrastructure.parser.DocumentParserFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,11 +27,11 @@ import java.util.Set;
 /**
  * Created by administrador_1 on 01/10/2016.
  */
-
+@Log4j2
 public abstract class MassiveLoaderController<O, E> {
 
 
-    private static Logger LOGGER = LogManager.getLogger(MassiveLoaderController.class.getName());
+    //private static Logger LOGGER = LogManager.getLogger(MassiveLoaderController.class.getName());
 
     @Autowired
     protected LoaderAsyncWorker<E> loaderAsyncWorker;
@@ -52,12 +51,11 @@ public abstract class MassiveLoaderController<O, E> {
 
         try {
 
-            LOGGER.info("starting massive loading for file: " + file.getName());
+            log.info("Iniciando procesamiento masivo del excel: " + file.getName() + " extraccion de informacion");
             List<O> records = documentParser.parse(file, voTransformer);
             response = MasiveLoaderResponse.newInstance(validate(records));
-
             if (response.isSuccess()) {
-
+                log.info("Datos cargados exitosamente");
                 List<E> contextInfoList = new ArrayList<>();
                 records.stream().forEach((O vo) -> {
                     MassiveRecordContext<ComunicacionOficialContainerDTO> data = (MassiveRecordContext<ComunicacionOficialContainerDTO>) massiveRecordTransformer.transform(vo);
@@ -65,21 +63,22 @@ public abstract class MassiveLoaderController<O, E> {
                     data.getDomainItem().getComunicacionOficialDTO().getCorrespondencia().setCodSede(codigoSede);
                     contextInfoList.add((E) data);
                 });
+                log.info("Inicio del procesamiento en hilos");
                 loaderAsyncWorker.process(executor, contextInfoList, type, callerContext);
             }
 
         } catch (BusinessException be) {
-            LOGGER.error("business exception in massive loading for file: " + file.getName(), be);
+            log.error("Error de negocio en: " + file.getName(), be);
             response = MasiveLoaderResponse.newInstance(be.getMessage());
         } catch (NumberFormatException e) {
-            LOGGER.error("number format exception in massive loading for file: " + file.getName(), e);
+            log.error("Excepcion de formato de numero en el fichero: " + file.getName(), e);
             response = MasiveLoaderResponse.newInstance(MessageUtil.getMessage("massiveloader.structure.error"));
         } catch (Exception e) {
-            LOGGER.error("generic exception in massive loading for file: " + file.getName(), e);
+            log.error("Excepcion generica en el fichero: " + file.getName(), e);
             response = MasiveLoaderResponse.newInstance(MessageUtil.getMessage("massiveloader.generic.error"));
         }
 
-        LOGGER.info("ending massive loading for file: " + file.getName());
+        log.info("Carga masiva terminada del fichero: " + file.getName());
         return response;
     }
 

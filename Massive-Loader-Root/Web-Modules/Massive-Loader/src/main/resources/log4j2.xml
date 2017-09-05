@@ -4,8 +4,8 @@
         <Property name="log-path">/home/wildfly/wildfly_logs</Property>
     </Properties>
     <Appenders>
-        <RollingFile name="RollingFile" fileName="${log-path}/application-BusinessArtifacts.log"
-                     filePattern="${log-path}/application-BusinessArtifacts-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="RollingFile" fileName="${log-path}/applicationMassiveLoader.log"
+                     filePattern="${log-path}/applicationMassiveLoader-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout>
                 <pattern>%d{dd/MMM/yyyy HH:mm:ss,SSS}- %c{1}: %m%n</pattern>
             </PatternLayout>

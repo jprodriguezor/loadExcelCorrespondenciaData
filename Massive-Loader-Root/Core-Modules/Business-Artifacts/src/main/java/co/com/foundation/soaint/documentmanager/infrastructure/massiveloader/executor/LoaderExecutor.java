@@ -1,12 +1,11 @@
 package co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.executor;
 
-import co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva;
-import co.com.foundation.soaint.documentmanager.persistence.entity.constants.CargaMasivaStatus;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.MassiveLoaderType;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.domain.CallerContext;
+import co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva;
+import co.com.foundation.soaint.documentmanager.persistence.entity.constants.CargaMasivaStatus;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +15,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-
+@Log4j2
 public abstract class LoaderExecutor<E> {
 
-    protected static Logger LOGGER = LogManager.getLogger(LoaderExecutor.class.getName());
 
     @PersistenceContext
     protected EntityManager em;
@@ -33,7 +31,7 @@ public abstract class LoaderExecutor<E> {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void execute(List<E> inputs, MassiveLoaderType type, CallerContext callerContext) {
 
-        LOGGER.info("executing massive loading for: " + type);
+        log.info("eEjecutando la carga  para: " + type);
         int totalRecords = inputs.size();
 
         CmCargaMasiva cm = new CmCargaMasiva(type.name(), new Date(), totalRecords,0, 0, CargaMasivaStatus.EN_PROCESO);
@@ -48,7 +46,7 @@ public abstract class LoaderExecutor<E> {
         cm.setEstado(CargaMasivaStatus.COMPLETADO);
         cm.setTotalRegistrosError(totalRecords - cm.getTotalRegistrosExitosos());
 
-        LOGGER.info("ending massive loading for: " + type);
+        log.info("Terminando la carga para: " + type);
     }
 
 

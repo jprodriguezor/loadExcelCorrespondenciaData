@@ -19,7 +19,7 @@ public class CorrespondenciaClient {
 
     private static Logger log = LogManager.getLogger(CorrespondenciaClient.class.getName());
 
-    @Value("${correspondencia.endpoint.url}")
+    //@Value("${correspondencia.endpoint.url}")
     private String endpoint = "";
 
     public CorrespondenciaClient() {
@@ -27,17 +27,20 @@ public class CorrespondenciaClient {
     }
 
     public Response radicar(ComunicacionOficialDTO comunicacionOficialDTO) throws SystemException {
+        log.info("Inicio invocacion servicio correspondencia");
+        endpoint = System.getProperty("correspondencia.endpoint.url");
+        log.info("Endpoint a consultar para el servicio de correspondencia" + endpoint);
+        log.info("Se inserta radicado con numero = " + comunicacionOficialDTO.getCorrespondencia().getNroRadicado());
         WebTarget wt = ClientBuilder.newClient().target(endpoint);
 
         Response response = wt.path("/correspondencia-web-api/correspondencia")
                 .request()
                 .post(Entity.json(comunicacionOficialDTO));
         if (response.getStatus() == Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()) { // 500
-            //HttpServerErrorException e = response.readEntity(HttpServerErrorException.class);
             log.error(response.getStatusInfo().getReasonPhrase());
             throw new SystemException(response.getStatusInfo().getReasonPhrase());
-            // do stuff
         }
+        log.info("Fin invocacion servicio correspondencia");
         return response;
     }
 }

@@ -1,16 +1,17 @@
 package co.com.foundation.soaint.documentmanager.business.series;
 
-import co.com.foundation.soaint.documentmanager.persistence.entity.AdmSerie;
-import co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva;
 import co.com.foundation.soaint.documentmanager.business.series.interfaces.SeriesManagerProxy;
-import co.com.foundation.soaint.infrastructure.exceptions.BusinessException;
-import co.com.foundation.soaint.infrastructure.exceptions.SystemException;
-import co.com.foundation.soaint.infrastructure.annotations.InfrastructureService;
 import co.com.foundation.soaint.documentmanager.infrastructure.builder.massiveloader.CmRegistroCargaMasivaBuilder;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.domain.CallerContext;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.domain.MassiveRecordContext;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.executor.LoaderExecutor;
+import co.com.foundation.soaint.documentmanager.persistence.entity.AdmSerie;
+import co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva;
+import co.com.foundation.soaint.infrastructure.annotations.InfrastructureService;
+import co.com.foundation.soaint.infrastructure.exceptions.BusinessException;
+import co.com.foundation.soaint.infrastructure.exceptions.SystemException;
 import co.com.foundation.soaint.infrastructure.proxy.ProxyBuilder;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 @InfrastructureService
+@Log4j2
 public class SeriesMasiveLoader extends LoaderExecutor<MassiveRecordContext<AdmSerie>> {
 
     // [fields] -----------------------------------
@@ -37,7 +39,7 @@ public class SeriesMasiveLoader extends LoaderExecutor<MassiveRecordContext<AdmS
     @Override
     public boolean processRecord( MassiveRecordContext<AdmSerie> input, CmCargaMasiva cm, CallerContext callerContext ) {
 
-        LOGGER.info("start processing record: " + input.getRaw());
+        log.info("start processing record: " + input.getRaw());
         CmRegistroCargaMasivaBuilder builder = CmRegistroCargaMasivaBuilder.newBuilder();
         boolean success = true;
 
@@ -59,7 +61,7 @@ public class SeriesMasiveLoader extends LoaderExecutor<MassiveRecordContext<AdmS
         }
 
         em.persist( builder.build() );
-        LOGGER.info("end processing record: " + input.getRaw());
+        log.info("end processing record: " + input.getRaw());
         return success;
     }
 }

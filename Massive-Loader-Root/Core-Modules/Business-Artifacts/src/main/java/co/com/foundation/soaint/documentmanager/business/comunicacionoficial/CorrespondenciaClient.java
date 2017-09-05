@@ -36,11 +36,12 @@ public class CorrespondenciaClient {
         Response response = wt.path("/correspondencia-web-api/correspondencia")
                 .request()
                 .post(Entity.json(comunicacionOficialDTO));
-        if (response.getStatus() == Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()) { // 500
-            log.error(response.getStatusInfo().getReasonPhrase());
+        if(response.getStatus() == Response.Status.OK.getStatusCode()){
+            log.info("Fin exitoso de la invocacion servicio correspondencia");
+            return response;
+        }else  { // 500 400
+            log.error("Error en la invocacion al servicio de correspondencia con razon:  " + response.getStatusInfo().getReasonPhrase());
             throw new SystemException(response.getStatusInfo().getReasonPhrase());
         }
-        log.info("Fin invocacion servicio correspondencia");
-        return response;
     }
 }

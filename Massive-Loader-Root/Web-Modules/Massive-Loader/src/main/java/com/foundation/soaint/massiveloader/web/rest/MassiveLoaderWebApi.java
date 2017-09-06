@@ -8,17 +8,20 @@ import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.dom
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.executor.LoaderExecutor;
 import co.com.foundation.soaint.infrastructure.transformer.Transformer;
 import com.foundation.soaint.massiveloader.web.domain.DocumentVO;
+import com.foundation.soaint.massiveloader.web.infrastructure.common.ListadoCargasMasivasDTO;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.MasiveLoaderResponse;
+import com.foundation.soaint.massiveloader.web.infrastructure.common.StatusMassiveLoaderProcessResponseDTO;
 import com.foundation.soaint.massiveloader.web.infrastructure.massiveloader.MassiveLoaderController;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 
 @Controller
@@ -58,4 +61,26 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
         return processGenericLoad(file, genericExecutor, MassiveLoaderType.COMUNICACION_OFICIAL, voTransformer,
                 massiveRecordTransformer, ccBuilder.build(),codigoSede,codigoDependencia);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/estadocargamasiva", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
+    public StatusMassiveLoaderProcessResponseDTO obtenerEstadoCargaMasiva(){
+       return obtenerDataEstadoCargaMasiva();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/estadocargamasiva/{idCarga}", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
+    public StatusMassiveLoaderProcessResponseDTO obtenerEstadoCargaMasivabyID(@PathVariable int idCarga){
+        return obtenerDataEstadoCargaMasivabyID(idCarga);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/listadocargamasiva", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
+    public ListadoCargasMasivasDTO obtenerlistadoCargaMasiva(){
+        return obtenerDataListadoCargaMasiva();
+
+    }
+
+
+
 }

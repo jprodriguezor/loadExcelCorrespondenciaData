@@ -31,7 +31,7 @@ public abstract class LoaderExecutor<E> {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void execute(List<E> inputs, MassiveLoaderType type, CallerContext callerContext) {
 
-        log.info("eEjecutando la carga  para: " + type);
+        log.info("Ejecutando la carga  para: " + type);
         int totalRecords = inputs.size();
 
         CmCargaMasiva cm = new CmCargaMasiva(type.name(), new Date(), totalRecords,0, 0, CargaMasivaStatus.EN_PROCESO);

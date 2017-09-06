@@ -18,4 +18,22 @@ import java.util.List;
 public class ListadoCargasMasivasDTO implements Serializable {
 
     List<CargaMasiva> cargaMasiva;
+
+    public static class ListadoCargasMasivasDTOBuilder {
+        private List<CargaMasiva> cargaMasiva;
+
+
+        ListadoCargasMasivasDTOBuilder() {
+        }
+
+        public ListadoCargasMasivasDTO.ListadoCargasMasivasDTOBuilder cargamasiva(List<CargaMasiva> cargaMasiva) {
+            this.cargaMasiva = cargaMasiva;
+            return this;
+        }
+
+        public String toString() {
+            return "ListadoCargasMasivasDTO.ListadoCargasMasivasDTOBuilder(cargamasiva=" + this.cargaMasiva +")";
+        }
+    }
+
 }

@@ -21,7 +21,19 @@ import java.util.Date;
     @NamedQuery(name= "CmCargaMasiva.findAll",
             query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva("
                   + "c.id, c.nombre, c.fechaCreacion, c.totalRegistros, c.totalRegistrosExitosos, c.totalRegistrosError, c.estado) "
-                  + "From CmCargaMasiva c")
+                  + "From CmCargaMasiva c"),
+        @NamedQuery(name= "CmCargaMasiva.obtenerDataEstadoCargaMasiva",
+                query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva("
+                        + "c.id, c.nombre, c.fechaCreacion, c.totalRegistros, c.totalRegistrosExitosos, c.totalRegistrosError, c.estado) "
+                        + "From CmCargaMasiva c order by c.id desc"),
+        @NamedQuery(name= "CmCargaMasiva.obtenerDataEstadoCargaMasivabyID",
+                query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva("
+                        + "c.id, c.nombre, c.fechaCreacion, c.totalRegistros, c.totalRegistrosExitosos, c.totalRegistrosError, c.estado) "
+                        + "From CmCargaMasiva c where c.id =:ID_CARGA  order by c.id desc"),
+        @NamedQuery(name= "CmCargaMasiva.obtenerDataListadoCargaMasiva",
+                query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva("
+                        + "c.id, c.nombre) "
+                        + "From CmCargaMasiva c")
     
 })
 @TableGenerator(name = "CM_CARGA_MASIVA_GENERATOR", table = "TABLE_GENERATOR", pkColumnName = "SEQ_NAME",
@@ -73,6 +85,11 @@ public class CmCargaMasiva implements Serializable{
         this.totalRegistrosExitosos = totalRegistrosExitosos;
         this.totalRegistrosError = totalRegistrosError;
         this.estado = estado;
+    }
+
+    public CmCargaMasiva(Long id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
     }
 
     public int getTotalRegistrosExitosos() {

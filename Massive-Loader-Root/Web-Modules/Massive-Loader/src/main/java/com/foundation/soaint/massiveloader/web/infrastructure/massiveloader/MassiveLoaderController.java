@@ -98,20 +98,7 @@ public abstract class MassiveLoaderController<O, E> {
         return response;
     }
 
-    private StatusMassiveLoaderProcessResponseDTO getResponse(List<CmCargaMasiva> cmcargamasiva) {
-        StatusMassiveLoaderProcessResponseDTO response = null;
-        if (cmcargamasiva != null && !cmcargamasiva.isEmpty() && cmcargamasiva.get(0)!= null) {
-            response = transformListCargaMasivaToStatusMassiveLoaderProcessResponseDTO(cmcargamasiva.get(0));
-            if (response != null) {
-                List<CmRegistroCargaMasiva> listadoCMRegistros = em.createNamedQuery("CmRegistroCargaMasiva.findbyIDCarga", CmRegistroCargaMasiva.class)
-                        .setParameter("ID_CARGA", Long.valueOf(response.getIdCargaMasiva()))
-                        .getResultList();
-                List<RegistroCargaMasivaDTO> registros = transformCMRegistrosToRegistroCargaMasivaDTO(listadoCMRegistros);
-                response.setRegistrosCargaMasiva(registros);
-            }
-        }
-        return response;
-    }
+
 
 
     protected StatusMassiveLoaderProcessResponseDTO obtenerDataEstadoCargaMasivabyID(int idCarga) {
@@ -164,18 +151,33 @@ public abstract class MassiveLoaderController<O, E> {
         StatusMassiveLoaderProcessResponseDTO statusMassiveLoaderProcessResponseDTO = null;
         if (cmCargaMasiva != null) {
             statusMassiveLoaderProcessResponseDTO = new StatusMassiveLoaderProcessResponseDTO();
-            statusMassiveLoaderProcessResponseDTO.setIdCargaMasiva(Math.toIntExact(cmCargaMasiva.getId()));
-            statusMassiveLoaderProcessResponseDTO.setNombreCargaMasiva(cmCargaMasiva.getNombre());
-            statusMassiveLoaderProcessResponseDTO.setFechaCreacionCargaMasiva(cmCargaMasiva.getFechaCreacion());
-            statusMassiveLoaderProcessResponseDTO.setEstadoCargaMasiva(cmCargaMasiva.getEstado().name());
-            statusMassiveLoaderProcessResponseDTO.setTotalRegistrosCargaMasiva(cmCargaMasiva.getTotalRegistros());
-            statusMassiveLoaderProcessResponseDTO.setTotalRegistrosExitososCargaMasiva(cmCargaMasiva.getTotalRegistrosExitosos());
-            statusMassiveLoaderProcessResponseDTO.setTotalRegistrosErrorCargaMasiva(cmCargaMasiva.getTotalRegistrosError());
+            CorrespondenciaResponse correspondencia = new CorrespondenciaResponse();
+            correspondencia.setIdCargaMasiva(Math.toIntExact(cmCargaMasiva.getId()));
+            correspondencia.setNombreCargaMasiva(cmCargaMasiva.getNombre());
+            correspondencia.setFechaCreacionCargaMasiva(cmCargaMasiva.getFechaCreacion());
+            correspondencia.setEstadoCargaMasiva(cmCargaMasiva.getEstado().name());
+            correspondencia.setTotalRegistrosCargaMasiva(cmCargaMasiva.getTotalRegistros());
+            correspondencia.setTotalRegistrosExitososCargaMasiva(cmCargaMasiva.getTotalRegistrosExitosos());
+            correspondencia.setTotalRegistrosErrorCargaMasiva(cmCargaMasiva.getTotalRegistrosError());
+            statusMassiveLoaderProcessResponseDTO.setCorrespondencia(correspondencia);
         }
         return statusMassiveLoaderProcessResponseDTO;
     }
 
-
+    private StatusMassiveLoaderProcessResponseDTO getResponse(List<CmCargaMasiva> cmcargamasiva) {
+        StatusMassiveLoaderProcessResponseDTO response = new StatusMassiveLoaderProcessResponseDTO();
+        if (cmcargamasiva != null && !cmcargamasiva.isEmpty() && cmcargamasiva.get(0)!= null) {
+            response = transformListCargaMasivaToStatusMassiveLoaderProcessResponseDTO(cmcargamasiva.get(0));
+            if (response != null) {
+                List<CmRegistroCargaMasiva> listadoCMRegistros = em.createNamedQuery("CmRegistroCargaMasiva.findbyIDCarga", CmRegistroCargaMasiva.class)
+                        .setParameter("ID_CARGA", Long.valueOf(response.getCorrespondencia().getIdCargaMasiva()))
+                        .getResultList();
+                List<RegistroCargaMasivaDTO> registros = transformCMRegistrosToRegistroCargaMasivaDTO(listadoCMRegistros);
+                response.getCorrespondencia().setRegistrosCargaMasiva(registros);
+            }
+        }
+        return response;
+    }
     //[validate] ------------------------------
 
     protected String validate(List<O> csvDomainList) {

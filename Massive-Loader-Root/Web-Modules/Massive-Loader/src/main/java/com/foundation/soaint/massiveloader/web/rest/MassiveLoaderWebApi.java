@@ -24,8 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Log4j2
 public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, MassiveRecordContext<ComunicacionOficialContainerDTO>> {
 
-    //private static Logger log = LogManager.getLogger(MassiveLoaderWebApi.class.getName());
-
     @Autowired
     @Qualifier("genericLoaderExecutor")
     private LoaderExecutor genericExecutor;

@@ -143,7 +143,7 @@ public abstract class MassiveLoaderController<O, E> {
 
         for (CmRegistroCargaMasiva cmR : listadoCMRegistros) {
             RegistroCargaMasivaDTO registro = new RegistroCargaMasivaDTO(Math.toIntExact(cmR.getId()), cmR.getContenido(), cmR.getMensajes(), cmR.getEstado());
-            log.info("Estado del Registro: " + registro.getEstado())
+            log.info("Estado del Registro: " + registro.getEstado());
             listado.add(registro);
         }
         return listado;

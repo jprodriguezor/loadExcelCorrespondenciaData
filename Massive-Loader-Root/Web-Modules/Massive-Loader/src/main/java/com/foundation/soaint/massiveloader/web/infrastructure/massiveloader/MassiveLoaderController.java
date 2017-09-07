@@ -134,7 +134,8 @@ public abstract class MassiveLoaderController<O, E> {
         List<CargaMasiva> listado = new ArrayList<>();
         for (CmCargaMasiva cmCargaMasiva : cmCargaMasivaList) {
             CargaMasiva cm = new CargaMasiva(Math.toIntExact(cmCargaMasiva.getId()), cmCargaMasiva.getNombre());
-            log.info("======================== >  Carga Masiva: " + cm.getNombreCarga());
+            log.info("======================== >  Carga Masiva ID: " + cm.getId());
+            log.info("======================== >  Carga Masiva Nombre: " + cm.getNombreCarga());
             listado.add(cm);
         }
         listadoCargasMasivasDTO.setCargaMasiva(listado);

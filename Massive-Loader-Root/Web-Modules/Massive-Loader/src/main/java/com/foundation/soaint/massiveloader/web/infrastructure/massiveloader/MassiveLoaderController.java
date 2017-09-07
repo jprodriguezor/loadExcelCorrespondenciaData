@@ -99,8 +99,6 @@ public abstract class MassiveLoaderController<O, E> {
     }
 
 
-
-
     protected StatusMassiveLoaderProcessResponseDTO obtenerDataEstadoCargaMasivabyID(int idCarga) {
         log.info("Iniciando obtenerDataEstadoCargaMasivabyID con ID = " + idCarga);
         StatusMassiveLoaderProcessResponseDTO response;
@@ -109,7 +107,12 @@ public abstract class MassiveLoaderController<O, E> {
                 .setMaxResults(1)
                 .getResultList();
         response = getResponse(cmcargamasiva);
-        log.info("Fin obtenerDataEstadoCargaMasivabyID");
+        if (response != null && response.getCorrespondencia() != null) {
+            log.info("Fin obtenerDataEstadoCargaMasivabyID con total de registros = " + response.getCorrespondencia().getTotalRegistrosCargaMasiva());
+        } else {
+            log.info("Fin obtenerDataEstadoCargaMasivabyID con total de registros = 0");
+        }
+
         return response;
     }
 
@@ -169,7 +172,7 @@ public abstract class MassiveLoaderController<O, E> {
 
     private StatusMassiveLoaderProcessResponseDTO getResponse(List<CmCargaMasiva> cmcargamasiva) {
         StatusMassiveLoaderProcessResponseDTO response = new StatusMassiveLoaderProcessResponseDTO();
-        if (cmcargamasiva != null && !cmcargamasiva.isEmpty() && cmcargamasiva.get(0)!= null) {
+        if (cmcargamasiva != null && !cmcargamasiva.isEmpty() && cmcargamasiva.get(0) != null) {
             response = transformListCargaMasivaToStatusMassiveLoaderProcessResponseDTO(cmcargamasiva.get(0));
             if (response != null) {
                 List<CmRegistroCargaMasiva> listadoCMRegistros = em.createNamedQuery("CmRegistroCargaMasiva.findbyIDCarga", CmRegistroCargaMasiva.class)

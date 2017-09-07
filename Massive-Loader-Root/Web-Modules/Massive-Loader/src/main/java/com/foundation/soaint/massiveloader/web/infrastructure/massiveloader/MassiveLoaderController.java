@@ -131,6 +131,7 @@ public abstract class MassiveLoaderController<O, E> {
         List<CargaMasiva> listado = new ArrayList<>();
         for (CmCargaMasiva cmCargaMasiva : cmCargaMasivaList) {
             CargaMasiva cm = new CargaMasiva(Math.toIntExact(cmCargaMasiva.getId()), cmCargaMasiva.getNombre());
+            log.info("Carga Masiva: " + cm.getNombreCarga());
             listado.add(cm);
         }
         listadoCargasMasivasDTO.setCargaMasiva(listado);
@@ -142,6 +143,7 @@ public abstract class MassiveLoaderController<O, E> {
 
         for (CmRegistroCargaMasiva cmR : listadoCMRegistros) {
             RegistroCargaMasivaDTO registro = new RegistroCargaMasivaDTO(Math.toIntExact(cmR.getId()), cmR.getContenido(), cmR.getMensajes(), cmR.getEstado());
+            log.info("Estado del Registro: " + registro.getEstado())
             listado.add(registro);
         }
         return listado;
@@ -160,6 +162,7 @@ public abstract class MassiveLoaderController<O, E> {
             correspondencia.setTotalRegistrosExitososCargaMasiva(cmCargaMasiva.getTotalRegistrosExitosos());
             correspondencia.setTotalRegistrosErrorCargaMasiva(cmCargaMasiva.getTotalRegistrosError());
             statusMassiveLoaderProcessResponseDTO.setCorrespondencia(correspondencia);
+            log.info("Cantidad de registros procesados: " + correspondencia.getTotalRegistrosCargaMasiva());
         }
         return statusMassiveLoaderProcessResponseDTO;
     }

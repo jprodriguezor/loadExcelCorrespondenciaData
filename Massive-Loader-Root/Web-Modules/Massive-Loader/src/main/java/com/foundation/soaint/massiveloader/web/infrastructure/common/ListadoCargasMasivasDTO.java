@@ -17,7 +17,7 @@ import java.util.List;
 @Builder(builderMethodName = "newInstance")
 public class ListadoCargasMasivasDTO implements Serializable {
 
-    List<CargaMasiva> cargaMasiva;
+    private List<CargaMasiva> cargaMasiva;
 
     public static class ListadoCargasMasivasDTOBuilder {
         private List<CargaMasiva> cargaMasiva;

@@ -44,6 +44,7 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
 
     //[upload service] ------------------------------
     @ResponseBody
+    @CrossOrigin
     @RequestMapping(value = "/cargar-fichero", method = RequestMethod.POST, produces ="application/json;charset=utf-8")
     public MasiveLoaderResponse cargarFichero(@RequestParam("file") MultipartFile file,@RequestParam("codigoSede") String codigoSede, @RequestParam("codigoDependencia") String codigoDependencia) {
         log.info("Cargando el fichero");
@@ -57,18 +58,21 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
     }
 
     @ResponseBody
+    @CrossOrigin
     @RequestMapping(value = "/estadocargamasiva", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
     public StatusMassiveLoaderProcessResponseDTO obtenerEstadoCargaMasiva(){
        return obtenerDataEstadoCargaMasiva();
     }
 
     @ResponseBody
+    @CrossOrigin
     @RequestMapping(value = "/estadocargamasiva/{idCarga}", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
     public StatusMassiveLoaderProcessResponseDTO obtenerEstadoCargaMasivabyID(@PathVariable int idCarga){
         return obtenerDataEstadoCargaMasivabyID(idCarga);
     }
 
     @ResponseBody
+    @CrossOrigin
     @RequestMapping(value = "/listadocargamasiva", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
     public ListadoCargasMasivasDTO obtenerlistadoCargaMasiva(){
         return obtenerDataListadoCargaMasiva();

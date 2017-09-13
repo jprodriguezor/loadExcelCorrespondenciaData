@@ -116,6 +116,23 @@ public abstract class MassiveLoaderController<O, E> {
         return response;
     }
 
+    protected StatusMassiveLoaderProcessResponseDTO obtenerDataEstadoCargaMasivabyEstado(String estado) {
+        log.info("Iniciando obtenerDataEstadoCargaMasivabyEstado con ESTADO = " + estado);
+        StatusMassiveLoaderProcessResponseDTO response;
+        List<CmCargaMasiva> cmcargamasiva = em.createNamedQuery("CmCargaMasiva.obtenerDataEstadoCargaMasivabyESTADO", CmCargaMasiva.class)
+                .setParameter("ESTDO", String.valueOf(estado))
+                .setMaxResults(1)
+                .getResultList();
+        response = getResponse(cmcargamasiva);
+        if (response != null && response.getCorrespondencia() != null) {
+            log.info("Fin obtenerDataEstadoCargaMasivabyEstado con total de registros = " + response.getCorrespondencia().getTotalRegistrosCargaMasiva());
+        } else {
+            log.info("Fin obtenerDataEstadoCargaMasivabyEstado con total de registros = 0");
+        }
+
+        return response;
+    }
+
     protected ListadoCargasMasivasDTO obtenerDataListadoCargaMasiva() {
         log.info("Iniciando obtenerDataListadoCargaMasiva");
         ListadoCargasMasivasDTO response;

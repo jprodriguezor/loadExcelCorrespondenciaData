@@ -33,7 +33,7 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
     private Transformer massiveRecordTransformer;
 
     @Autowired
-    @Qualifier("excelRecordToDocumentVOTransformer")
+    @Qualifier("excelToDocVOTransformer")
     private Transformer voTransformer;
 
     public MassiveLoaderWebApi() {

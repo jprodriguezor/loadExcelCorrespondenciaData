@@ -74,7 +74,11 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
         return obtenerDataListadoCargaMasiva();
 
     }
-
+    @ResponseBody
+    @RequestMapping(value = "/estadocargamasivaEstado/{estado}", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
+    public StatusMassiveLoaderProcessResponseDTO obtenerEstadoCargaMasivabyEstado(@PathVariable String estado){
+        return obtenerDataEstadoCargaMasivabyEstado (estado);
+    }
 
 
 }

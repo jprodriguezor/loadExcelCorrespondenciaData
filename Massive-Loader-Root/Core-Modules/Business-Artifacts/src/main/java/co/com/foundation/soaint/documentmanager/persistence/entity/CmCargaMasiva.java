@@ -30,6 +30,10 @@ import java.util.Date;
                 query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva("
                         + "c.id, c.nombre, c.fechaCreacion, c.totalRegistros, c.totalRegistrosExitosos, c.totalRegistrosError, c.estado) "
                         + "From CmCargaMasiva c where c.id =:ID_CARGA  order by c.id desc"),
+        @NamedQuery(name= "CmCargaMasiva.obtenerDataEstadoCargaMasivabyESTADO",
+                query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva("
+                        + "c.id, c.nombre, c.fechaCreacion, c.totalRegistros, c.totalRegistrosExitosos, c.totalRegistrosError, c.estado) "
+                        + "From CmCargaMasiva c where c.estado =:ESTADO  order by c.id desc"),
         @NamedQuery(name= "CmCargaMasiva.obtenerDataListadoCargaMasiva",
                 query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva("
                         + "c.id, c.nombre) "

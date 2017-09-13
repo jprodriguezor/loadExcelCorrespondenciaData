@@ -3,6 +3,7 @@ package com.foundation.soaint.massiveloader.web.infrastructure.transformer.massi
 import co.com.foundation.soaint.infrastructure.transformer.Transformer;
 import com.foundation.soaint.massiveloader.web.domain.DocumentVO;
 import com.foundation.soaint.massiveloader.web.infrastructure.builder.generic.DocumentVoBuilder;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class ExcelRecordToDocumentVOTransformer implements Transformer<Row, DocumentVO> {
+public class ExcelToDocVOTransformer implements Transformer<Row, DocumentVO> {
 
     public static final int NO_RADICADO = 0;
     public static final int FECHA_RADICACION = 1;
@@ -37,8 +38,10 @@ public class ExcelRecordToDocumentVOTransformer implements Transformer<Row, Docu
 
     @Override
     public DocumentVO transform(Row row) {
+        DataFormatter formatter = new DataFormatter();
+        String numRadicado = formatter.formatCellValue(row.getCell(NO_RADICADO));
         return DocumentVoBuilder.newBuilder()
-                .withNoRadicado(row.getCell(NO_RADICADO).getStringCellValue())
+                .withNoRadicado(numRadicado)
                 .withFechaRadicacion(row.getCell(FECHA_RADICACION).getDateCellValue())
                 .withTipoComunicacion(row.getCell(TIPO_COMUNICACION).getStringCellValue())
                 .withTipologiaDocumental(row.getCell(TIPOLOGIA_DOCUMENTAL).getStringCellValue())

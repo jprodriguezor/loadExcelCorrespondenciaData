@@ -8,7 +8,7 @@ import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.dom
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.executor.LoaderExecutor;
 import co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva;
 import co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva;
-import co.com.foundation.soaint.documentmanager.persistence.entity.constants.CargaMasivaStatus;
+import co.com.foundation.soaint.documentmanager.persistence.entity.constants.RegistroCargaMasivaStatus;
 import co.com.foundation.soaint.infrastructure.common.MessageUtil;
 import co.com.foundation.soaint.infrastructure.exceptions.BusinessException;
 import co.com.foundation.soaint.infrastructure.transformer.Transformer;
@@ -121,8 +121,8 @@ public abstract class MassiveLoaderController<O, E> {
         log.info("Iniciando obtenerDataEstadoCargaMasivabyEstado con ESTADO = " + estado);
         StatusMassiveLoaderProcessResponseDTO response;
 
-        List<CmCargaMasiva> cmcargamasiva = em.createNamedQuery("CmCargaMasiva.obtenerDataEstadoCargaMasivabyESTADO", CmCargaMasiva.class)
-                .setParameter("ESTADO", CargaMasivaStatus.COMPLETADO)
+        List<CmCargaMasiva> cmcargamasiva = em.createNamedQuery("CmCargaMasiva.obtenerDataEstadoCargaMasivabyEstado", CmCargaMasiva.class)
+                .setParameter("ESTADO", RegistroCargaMasivaStatus.COMPLETADO_CON_ERRORES)
                 .setMaxResults(1)
                 .getResultList();
         response = getResponse(cmcargamasiva);

@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-@Controller
+//@Controller
 @Log4j2
+@RestController
+@RequestMapping("/massiveloaderapi")
 public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, MassiveRecordContext<ComunicacionOficialContainerDTO>> {
 
     @Autowired
@@ -43,7 +45,7 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
 
 
     //[upload service] ------------------------------
-    @ResponseBody
+    //@ResponseBody
     @RequestMapping(value = "/cargar-fichero", method = RequestMethod.POST, produces ="application/json;charset=utf-8")
     public MasiveLoaderResponse cargarFichero(@RequestParam("file") MultipartFile file,@RequestParam("codigoSede") String codigoSede, @RequestParam("codigoDependencia") String codigoDependencia) {
         log.info("Cargando el fichero");
@@ -56,25 +58,21 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
                 massiveRecordTransformer, ccBuilder.build(),codigoSede,codigoDependencia);
     }
 
-    @ResponseBody
+    //@ResponseBody
     @RequestMapping(value = "/estadocargamasiva", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
     public StatusMassiveLoaderProcessResponseDTO obtenerEstadoCargaMasiva(){
        return obtenerDataEstadoCargaMasiva();
     }
 
-    @ResponseBody
+    //@ResponseBody
     @RequestMapping(value = "/estadocargamasiva/{idCarga}", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
     public StatusMassiveLoaderProcessResponseDTO obtenerEstadoCargaMasivabyID(@PathVariable int idCarga){
         return obtenerDataEstadoCargaMasivabyID(idCarga);
     }
 
-    @ResponseBody
+    //@ResponseBody
     @RequestMapping(value = "/listadocargamasiva", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
     public ListadoCargasMasivasDTO obtenerlistadoCargaMasiva(){
         return obtenerDataListadoCargaMasiva();
-
     }
-
-
-
 }

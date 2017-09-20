@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static org.jgroups.conf.ProtocolConfiguration.log;
+
 /**
  * Created by administrador_1 on 01/10/2016.
  */
@@ -42,6 +44,12 @@ public abstract class MassiveLoaderController<O, E> {
     @PersistenceContext
     protected EntityManager em;
 
+//    @Autowired
+//    MassiveLoaderRetry massiveLoaderRetry;
+
+    static final String NOT_FOUND="not_found";
+    static final String FAILED_TO_CONNECT="Failed to connect to any server. Servers tried:";
+    static final String JMS_MESSAGE="jms fail";
     //[generic load processing] ------------------------------
 
     protected MasiveLoaderResponse processGenericLoad(final MultipartFile file, final LoaderExecutor<E> executor,
@@ -117,22 +125,33 @@ public abstract class MassiveLoaderController<O, E> {
         return response;
     }
 
-    protected StatusMassiveLoaderProcessResponseDTO obtenerDataEstadoCargaMasivabyEstado(String estado) {
-        log.info("Iniciando obtenerDataEstadoCargaMasivabyEstado con ESTADO = " + estado);
-        StatusMassiveLoaderProcessResponseDTO response;
+    protected String obtenerDataEstadoCargaMasivabyIDAA(int idCarga) {
+        log.info("Iniciando obtenerDataEstadoCargaMasivabyID con ID = " + idCarga);
+        retryCall ();
 
+        return "AAAAA";
+    }
+
+    protected List<StatusMassiveLoaderProcessResponseDTO> obtenerDataEstadoCargaMasivaCOmpletadoConErrores() {
+        log.info("Iniciando obtenerDataEstadoCargaMasivabyEstado con ESTADO = " + RegistroCargaMasivaStatus.COMPLETADO_CON_ERRORES);
+        StatusMassiveLoaderProcessResponseDTO response;
+        List<StatusMassiveLoaderProcessResponseDTO> listreponse=new ArrayList <> ();
         List<CmCargaMasiva> cmcargamasiva = em.createNamedQuery("CmCargaMasiva.obtenerDataEstadoCargaMasivabyEstado", CmCargaMasiva.class)
                 .setParameter("ESTADO", RegistroCargaMasivaStatus.COMPLETADO_CON_ERRORES)
-                .setMaxResults(1)
                 .getResultList();
-        response = getResponse(cmcargamasiva);
-        if (response != null && response.getCorrespondencia() != null) {
-            log.info("Fin obtenerDataEstadoCargaMasivabyEstado con total de registros = " + response.getCorrespondencia().getTotalRegistrosCargaMasiva());
+
+        for (CmCargaMasiva cmCargaMasiva: cmcargamasiva
+             ) {
+            listreponse.add (getResponse (cmCargaMasiva));
+        }
+
+        if (listreponse != null && listreponse.get (0).getCorrespondencia() != null) {
+            log.info("Fin obtenerDataEstadoCargaMasivaCOmpletadoConErrores con total de registros = " + listreponse.size ());
         } else {
             log.info("Fin obtenerDataEstadoCargaMasivabyEstado con total de registros = 0");
         }
 
-        return response;
+        return listreponse;
     }
 
     protected ListadoCargasMasivasDTO obtenerDataListadoCargaMasiva() {
@@ -204,6 +223,20 @@ public abstract class MassiveLoaderController<O, E> {
         }
         return response;
     }
+    private StatusMassiveLoaderProcessResponseDTO getResponse(CmCargaMasiva cmcargamasiva) {
+        StatusMassiveLoaderProcessResponseDTO response = new StatusMassiveLoaderProcessResponseDTO();
+        if (cmcargamasiva != null ) {
+            response = transformListCargaMasivaToStatusMassiveLoaderProcessResponseDTO(cmcargamasiva);
+            if (response != null) {
+                List<CmRegistroCargaMasiva> listadoCMRegistros = em.createNamedQuery("CmRegistroCargaMasiva.findbyIDCarga", CmRegistroCargaMasiva.class)
+                        .setParameter("ID_CARGA", Long.valueOf(response.getCorrespondencia().getIdCargaMasiva()))
+                        .getResultList();
+                List<RegistroCargaMasivaDTO> registros = transformCMRegistrosToRegistroCargaMasivaDTO(listadoCMRegistros);
+                response.getCorrespondencia().setRegistrosCargaMasiva(registros);
+            }
+        }
+        return response;
+    }
     //[validate] ------------------------------
 
     protected String validate(List<O> csvDomainList) {
@@ -228,7 +261,64 @@ public abstract class MassiveLoaderController<O, E> {
         return baseMessage + messageResponse.toString();
     }
 
+    protected void retryCall(){
+        log.info("Se inicia el procesamiento de los mensajes con errores");
 
+        log.info("Se obtienen los registros de cargas masiva");
+
+
+        //TODO en caso de que se relaice correctamente
+        for (StatusMassiveLoaderProcessResponseDTO registro: obtenerDataEstadoCargaMasivaCOmpletadoConErrores()
+                ) {
+            for (RegistroCargaMasivaDTO registroCargaMasivaDTO:registro.getCorrespondencia ().getRegistrosCargaMasiva ()
+                 ) {
+                String mensaje= registroCargaMasivaDTO.getMensajes ();
+                int id=registroCargaMasivaDTO.getId ();
+
+                if (mensaje.contains (FAILED_TO_CONNECT)){
+                    //invocar servicio para carga masiva de nuevo
+                    log.info("Se obtienen los registros de cargas masiva con estado:" + mensaje+id);
+
+                }
+                else if(mensaje.equals (NOT_FOUND)){
+                    //invocar el servicio de nuevo
+                    log.info("Se obtienen los registros de cargas masiva con estado:" + mensaje+id);
+                }
+                else if (mensaje.contains (JMS_MESSAGE)){
+                    //encolar nuevamente
+                    Long ide=Long.valueOf (id);
+                    enExito(ide);
+                    log.info("Se obtienen los registros de cargas masiva con estado:" + mensaje+id);
+                }
+            }
+
+
+
+        }
+
+
+    }
+    protected void actualizarEstadoExito(int id) {
+        log.info("Iniciando actualizarEstado con ESTADO = " + RegistroCargaMasivaStatus.COMPLETADO_CORRECTAMENTE);
+        StatusMassiveLoaderProcessResponseDTO response;
+
+         em.createNamedQuery("CmRegistroCargaMasiva.updateEstadoRegistroCargaMasiva", CmCargaMasiva.class)
+                .setParameter("ESTADO", RegistroCargaMasivaStatus.COMPLETADO_CORRECTAMENTE)
+                .setParameter ("ID",Long.valueOf(id))
+                .setMaxResults(1)
+                .getResultList();
+    }
+
+    private void enExito(Long id) {
+
+        CmRegistroCargaMasiva cmRegistroCargaMasiva = new CmRegistroCargaMasiva ( );
+        cmRegistroCargaMasiva.setId (id);
+
+        CmRegistroCargaMasiva cmRegistroCargaMass = em.find (CmRegistroCargaMasiva.class, cmRegistroCargaMasiva.getId ( ));
+        em.getTransaction ( ).begin ( );
+        cmRegistroCargaMass.setEstado (RegistroCargaMasivaStatus.COMPLETADO_CORRECTAMENTE);
+        em.getTransaction ( ).commit ( );
+    }
     //[template] ------------------------------
 
 

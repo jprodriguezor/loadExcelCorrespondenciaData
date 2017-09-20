@@ -13,14 +13,19 @@ import java.io.Serializable;
 @Entity
 @Table(name = "CM_REGISTRO_CARGA_MASIVA")
 @NamedQueries({
-@NamedQuery(name= "CmRegistroCargaMasiva.findAll",
-            query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva("
-                  + "c.id, c.contenido, c.mensajes, c.estado)"
-                  + "From CmRegistroCargaMasiva c where c.cargaMasiva.id =:ID_CARGA"),
-        @NamedQuery(name= "CmRegistroCargaMasiva.findbyIDCarga",
-                query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva("
-                        + "c.id, c.contenido, c.mensajes, c.estado)"
-                        + "From CmRegistroCargaMasiva c where c.cargaMasiva.id =:ID_CARGA")
+                @NamedQuery(name= "CmRegistroCargaMasiva.findAll",
+                            query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva("
+                                  + "c.id, c.contenido, c.mensajes, c.estado)"
+                                  + "From CmRegistroCargaMasiva c where c.cargaMasiva.id =:ID_CARGA"),
+                @NamedQuery(name= "CmRegistroCargaMasiva.findbyIDCarga",
+                        query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva("
+                                + "c.id, c.contenido, c.mensajes, c.estado)"
+                                + "From CmRegistroCargaMasiva c where c.cargaMasiva.id =:ID_CARGA"),
+                @NamedQuery(name= "CmRegistroCargaMasiva.updateEstadoRegistroCargaMasiva",
+                        query = "Update co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva.CmRegistroCargaMasiva c SET"
+                                + " c.estado=:ESTADO"
+                                + " Where c.id=:ID")
+
 })
 @TableGenerator(name = "CM_REGISTRO_CARGA_MASIVA_GENERATOR", table = "TABLE_GENERATOR", pkColumnName = "SEQ_NAME",
         valueColumnName = "SEQ_VALUE", pkColumnValue = "CM_REGISTRO_CARGA_MASIVA_SEQ", allocationSize = 1)

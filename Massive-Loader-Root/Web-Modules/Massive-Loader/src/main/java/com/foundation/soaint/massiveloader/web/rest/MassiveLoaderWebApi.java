@@ -38,6 +38,8 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
     @Qualifier("excelToDocVOTransformer")
     private Transformer voTransformer;
 
+
+
     public MassiveLoaderWebApi() {
         //Constructor por defecto.
 
@@ -74,5 +76,12 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
     @RequestMapping(value = "/listadocargamasiva", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
     public ListadoCargasMasivasDTO obtenerlistadoCargaMasiva(){
         return obtenerDataListadoCargaMasiva();
+    }
+
+    //@ResponseBody
+    @RequestMapping(value = "/estadocargamasivaAA/{idCarga}", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
+    public boolean obtenerEstadoCargaMasivabyIDAA(@PathVariable int idCarga){
+         actualizarEstadoExito (idCarga);
+        return true;
     }
 }

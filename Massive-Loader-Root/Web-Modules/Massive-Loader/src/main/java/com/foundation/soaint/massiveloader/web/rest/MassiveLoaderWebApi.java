@@ -6,6 +6,8 @@ import co.com.foundation.soaint.documentmanager.infrastructure.builder.massivelo
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.MassiveLoaderType;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.domain.MassiveRecordContext;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.executor.LoaderExecutor;
+import co.com.foundation.soaint.infrastructure.exceptions.BusinessException;
+import co.com.foundation.soaint.infrastructure.exceptions.SystemException;
 import co.com.foundation.soaint.infrastructure.transformer.Transformer;
 import com.foundation.soaint.massiveloader.web.domain.DocumentVO;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.ListadoCargasMasivasDTO;
@@ -18,6 +20,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.jms.JMSException;
+import javax.naming.NamingException;
+import java.text.ParseException;
 
 
 //@Controller
@@ -37,7 +43,6 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
     @Autowired
     @Qualifier("excelToDocVOTransformer")
     private Transformer voTransformer;
-
 
 
     public MassiveLoaderWebApi() {
@@ -80,8 +85,10 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
 
     //@ResponseBody
     @RequestMapping(value = "/estadocargamasivaAA/{idCarga}", method = RequestMethod.GET, produces ="application/json;charset=utf-8")
-    public boolean obtenerEstadoCargaMasivabyIDAA(@PathVariable int idCarga){
-         actualizarEstadoExito (idCarga);
-        return true;
+    public String obtenerEstadoCargaMasivabyIDAA(@PathVariable int idCarga) throws ParseException, NamingException, JMSException, BusinessException, SystemException {
+//         actualizarEstadoExito (idCarga);
+       return obtenerDataEstadoCargaMasivabyIDAA(idCarga);
+
+//        fillDocumentVO("DocumentVO(noRadicado=12EE2016420100000900167, fechaRadicacion=Thu May 12 22:00:00 CDT 2016, tipoComunicacion=TP-CMCOE/Comunicación Oficial Externa Recibida, tipologiaDocumental=TL-DOCOF/Oficio, noFolios=1.0, noAnexos=0.0, asunto=Tutela , requiereDigitalizar=TRUE, requiereDistribucionFisica=TRUE, personaRemite=, razonSocial=, nombre=, sedeAdministrativaRemitenteInterno=1040_VICEPRESIDENCIA DE BENEFICIOS ECONOMICOS PERIODICOS/1040, dependenciaRemitenteInterno=1040.1040_VICEPRESIDENCIA DE BENEFICIOS ECONOMICOS PERIODICOS/10401040, sedeAdministrativaDestinatario=200_VICEPRESIDENCIA DE FINANCIAMIENTO E INVERSIONES/200, dependenciaDestinatario=1040.1042_GERENCIA NACIONAL DE LA GESTION DE RED BEPS/10401042)");
     }
 }

@@ -2,7 +2,9 @@ package com.foundation.soaint.massiveloader.web.infrastructure.massiveloader;
 
 import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.ComunicacionOficialManager;
 import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.CorrespondenciaClient;
+import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.interfaces.ComunicacionOficialManagerProxy;
 import co.com.foundation.soaint.documentmanager.domain.ComunicacionOficialContainerDTO;
+import co.com.foundation.soaint.documentmanager.infrastructure.builder.massiveloader.CallerContextBuilder;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.LoaderAsyncWorker;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.MassiveLoaderType;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.domain.CallerContext;
@@ -61,9 +63,6 @@ public abstract class MassiveLoaderController<O, E> {
 
     @Autowired
     protected DocumentToComunicacionOficialTransformer documentToComunicacionOficialTransformer;
-
-    @Autowired
-    protected ComunicacionOficialManager comunicacionOficialManager;
 
     @Autowired
     WildFlyJmsQueueSender wildFlyJmsQueueSender;
@@ -310,7 +309,13 @@ public abstract class MassiveLoaderController<O, E> {
             if (mensaje.contains (FAILED_TO_CONNECT)){
                     //invocar servicio para carga masiva de nuevo
                     log.info("Se llama al servicio para realizar la carga masiva========>");
-                    comunicacionOficialManager.gestionarComunicacionOficial (comunicacionOficialContainerDTO);
+                CallerContextBuilder ccBuilder = CallerContextBuilder.newBuilder();
+                ccBuilder.withBeanName("comunicacionOficialManager");
+                ccBuilder.withMethodName("gestionarComunicacionOficial");
+                ccBuilder.withServiceInterface(ComunicacionOficialManagerProxy.class);
+                correspondenciaClient.radicar (comunicacionOficialContainerDTO.getComunicacionOficialDTO ());
+
+
                 }
                 else if (mensaje.contains (JMS_MESSAGE)){
                     //encolar nuevamente

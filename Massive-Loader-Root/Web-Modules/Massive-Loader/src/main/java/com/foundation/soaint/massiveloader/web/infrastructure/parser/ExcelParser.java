@@ -26,7 +26,6 @@ public class ExcelParser<O> extends DocumentParser<O, Row> {
 
     @Override
     public List<O> parse(MultipartFile file, Transformer<Row, O> transformer) throws IOException, BusinessException {
-        //FileInputStream file = new FileInputStream(new File("C:\\Users\\g2o\\Desktop\\Plantilla Cargue Contigencia-Cuba.xlsx"));
 
         //Create Workbook instance holding reference to .xlsx file
         XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
@@ -46,10 +45,6 @@ public class ExcelParser<O> extends DocumentParser<O, Row> {
                 excelDomainList.add(transformer.transform(next));
         }
 
-        /*if (excelDomainList.size() != excelDomainList.size())
-            throw ExceptionBuilder.newBuilder()
-                    .withMessage("massiveloader.structure.error")
-                    .buildBusinessException();*/
 
         return excelDomainList;
     }

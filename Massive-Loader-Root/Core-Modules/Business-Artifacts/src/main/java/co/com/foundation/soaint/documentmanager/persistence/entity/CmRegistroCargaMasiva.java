@@ -21,14 +21,14 @@ import java.io.Serializable;
                         query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva("
                                 + "c.id, c.contenido, c.mensajes, c.estado)"
                                 + "From CmRegistroCargaMasiva c where c.cargaMasiva.id =:ID_CARGA"),
-        @NamedQuery(name= "CmRegistroCargaMasiva.findbyEstado",
-                query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva("
-                        + "c.id, c.contenido, c.mensajes, c.estado)"
-                        + "From CmRegistroCargaMasiva c where c.estado =:ESTADO"),
-        @NamedQuery(name= "CmRegistroCargaMasiva.updateEstadoRegistroCargaMasiva",
-                        query = "Update CmRegistroCargaMasiva c SET"
-                                + " c.estado=:ESTADO"
-                                + " Where c.id=:ID")
+                @NamedQuery(name= "CmRegistroCargaMasiva.findbyEstado",
+                        query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva("
+                                + "c.id, c.contenido, c.mensajes, c.estado)"
+                                + "From CmRegistroCargaMasiva c where c.estado =:ESTADO"),
+                @NamedQuery(name= "CmRegistroCargaMasiva.updateEstadoRegistroCargaMasiva",
+                                query = "Update CmRegistroCargaMasiva c SET"
+                                        + " c.estado=:ESTADO"
+                                        + " Where c.id=:ID")
 
 })
 @TableGenerator(name = "CM_REGISTRO_CARGA_MASIVA_GENERATOR", table = "TABLE_GENERATOR", pkColumnName = "SEQ_NAME",

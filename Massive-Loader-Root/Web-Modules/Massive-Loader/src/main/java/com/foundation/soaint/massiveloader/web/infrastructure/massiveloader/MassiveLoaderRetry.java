@@ -15,6 +15,8 @@ import com.foundation.soaint.massiveloader.web.infrastructure.common.StatusMassi
 import com.foundation.soaint.massiveloader.web.infrastructure.transformer.massiveloader.DocumentToComunicacionOficialTransformer;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +34,7 @@ import java.util.Locale;
 
 import static org.jgroups.conf.ProtocolConfiguration.log;
 @Component
+@EnableScheduling
 public class MassiveLoaderRetry {
 
 
@@ -51,16 +54,15 @@ public class MassiveLoaderRetry {
     @Autowired
     protected CorrespondenciaClient correspondenciaClient;
 
+    @Scheduled(fixedRate = 30000, initialDelay = 10000)
     protected void retryCall() throws ParseException, NamingException, JMSException, BusinessException, SystemException {
         log.info("Se inicia el procesamiento de los mensajes con errores");
-
         log.info("Se obtienen los registros de cargas masiva");
 
 
         //TODO en caso de que se relaice correctamente
         for (RegistroCargaMasivaDTO registro: obtenerDataEstadoCargaMasivaCOmpletadoConErrores()
                 ) {
-
             String mensaje= registro.getMensajes ();
             int id=registro.getId ();
             ComunicacionOficialContainerDTO comunicacionOficialContainerDTO=new ComunicacionOficialContainerDTO ();

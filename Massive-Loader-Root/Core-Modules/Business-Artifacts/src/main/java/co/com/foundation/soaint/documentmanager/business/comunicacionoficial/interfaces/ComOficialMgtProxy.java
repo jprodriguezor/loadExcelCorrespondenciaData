@@ -15,7 +15,7 @@ import java.util.List;
  * Created by administrador_1 on 05/10/2016.
  */
 
-public interface ComunicacionOficialManagerProxy {
+public interface ComOficialMgtProxy {
 
     void gestionarComunicacionOficial(ComunicacionOficialContainerDTO comunicacionOficialContainerDTO) throws SystemException, BusinessException, JMSException, NamingException;
 

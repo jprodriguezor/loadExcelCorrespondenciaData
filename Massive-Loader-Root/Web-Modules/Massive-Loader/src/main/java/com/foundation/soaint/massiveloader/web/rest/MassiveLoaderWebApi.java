@@ -1,6 +1,6 @@
 package com.foundation.soaint.massiveloader.web.rest;
 
-import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.interfaces.ComunicacionOficialManagerProxy;
+import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.interfaces.ComOficialMgtProxy;
 import co.com.foundation.soaint.documentmanager.domain.ComunicacionOficialContainerDTO;
 import co.com.foundation.soaint.documentmanager.infrastructure.builder.massiveloader.CallerContextBuilder;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.MassiveLoaderType;
@@ -51,7 +51,7 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
         CallerContextBuilder ccBuilder = CallerContextBuilder.newBuilder();
         ccBuilder.withBeanName("comunicacionOficialManager");
         ccBuilder.withMethodName("gestionarComunicacionOficial");
-        ccBuilder.withServiceInterface(ComunicacionOficialManagerProxy.class);
+        ccBuilder.withServiceInterface(ComOficialMgtProxy.class);
 
         return processGenericLoad(file, genericExecutor, MassiveLoaderType.COMUNICACION_OFICIAL, voTransformer,
                 massiveRecordTransformer, ccBuilder.build(),codigoSede,codigoDependencia);

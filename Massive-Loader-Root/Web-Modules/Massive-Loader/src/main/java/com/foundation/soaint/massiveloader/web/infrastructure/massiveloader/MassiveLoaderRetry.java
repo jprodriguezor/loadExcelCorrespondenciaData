@@ -1,7 +1,7 @@
 package com.foundation.soaint.massiveloader.web.infrastructure.massiveloader;
 
 import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.CorrespondenciaClient;
-import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.interfaces.ComunicacionOficialManagerProxy;
+import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.interfaces.ComOficialMgtProxy;
 import co.com.foundation.soaint.documentmanager.domain.ComunicacionOficialContainerDTO;
 import co.com.foundation.soaint.documentmanager.infrastructure.builder.massiveloader.CallerContextBuilder;
 import co.com.foundation.soaint.documentmanager.jms.WildFlyJmsQueueSender;
@@ -15,7 +15,6 @@ import com.foundation.soaint.massiveloader.web.infrastructure.common.StatusMassi
 import com.foundation.soaint.massiveloader.web.infrastructure.transformer.massiveloader.DocumentToComunicacionOficialTransformer;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,7 +75,7 @@ public class MassiveLoaderRetry {
                 CallerContextBuilder ccBuilder = CallerContextBuilder.newBuilder ( );
                 ccBuilder.withBeanName ("comunicacionOficialManager");
                 ccBuilder.withMethodName ("gestionarComunicacionOficial");
-                ccBuilder.withServiceInterface (ComunicacionOficialManagerProxy.class);
+                ccBuilder.withServiceInterface (ComOficialMgtProxy.class);
                 correspondenciaClient.radicar (comunicacionOficialContainerDTO.getComunicacionOficialDTO ( ));
 
 

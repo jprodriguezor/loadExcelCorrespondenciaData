@@ -1,6 +1,6 @@
 package co.com.foundation.soaint.documentmanager.business.comunicacionoficial;
 
-import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.interfaces.ComunicacionOficialManagerProxy;
+import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.interfaces.ComOficialMgtProxy;
 import co.com.foundation.soaint.documentmanager.domain.ComunicacionOficialContainerDTO;
 import co.com.foundation.soaint.documentmanager.jms.WildFlyJmsQueueSender;
 import co.com.foundation.soaint.infrastructure.annotations.BusinessBoundary;
@@ -19,7 +19,7 @@ import javax.naming.NamingException;
 
 @BusinessBoundary
 @Log4j2
-public class ComunicacionOficialManager implements ComunicacionOficialManagerProxy {
+public class ComunicacionOficialManager implements ComOficialMgtProxy {
 
     // [fields] -----------------------------------
 

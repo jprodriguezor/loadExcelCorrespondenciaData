@@ -29,7 +29,7 @@ public class CorrespondenciaClient {
     public Response radicar(ComunicacionOficialDTO comunicacionOficialDTO) throws SystemException {
         log.info("Inicio invocacion servicio correspondencia");
         endpoint = System.getProperty("correspondencia.endpoint.url");
-        log.info("Endpoint a consultar para el servicio de correspondencia" + endpoint);
+        log.info("Endpoint a consultar para el servicio de correspondencia " + endpoint);
         log.info("Se inserta radicado con numero = " + comunicacionOficialDTO.getCorrespondencia().getNroRadicado());
         WebTarget wt = ClientBuilder.newClient().target(endpoint);
 
@@ -44,25 +44,4 @@ public class CorrespondenciaClient {
             throw new SystemException(response.getStatusInfo().getReasonPhrase());
         }
     }
-    public String chequearNroRadicado(ComunicacionOficialDTO comunicacionOficialDTO) throws SystemException {
-        log.info("Inicio invocacion servicio correspondencia");
-        endpoint = System.getProperty("correspondencia.endpoint.url");
-        log.info("Endpoint a consultar para el servicio de correspondencia" + endpoint);
-        log.info("Se chequea el NroRadicado = " + comunicacionOficialDTO.getCorrespondencia().getNroRadicado());
-        WebTarget wt = ClientBuilder.newClient().target(endpoint);
-
-        String existe;
-        Response response = wt.path("/correspondencia-web-api/verificar-numero-radicado")
-                .request()
-                .post(Entity.json(comunicacionOficialDTO));
-        if(response.getStatus() == Response.Status.OK.getStatusCode()){
-            log.info("Fin exitoso de la invocacion servicio correspondencia");
-            existe=response.readEntity (String.class);
-        }else  { // 500 400
-            log.error("Error en la invocacion al servicio de correspondencia con razon:  " + response.getStatusInfo().getReasonPhrase());
-            throw new SystemException(response.getStatusInfo().getReasonPhrase());
-        }
-        return existe;
-    }
-
 }

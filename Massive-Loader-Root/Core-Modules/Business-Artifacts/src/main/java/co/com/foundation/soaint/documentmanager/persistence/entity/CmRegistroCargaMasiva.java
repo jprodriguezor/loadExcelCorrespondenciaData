@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Table(name = "CM_REGISTRO_CARGA_MASIVA")
 @NamedQueries({
                 @NamedQuery(name= "CmRegistroCargaMasiva.findAll",
-                            query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva("
+                        query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva("
                                   + "c.id, c.contenido, c.mensajes, c.estado)"
                                   + "From CmRegistroCargaMasiva c where c.cargaMasiva.id =:ID_CARGA"),
                 @NamedQuery(name= "CmRegistroCargaMasiva.findbyIDCarga",
@@ -24,9 +24,10 @@ import java.io.Serializable;
                 @NamedQuery(name= "CmRegistroCargaMasiva.findbyEstado",
                         query = "Select NEW co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva("
                                 + "c.id, c.contenido, c.mensajes, c.estado)"
-                                + "From CmRegistroCargaMasiva c where c.estado =:ESTADO"),
+                                + "From CmRegistroCargaMasiva c where c.estado =:ESTADO and "
+                                + "Not c.mensajes=:MENSAJE"),
                 @NamedQuery(name= "CmRegistroCargaMasiva.updateEstadoRegistroCargaMasiva",
-                                query = "Update CmRegistroCargaMasiva c SET"
+                        query = "Update CmRegistroCargaMasiva c SET"
                                         + " c.estado=:ESTADO"
                                         + " Where c.id=:ID")
 

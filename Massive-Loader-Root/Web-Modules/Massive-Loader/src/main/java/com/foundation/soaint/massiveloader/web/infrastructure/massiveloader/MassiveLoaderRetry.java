@@ -40,6 +40,7 @@ public class MassiveLoaderRetry {
     static final String NOT_FOUND = "not_found";
     static final String FAILED_TO_CONNECT = "Failed to connect to any server. Servers tried:";
     static final String JMS_MESSAGE = "jms fail";
+    static final String INTERNALERROR = "Internal Server Error";
 
     @PersistenceContext
     protected EntityManager em;
@@ -55,8 +56,6 @@ public class MassiveLoaderRetry {
     @Scheduled(fixedRate = 30000, initialDelay = 10000)
     public void retryCall() throws ParseException, NamingException, JMSException, BusinessException, SystemException {
         log.info ("Se inicia el procesamiento de los mensajes con errores");
-        log.info ("Se obtienen los registros de cargas masiva");
-
 
         //TODO en caso de que se relaice correctamente
         for (RegistroCargaMasivaDTO registro : obtenerDataEstadoCargaMasivaCOmpletadoConErrores ( )
@@ -70,20 +69,14 @@ public class MassiveLoaderRetry {
 
             if (mensaje.contains (FAILED_TO_CONNECT)) {
                 //invocar servicio para carga masiva de nuevo
-                log.info ("Se llama al servicio para realizar la carga masiva========>");
+                log.info ("Se llama nuevamente al servicio para realizar la carga masiva");
                 CallerContextBuilder ccBuilder = CallerContextBuilder.newBuilder ( );
                 ccBuilder.withBeanName ("comunicacionOficialManager");
                 ccBuilder.withMethodName ("gestionarComunicacionOficial");
                 ccBuilder.withServiceInterface (ComOficialMgtProxy.class);
                 //Se chequea si existe el nroRadicado, si existe se actualiza el estado, si no se hace la radicacion y se actualiza el estado
-                String existeNroRadicado = "";
-                if (existeNroRadicado == "false") {
-                    correspondenciaClient.radicar (comunicacionOficialContainerDTO.getComunicacionOficialDTO ( ));
+                   correspondenciaClient.radicar (comunicacionOficialContainerDTO.getComunicacionOficialDTO ( ));
                     actualizarEstadoExito (id);
-                } else if (existeNroRadicado == "true") {
-                    actualizarEstadoExito (id);
-                }
-
 
             } else if (mensaje.contains (JMS_MESSAGE)) {
                 //encolar nuevamente
@@ -91,6 +84,7 @@ public class MassiveLoaderRetry {
                 log.info ("Se encola nuevamente");
                 Gson gson = new Gson ( );
                 String message = gson.toJson (comunicacionOficialContainerDTO.getEntradaProcesoDTO ( ));
+                log.info ("Mensaje a encolar: " + comunicacionOficialContainerDTO.getEntradaProcesoDTO ( ));
                 log.info ("Mensaje a encolar: " + message);
                 wildFlyJmsQueueSender.init ( );
                 wildFlyJmsQueueSender.send (message);
@@ -111,7 +105,6 @@ public class MassiveLoaderRetry {
         DateFormat format = new SimpleDateFormat ("EEE MMM d HH:mm:ss z yyyy", Locale.ENGLISH);
         Date date = new Date ( );
         try {
-            log.info (parts[1].substring (parts[1].indexOf ("=") + 1));
             date = format.parse (parts[1].substring (parts[1].indexOf ("=") + 1));
         } catch (ParseException e) {
             log.info ("Error dando formato a la fecha");
@@ -148,27 +141,23 @@ public class MassiveLoaderRetry {
     }
 
     protected List <RegistroCargaMasivaDTO> obtenerDataEstadoCargaMasivaCOmpletadoConErrores() {
-        log.info ("Iniciando obtenerDataEstadoCargaMasivabyEstado con ESTADO = " + RegistroCargaMasivaStatus.COMPLETADO_CON_ERRORES);
+        log.info ("Iniciando obtenerDataEstadoCargaMasivabyEstado con ESTADO = " + RegistroCargaMasivaStatus.COMPLETADO_CON_ERRORES + " y mensaje: "+INTERNALERROR) ;
         StatusMassiveLoaderProcessResponseDTO response;
         List <RegistroCargaMasivaDTO> listreponse = new ArrayList <> ( );
         List <CmRegistroCargaMasiva> cmRegistroCargaMasivas = em.createNamedQuery ("CmRegistroCargaMasiva.findbyEstado", CmRegistroCargaMasiva.class)
                 .setParameter ("ESTADO", RegistroCargaMasivaStatus.COMPLETADO_CON_ERRORES)
+                .setParameter ("MENSAJE", INTERNALERROR)
                 .getResultList ( );
 
         for (CmRegistroCargaMasiva cmRegistroCargaMasiva : cmRegistroCargaMasivas) {
             RegistroCargaMasivaDTO registroCargaMasivaDT = new RegistroCargaMasivaDTO ( );
-            log.info ("$$$$$$$$$$$$$$ " + cmRegistroCargaMasiva.getId ( ).intValue ( ));
             registroCargaMasivaDT.setId (cmRegistroCargaMasiva.getId ( ).intValue ( ));
             registroCargaMasivaDT.setContenido (cmRegistroCargaMasiva.getContenido ( ));
             registroCargaMasivaDT.setEstado (cmRegistroCargaMasiva.getEstado ( ));
             registroCargaMasivaDT.setMensajes (cmRegistroCargaMasiva.getMensajes ( ));
             listreponse.add (registroCargaMasivaDT);
         }
-        if (listreponse != null && listreponse.get (0) != null) {
-            log.info ("Fin obtenerDataEstadoCargaMasivaCOmpletadoConErrores con total de registros = " + listreponse.size ( ));
-        } else {
-            log.info ("Fin obtenerDataEstadoCargaMasivabyEstado con total de registros = 0");
-        }
+        
         return listreponse;
     }
 }

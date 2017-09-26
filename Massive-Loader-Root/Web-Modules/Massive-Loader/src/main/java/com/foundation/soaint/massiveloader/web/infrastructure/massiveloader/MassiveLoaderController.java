@@ -43,7 +43,7 @@ public abstract class MassiveLoaderController<O, E> {
 
 
     @Autowired
-    protected LoaderAsyncWorker<E> loaderAsyncWorker;
+    protected LoaderAsyncWorker <E> loaderAsyncWorker;
 
     @PersistenceContext
     protected EntityManager em;
@@ -57,89 +57,83 @@ public abstract class MassiveLoaderController<O, E> {
     @Autowired
     WildFlyJmsQueueSender wildFlyJmsQueueSender;
 
-//    @Autowired
-//    MassiveLoaderRetry massiveLoaderRetry;
-
-    static final String NOT_FOUND="not_found";
-    static final String FAILED_TO_CONNECT="Failed to connect to any server. Servers tried:";
-    static final String JMS_MESSAGE="jms fail";
     //[generic load processing] ------------------------------
 
-    protected MasiveLoaderResponse processGenericLoad(final MultipartFile file, final LoaderExecutor<E> executor,
+    protected MasiveLoaderResponse processGenericLoad(final MultipartFile file, final LoaderExecutor <E> executor,
                                                       final MassiveLoaderType type,
                                                       final Transformer voTransformer,
-                                                      final Transformer<O, E> massiveRecordTransformer,
+                                                      final Transformer <O, E> massiveRecordTransformer,
                                                       final CallerContext callerContext, String codigoSede, String codigoDependencia) {
 
         MasiveLoaderResponse response;
 
-        DocumentParserFactory<O> documentParserFactory = new DocumentParserFactory<>();
-        DocumentParser documentParser = documentParserFactory.getDocumentParser(file);
+        DocumentParserFactory <O> documentParserFactory = new DocumentParserFactory <> ( );
+        DocumentParser documentParser = documentParserFactory.getDocumentParser (file);
 
         try {
 
-            log.info("Iniciando procesamiento masivo del excel: " + file.getName() + " extraccion de informacion");
-            List<O> records = documentParser.parse(file, voTransformer);
-            response = MasiveLoaderResponse.newInstance(validate(records));
-            if (response.isSuccess()) {
-                log.info("Datos cargados exitosamente");
-                List<E> contextInfoList = new ArrayList<>();
-                records.stream().forEach((O vo) -> {
-                    MassiveRecordContext<ComunicacionOficialContainerDTO> data = (MassiveRecordContext<ComunicacionOficialContainerDTO>) massiveRecordTransformer.transform(vo);
-                    data.getDomainItem().getComunicacionOficialDTO().getCorrespondencia().setCodDependencia(codigoDependencia);
-                    data.getDomainItem().getComunicacionOficialDTO().getCorrespondencia().setCodSede(codigoSede);
-                    contextInfoList.add((E) data);
+            log.info ("Iniciando procesamiento masivo del excel: " + file.getName ( ) + " extraccion de informacion");
+            List <O> records = documentParser.parse (file, voTransformer);
+            response = MasiveLoaderResponse.newInstance (validate (records));
+            if (response.isSuccess ( )) {
+                log.info ("Datos cargados exitosamente");
+                List <E> contextInfoList = new ArrayList <> ( );
+                records.stream ( ).forEach ((O vo) -> {
+                    MassiveRecordContext <ComunicacionOficialContainerDTO> data = (MassiveRecordContext <ComunicacionOficialContainerDTO>) massiveRecordTransformer.transform (vo);
+                    data.getDomainItem ( ).getComunicacionOficialDTO ( ).getCorrespondencia ( ).setCodDependencia (codigoDependencia);
+                    data.getDomainItem ( ).getComunicacionOficialDTO ( ).getCorrespondencia ( ).setCodSede (codigoSede);
+                    contextInfoList.add ((E) data);
                 });
-                log.info("Inicio del procesamiento en hilos");
-                loaderAsyncWorker.process(executor, contextInfoList, type, callerContext);
+                log.info ("Inicio del procesamiento en hilos");
+                loaderAsyncWorker.process (executor, contextInfoList, type, callerContext);
             }
 
         } catch (BusinessException be) {
-            log.error("Error de negocio en: " + file.getName(), be);
-            response = MasiveLoaderResponse.newInstance(be.getMessage());
+            log.error ("Error de negocio en: " + file.getName ( ), be);
+            response = MasiveLoaderResponse.newInstance (be.getMessage ( ));
         } catch (NumberFormatException e) {
-            log.error("Excepcion de formato de numero en el fichero: " + file.getName(), e);
-            response = MasiveLoaderResponse.newInstance(MessageUtil.getMessage("massiveloader.structure.error"));
+            log.error ("Excepcion de formato de numero en el fichero: " + file.getName ( ), e);
+            response = MasiveLoaderResponse.newInstance (MessageUtil.getMessage ("massiveloader.structure.error"));
         } catch (Exception e) {
-            log.error("Excepcion generica en el fichero: " + file.getName(), e);
-            response = MasiveLoaderResponse.newInstance(MessageUtil.getMessage("massiveloader.generic.error"));
+            log.error ("Excepcion generica en el fichero: " + file.getName ( ), e);
+            response = MasiveLoaderResponse.newInstance (MessageUtil.getMessage ("massiveloader.generic.error"));
         }
 
-        log.info("Carga masiva terminada del fichero: " + file.getName());
+        log.info ("Carga masiva terminada del fichero: " + file.getName ( ));
         return response;
     }
 
     protected StatusMassiveLoaderProcessResponseDTO obtenerDataEstadoCargaMasiva() {
-        log.info("Inicio obtenerDataEstadoCargaMasiva");
+        log.info ("Inicio obtenerDataEstadoCargaMasiva");
         StatusMassiveLoaderProcessResponseDTO response;
-        List<CmCargaMasiva> cmcargamasiva = em.createNamedQuery("CmCargaMasiva.obtenerDataEstadoCargaMasiva", CmCargaMasiva.class)
-                .setMaxResults(1)
-                .getResultList();
-        response = getResponse(cmcargamasiva);
-        log.info("Fin obtenerDataEstadoCargaMasiva");
+        List <CmCargaMasiva> cmcargamasiva = em.createNamedQuery ("CmCargaMasiva.obtenerDataEstadoCargaMasiva", CmCargaMasiva.class)
+                .setMaxResults (1)
+                .getResultList ( );
+        response = getResponse (cmcargamasiva);
+        log.info ("Fin obtenerDataEstadoCargaMasiva");
         return response;
     }
 
 
     protected StatusMassiveLoaderProcessResponseDTO obtenerDataEstadoCargaMasivabyID(int idCarga) {
-        log.info("Iniciando obtenerDataEstadoCargaMasivabyID con ID = " + idCarga);
+        log.info ("Iniciando obtenerDataEstadoCargaMasivabyID con ID = " + idCarga);
         StatusMassiveLoaderProcessResponseDTO response;
-        List<CmCargaMasiva> cmcargamasiva = em.createNamedQuery("CmCargaMasiva.obtenerDataEstadoCargaMasivabyID", CmCargaMasiva.class)
-                .setParameter("ID_CARGA", Long.valueOf(idCarga))
-                .setMaxResults(1)
-                .getResultList();
-        response = getResponse(cmcargamasiva);
-        if (response != null && response.getCorrespondencia() != null) {
-            log.info("Fin obtenerDataEstadoCargaMasivabyID con total de registros = " + response.getCorrespondencia().getTotalRegistrosCargaMasiva());
+        List <CmCargaMasiva> cmcargamasiva = em.createNamedQuery ("CmCargaMasiva.obtenerDataEstadoCargaMasivabyID", CmCargaMasiva.class)
+                .setParameter ("ID_CARGA", Long.valueOf (idCarga))
+                .setMaxResults (1)
+                .getResultList ( );
+        response = getResponse (cmcargamasiva);
+        if (response != null && response.getCorrespondencia ( ) != null) {
+            log.info ("Fin obtenerDataEstadoCargaMasivabyID con total de registros = " + response.getCorrespondencia ( ).getTotalRegistrosCargaMasiva ( ));
         } else {
-            log.info("Fin obtenerDataEstadoCargaMasivabyID con total de registros = 0");
+            log.info ("Fin obtenerDataEstadoCargaMasivabyID con total de registros = 0");
         }
 
         return response;
     }
 
     protected String obtenerDataEstadoCargaMasivabyIDAA(int idCarga) throws SystemException, JMSException, BusinessException, ParseException, NamingException {
-        log.info("Iniciando obtenerDataEstadoCargaMasivabyID con ID = " + idCarga);
+        log.info ("Iniciando obtenerDataEstadoCargaMasivabyID con ID = " + idCarga);
 //        retryCall ();
 
         return "AAAAA";
@@ -147,38 +141,38 @@ public abstract class MassiveLoaderController<O, E> {
 
 
     protected ListadoCargasMasivasDTO obtenerDataListadoCargaMasiva() {
-        log.info("Iniciando obtenerDataListadoCargaMasiva");
+        log.info ("Iniciando obtenerDataListadoCargaMasiva");
         ListadoCargasMasivasDTO response;
-        List<CmCargaMasiva> cmCargaMasivaList = em.createNamedQuery("CmCargaMasiva.obtenerDataEstadoCargaMasiva", CmCargaMasiva.class)
-                .getResultList();
-        response = transformCargaMasivaToListadoCargasMasivasDTO(cmCargaMasivaList);
-        log.info("Fin obtenerDataListadoCargaMasiva");
+        List <CmCargaMasiva> cmCargaMasivaList = em.createNamedQuery ("CmCargaMasiva.obtenerDataEstadoCargaMasiva", CmCargaMasiva.class)
+                .getResultList ( );
+        response = transformCargaMasivaToListadoCargasMasivasDTO (cmCargaMasivaList);
+        log.info ("Fin obtenerDataListadoCargaMasiva");
         return response;
 
     }
 
 
     //TODO: pendiente determinar si se usa un transform como en los otros casos
-    private ListadoCargasMasivasDTO transformCargaMasivaToListadoCargasMasivasDTO(List<CmCargaMasiva> cmCargaMasivaList) {
-        ListadoCargasMasivasDTO listadoCargasMasivasDTO = new ListadoCargasMasivasDTO();
-        List<CargaMasiva> listado = new ArrayList<>();
+    private ListadoCargasMasivasDTO transformCargaMasivaToListadoCargasMasivasDTO(List <CmCargaMasiva> cmCargaMasivaList) {
+        ListadoCargasMasivasDTO listadoCargasMasivasDTO = new ListadoCargasMasivasDTO ( );
+        List <CargaMasiva> listado = new ArrayList <> ( );
         for (CmCargaMasiva cmCargaMasiva : cmCargaMasivaList) {
-            CargaMasiva cm = new CargaMasiva(Math.toIntExact(cmCargaMasiva.getId()), cmCargaMasiva.getNombre());
-            log.info("======================== >  Carga Masiva ID: " + cm.getId());
-            log.info("======================== >  Carga Masiva Nombre: " + cm.getNombreCarga());
-            listado.add(cm);
+            CargaMasiva cm = new CargaMasiva (Math.toIntExact (cmCargaMasiva.getId ( )), cmCargaMasiva.getNombre ( ));
+            log.info ("======================== >  Carga Masiva ID: " + cm.getId ( ));
+            log.info ("======================== >  Carga Masiva Nombre: " + cm.getNombreCarga ( ));
+            listado.add (cm);
         }
-        listadoCargasMasivasDTO.setCargaMasiva(listado);
+        listadoCargasMasivasDTO.setCargaMasiva (listado);
         return listadoCargasMasivasDTO;
     }
 
-    private List<RegistroCargaMasivaDTO> transformCMRegistrosToRegistroCargaMasivaDTO(List<CmRegistroCargaMasiva> listadoCMRegistros) {
-        List<RegistroCargaMasivaDTO> listado = new ArrayList<>();
+    private List <RegistroCargaMasivaDTO> transformCMRegistrosToRegistroCargaMasivaDTO(List <CmRegistroCargaMasiva> listadoCMRegistros) {
+        List <RegistroCargaMasivaDTO> listado = new ArrayList <> ( );
 
         for (CmRegistroCargaMasiva cmR : listadoCMRegistros) {
-            RegistroCargaMasivaDTO registro = new RegistroCargaMasivaDTO(Math.toIntExact(cmR.getId()), cmR.getContenido(), cmR.getMensajes(), cmR.getEstado());
-            log.info("======================== >  Estado del Registro: " + registro.getEstado());
-            listado.add(registro);
+            RegistroCargaMasivaDTO registro = new RegistroCargaMasivaDTO (Math.toIntExact (cmR.getId ( )), cmR.getContenido ( ), cmR.getMensajes ( ), cmR.getEstado ( ));
+            log.info ("======================== >  Estado del Registro: " + registro.getEstado ( ));
+            listado.add (registro);
         }
         return listado;
     }
@@ -186,71 +180,72 @@ public abstract class MassiveLoaderController<O, E> {
     private StatusMassiveLoaderProcessResponseDTO transformListCargaMasivaToStatusMassiveLoaderProcessResponseDTO(CmCargaMasiva cmCargaMasiva) {
         StatusMassiveLoaderProcessResponseDTO statusMassiveLoaderProcessResponseDTO = null;
         if (cmCargaMasiva != null) {
-            statusMassiveLoaderProcessResponseDTO = new StatusMassiveLoaderProcessResponseDTO();
-            CorrespondenciaResponse correspondencia = new CorrespondenciaResponse();
-            correspondencia.setIdCargaMasiva(Math.toIntExact(cmCargaMasiva.getId()));
-            correspondencia.setNombreCargaMasiva(cmCargaMasiva.getNombre());
-            correspondencia.setFechaCreacionCargaMasiva(cmCargaMasiva.getFechaCreacion());
-            correspondencia.setEstadoCargaMasiva(cmCargaMasiva.getEstado().name());
-            correspondencia.setTotalRegistrosCargaMasiva(cmCargaMasiva.getTotalRegistros());
-            correspondencia.setTotalRegistrosExitososCargaMasiva(cmCargaMasiva.getTotalRegistrosExitosos());
-            correspondencia.setTotalRegistrosErrorCargaMasiva(cmCargaMasiva.getTotalRegistrosError());
-            statusMassiveLoaderProcessResponseDTO.setCorrespondencia(correspondencia);
-            log.info("======================== >  Cantidad de registros procesados: " + correspondencia.getTotalRegistrosCargaMasiva());
+            statusMassiveLoaderProcessResponseDTO = new StatusMassiveLoaderProcessResponseDTO ( );
+            CorrespondenciaResponse correspondencia = new CorrespondenciaResponse ( );
+            correspondencia.setIdCargaMasiva (Math.toIntExact (cmCargaMasiva.getId ( )));
+            correspondencia.setNombreCargaMasiva (cmCargaMasiva.getNombre ( ));
+            correspondencia.setFechaCreacionCargaMasiva (cmCargaMasiva.getFechaCreacion ( ));
+            correspondencia.setEstadoCargaMasiva (cmCargaMasiva.getEstado ( ).name ( ));
+            correspondencia.setTotalRegistrosCargaMasiva (cmCargaMasiva.getTotalRegistros ( ));
+            correspondencia.setTotalRegistrosExitososCargaMasiva (cmCargaMasiva.getTotalRegistrosExitosos ( ));
+            correspondencia.setTotalRegistrosErrorCargaMasiva (cmCargaMasiva.getTotalRegistrosError ( ));
+            statusMassiveLoaderProcessResponseDTO.setCorrespondencia (correspondencia);
+            log.info ("======================== >  Cantidad de registros procesados: " + correspondencia.getTotalRegistrosCargaMasiva ( ));
         }
         return statusMassiveLoaderProcessResponseDTO;
     }
 
-    private StatusMassiveLoaderProcessResponseDTO getResponse(List<CmCargaMasiva> cmcargamasiva) {
-        StatusMassiveLoaderProcessResponseDTO response = new StatusMassiveLoaderProcessResponseDTO();
-        if (cmcargamasiva != null && !cmcargamasiva.isEmpty() && cmcargamasiva.get(0) != null) {
-            response = transformListCargaMasivaToStatusMassiveLoaderProcessResponseDTO(cmcargamasiva.get(0));
+    private StatusMassiveLoaderProcessResponseDTO getResponse(List <CmCargaMasiva> cmcargamasiva) {
+        StatusMassiveLoaderProcessResponseDTO response = new StatusMassiveLoaderProcessResponseDTO ( );
+        if (cmcargamasiva != null && !cmcargamasiva.isEmpty ( ) && cmcargamasiva.get (0) != null) {
+            response = transformListCargaMasivaToStatusMassiveLoaderProcessResponseDTO (cmcargamasiva.get (0));
             if (response != null) {
-                List<CmRegistroCargaMasiva> listadoCMRegistros = em.createNamedQuery("CmRegistroCargaMasiva.findbyIDCarga", CmRegistroCargaMasiva.class)
-                        .setParameter("ID_CARGA", Long.valueOf(response.getCorrespondencia().getIdCargaMasiva()))
-                        .getResultList();
-                List<RegistroCargaMasivaDTO> registros = transformCMRegistrosToRegistroCargaMasivaDTO(listadoCMRegistros);
-                response.getCorrespondencia().setRegistrosCargaMasiva(registros);
+                List <CmRegistroCargaMasiva> listadoCMRegistros = em.createNamedQuery ("CmRegistroCargaMasiva.findbyIDCarga", CmRegistroCargaMasiva.class)
+                        .setParameter ("ID_CARGA", Long.valueOf (response.getCorrespondencia ( ).getIdCargaMasiva ( )))
+                        .getResultList ( );
+                List <RegistroCargaMasivaDTO> registros = transformCMRegistrosToRegistroCargaMasivaDTO (listadoCMRegistros);
+                response.getCorrespondencia ( ).setRegistrosCargaMasiva (registros);
             }
         }
         return response;
     }
+
     private StatusMassiveLoaderProcessResponseDTO getResponse(CmCargaMasiva cmcargamasiva) {
-        StatusMassiveLoaderProcessResponseDTO response = new StatusMassiveLoaderProcessResponseDTO();
-        if (cmcargamasiva != null ) {
-            response = transformListCargaMasivaToStatusMassiveLoaderProcessResponseDTO(cmcargamasiva);
+        StatusMassiveLoaderProcessResponseDTO response = new StatusMassiveLoaderProcessResponseDTO ( );
+        if (cmcargamasiva != null) {
+            response = transformListCargaMasivaToStatusMassiveLoaderProcessResponseDTO (cmcargamasiva);
             if (response != null) {
-                List<CmRegistroCargaMasiva> listadoCMRegistros = em.createNamedQuery("CmRegistroCargaMasiva.findbyIDCarga", CmRegistroCargaMasiva.class)
-                        .setParameter("ID_CARGA", Long.valueOf(response.getCorrespondencia().getIdCargaMasiva()))
-                        .getResultList();
-                List<RegistroCargaMasivaDTO> registros = transformCMRegistrosToRegistroCargaMasivaDTO(listadoCMRegistros);
-                response.getCorrespondencia().setRegistrosCargaMasiva(registros);
+                List <CmRegistroCargaMasiva> listadoCMRegistros = em.createNamedQuery ("CmRegistroCargaMasiva.findbyIDCarga", CmRegistroCargaMasiva.class)
+                        .setParameter ("ID_CARGA", Long.valueOf (response.getCorrespondencia ( ).getIdCargaMasiva ( )))
+                        .getResultList ( );
+                List <RegistroCargaMasivaDTO> registros = transformCMRegistrosToRegistroCargaMasivaDTO (listadoCMRegistros);
+                response.getCorrespondencia ( ).setRegistrosCargaMasiva (registros);
             }
         }
         return response;
     }
     //[validate] ------------------------------
 
-    protected String validate(List<O> csvDomainList) {
+    protected String validate(List <O> csvDomainList) {
 
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        StringBuilder messageResponse = new StringBuilder();
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory ( );
+        Validator validator = factory.getValidator ( );
+        StringBuilder messageResponse = new StringBuilder ( );
         int index = 1;
         boolean errors = false;
 
         for (O item : csvDomainList) {
 
-            Set<ConstraintViolation<O>> results = validator.validate(item);
+            Set <ConstraintViolation <O>> results = validator.validate (item);
             for (ConstraintViolation valResult : results) {
-                messageResponse.append("Row " + index + " - " + valResult.getPropertyPath() + " : " + valResult.getMessage()).append("<br/>");
+                messageResponse.append ("Row " + index + " - " + valResult.getPropertyPath ( ) + " : " + valResult.getMessage ( )).append ("<br/>");
                 errors = true;
             }
             index++;
         }
 
         String baseMessage = errors ? "Hay errores de estructura y/o tipos de datos en el archivo, revise el contenido"/*MessageUtil.getMessage("massiveloader.structure.error")*/ : "";
-        return baseMessage + messageResponse.toString();
+        return baseMessage + messageResponse.toString ( );
     }
 }
 

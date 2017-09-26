@@ -46,8 +46,7 @@ public class MassiveLoaderRetry {
 
     @Autowired
     protected DocumentToComunicacionOficialTransformer documentToComunicacionOficialTransformer;
-    @Autowired
-    protected MassiveLoaderController massiveLoaderController;
+
     @Autowired
     WildFlyJmsQueueSender wildFlyJmsQueueSender;
     @Autowired
@@ -55,19 +54,19 @@ public class MassiveLoaderRetry {
 
     @Scheduled(fixedRate = 30000, initialDelay = 10000)
     public void retryCall() throws ParseException, NamingException, JMSException, BusinessException, SystemException {
-        log.info("Se inicia el procesamiento de los mensajes con errores");
-        log.info("Se obtienen los registros de cargas masiva");
-
+        log.info ("Se inicia el procesamiento de los mensajes con errores");
+        log.info ("Se obtienen los registros de cargas masiva");
 
 
         //TODO en caso de que se relaice correctamente
         for (RegistroCargaMasivaDTO registro : obtenerDataEstadoCargaMasivaCOmpletadoConErrores ( )
                 ) {
-            String mensaje= registro.getMensajes ();
-            int id=registro.getId ();
-            ComunicacionOficialContainerDTO comunicacionOficialContainerDTO=new ComunicacionOficialContainerDTO ();
-            comunicacionOficialContainerDTO.setComunicacionOficialDTO (documentToComunicacionOficialTransformer.transform (fillDocumentVO (registro.getContenido ())).getDomainItem ().getComunicacionOficialDTO ());
-
+            String mensaje = registro.getMensajes ( );
+            int id = registro.getId ( );
+            ComunicacionOficialContainerDTO comunicacionOficialContainerDTO = new ComunicacionOficialContainerDTO ( );
+            comunicacionOficialContainerDTO.setComunicacionOficialDTO (documentToComunicacionOficialTransformer.transform (fillDocumentVO (registro.getContenido ( ))).getDomainItem ( ).getComunicacionOficialDTO ( ));
+            //Obtener el numero de radicado
+            String nroRadicado = comunicacionOficialContainerDTO.getComunicacionOficialDTO ( ).getCorrespondencia ( ).getNroRadicado ( );
 
             if (mensaje.contains (FAILED_TO_CONNECT)) {
                 //invocar servicio para carga masiva de nuevo
@@ -76,7 +75,14 @@ public class MassiveLoaderRetry {
                 ccBuilder.withBeanName ("comunicacionOficialManager");
                 ccBuilder.withMethodName ("gestionarComunicacionOficial");
                 ccBuilder.withServiceInterface (ComOficialMgtProxy.class);
-                correspondenciaClient.radicar (comunicacionOficialContainerDTO.getComunicacionOficialDTO ( ));
+                //Se chequea si existe el nroRadicado, si existe se actualiza el estado, si no se hace la radicacion y se actualiza el estado
+                String existeNroRadicado = "";
+                if (existeNroRadicado == "false") {
+                    correspondenciaClient.radicar (comunicacionOficialContainerDTO.getComunicacionOficialDTO ( ));
+                    actualizarEstadoExito (id);
+                } else if (existeNroRadicado == "true") {
+                    actualizarEstadoExito (id);
+                }
 
 
             } else if (mensaje.contains (JMS_MESSAGE)) {
@@ -89,11 +95,9 @@ public class MassiveLoaderRetry {
                 wildFlyJmsQueueSender.init ( );
                 wildFlyJmsQueueSender.send (message);
                 wildFlyJmsQueueSender.close ( );
-
+                actualizarEstadoExito (id);
             }
         }
-
-
     }
 
 
@@ -116,10 +120,8 @@ public class MassiveLoaderRetry {
         documentVO.setFechaRadicacion (date);
         documentVO.setTipoComunicacion (parts[2].substring (parts[2].indexOf ("=") + 1));
         documentVO.setTipologiaDocumental (parts[3].substring (parts[3].indexOf ("=") + 1));
-
         double noFolios = Double.parseDouble (parts[4].substring (parts[4].indexOf ("=") + 1));
         documentVO.setNoFolios (noFolios);
-
         double noAnexos = Double.parseDouble (parts[5].substring (parts[5].indexOf ("=") + 1));
         documentVO.setNoAnexos (noAnexos);
         documentVO.setAsunto (parts[6].substring (parts[6].indexOf ("=") + 1));
@@ -132,7 +134,6 @@ public class MassiveLoaderRetry {
         documentVO.setDependenciaRemitenteInterno (parts[13].substring (parts[13].indexOf ("=") + 1));
         documentVO.setSedeAdministrativaDestinatario (parts[14].substring (parts[14].indexOf ("=") + 1));
         documentVO.setDependenciaDestinatario (parts[15].substring (parts[15].indexOf ("=") + 1));
-
         return documentVO;
     }
 
@@ -140,12 +141,10 @@ public class MassiveLoaderRetry {
     protected void actualizarEstadoExito(int id) {
         log.info ("Iniciando actualizarEstado con ESTADO = " + RegistroCargaMasivaStatus.COMPLETADO_CORRECTAMENTE);
         StatusMassiveLoaderProcessResponseDTO response;
-
         em.createNamedQuery ("CmRegistroCargaMasiva.updateEstadoRegistroCargaMasiva")
                 .setParameter ("ESTADO", RegistroCargaMasivaStatus.COMPLETADO_CORRECTAMENTE)
                 .setParameter ("ID", Long.valueOf (id))
                 .executeUpdate ( );
-
     }
 
     protected List <RegistroCargaMasivaDTO> obtenerDataEstadoCargaMasivaCOmpletadoConErrores() {

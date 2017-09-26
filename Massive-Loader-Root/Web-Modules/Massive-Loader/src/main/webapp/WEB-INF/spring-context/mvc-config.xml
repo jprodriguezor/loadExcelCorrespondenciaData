@@ -3,13 +3,16 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="
    http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans.xsd
    http://www.springframework.org/schema/mvc
    http://www.springframework.org/schema/mvc/spring-mvc.xsd
    http://www.springframework.org/schema/context
-   http://www.springframework.org/schema/context/spring-context.xsd">
+   http://www.springframework.org/schema/context/spring-context.xsd
+   http://www.springframework.org/schema/task
+   http://www.springframework.org/schema/task/spring-task-4.1.xsd">
 
     <!-- Enables the Spring MVC @Controller programming model -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -45,5 +48,15 @@
                    location="classpath:/META-INF/resources/" />
     <mvc:resources mapping="/webjars/**"
                    location="classpath:/META-INF/resources/webjars/" />
+
+
+    <beans>
+        <task:scheduler id="taskScheduler" pool-size="10"/>
+        <task:annotation-driven scheduler="taskScheduler"/>
+        <bean id="massiveLoaderRetry" class="com.foundation.soaint.massiveloader.web.infrastructure.massiveloader.MassiveLoaderRetry"/>
+        <!--task:scheduled-tasks scheduler="taskScheduler">
+            <task:scheduled ref="massiveLoaderRetry" method="retryCall"/>
+        </task:scheduled-tasks-->
+    </beans>
 
 </beans>

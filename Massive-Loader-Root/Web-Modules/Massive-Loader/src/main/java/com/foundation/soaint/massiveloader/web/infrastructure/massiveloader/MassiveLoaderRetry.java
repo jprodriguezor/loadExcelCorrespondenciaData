@@ -34,7 +34,6 @@ import java.util.Locale;
 
 import static org.jgroups.conf.ProtocolConfiguration.log;
 @Component
-@EnableScheduling
 public class MassiveLoaderRetry {
 
 
@@ -55,7 +54,7 @@ public class MassiveLoaderRetry {
     protected CorrespondenciaClient correspondenciaClient;
 
     @Scheduled(fixedRate = 30000, initialDelay = 10000)
-    protected void retryCall() throws ParseException, NamingException, JMSException, BusinessException, SystemException {
+    public void retryCall() throws ParseException, NamingException, JMSException, BusinessException, SystemException {
         log.info("Se inicia el procesamiento de los mensajes con errores");
         log.info("Se obtienen los registros de cargas masiva");
 

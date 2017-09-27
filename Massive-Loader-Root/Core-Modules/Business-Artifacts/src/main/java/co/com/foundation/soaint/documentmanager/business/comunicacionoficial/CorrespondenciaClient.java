@@ -39,9 +39,12 @@ public class CorrespondenciaClient {
         if(response.getStatus() == Response.Status.OK.getStatusCode()){
             log.info("Fin exitoso de la invocacion servicio correspondencia");
             return response;
-        }else  { // 500 400
-            log.error("Error en la invocacion al servicio de correspondencia con razon:  " + response.getStatusInfo().getReasonPhrase());
-            throw new SystemException(response.getStatusInfo().getReasonPhrase());
+        }else if(response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
+            log.error("Error 400 en la invocacion al servicio de correspondencia con razon:  " + response.getStatusInfo().getReasonPhrase());
+            throw new SystemException("Error 400: " + response.getStatusInfo().getReasonPhrase());
+        } else{
+            log.error("Error 500 en la invocacion al servicio de correspondencia con razon:  " + response.getStatusInfo().getReasonPhrase());
+            throw new SystemException("Error 500: " + response.getStatusInfo().getReasonPhrase());
         }
     }
 }

@@ -17,7 +17,7 @@ import co.com.foundation.soaint.infrastructure.transformer.Transformer;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.*;
 import com.foundation.soaint.massiveloader.web.infrastructure.parser.DocumentParser;
 import com.foundation.soaint.massiveloader.web.infrastructure.parser.DocumentParserFactory;
-import com.foundation.soaint.massiveloader.web.infrastructure.transformer.massiveloader.DocumentToComunicacionOficialTransformer;
+import com.foundation.soaint.massiveloader.web.infrastructure.transformer.massiveloader.DocToComOficTransf;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,7 +52,7 @@ public abstract class MassiveLoaderController<O, E> {
     protected CorrespondenciaClient correspondenciaClient;
 
     @Autowired
-    protected DocumentToComunicacionOficialTransformer documentToComunicacionOficialTransformer;
+    protected DocToComOficTransf documentToComunicacionOficialTransformer;
 
     @Autowired
     WildFlyJmsQueueSender wildFlyJmsQueueSender;

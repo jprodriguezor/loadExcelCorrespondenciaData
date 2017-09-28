@@ -15,7 +15,7 @@ import co.com.foundation.soaint.infrastructure.exceptions.SystemException;
 import com.foundation.soaint.massiveloader.web.domain.DocumentVO;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.RegistroCargaMasivaDTO;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.StatusMassiveLoaderProcessResponseDTO;
-import com.foundation.soaint.massiveloader.web.infrastructure.transformer.massiveloader.DocumentToComunicacionOficialTransformer;
+import com.foundation.soaint.massiveloader.web.infrastructure.transformer.massiveloader.DocToComOficTransf;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class MassiveLoaderRetry {
     protected EntityManager em;
 
     @Autowired
-    protected DocumentToComunicacionOficialTransformer documentToComunicacionOficialTransformer;
+    protected DocToComOficTransf documentToComunicacionOficialTransformer;
 
     @Autowired
     WildFlyJmsQueueSender wildFlyJmsQueueSender;

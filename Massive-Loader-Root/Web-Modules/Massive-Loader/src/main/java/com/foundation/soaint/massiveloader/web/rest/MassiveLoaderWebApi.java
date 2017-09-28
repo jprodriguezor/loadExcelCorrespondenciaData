@@ -29,7 +29,7 @@ public class MassiveLoaderWebApi extends MassiveLoaderController <DocumentVO, Ma
     private LoaderExecutor genericExecutor;
 
     @Autowired
-    @Qualifier("documentToComunicacionOficialTransformer")
+    @Qualifier("docToComOficTransf")
     private Transformer massiveRecordTransformer;
 
     @Autowired

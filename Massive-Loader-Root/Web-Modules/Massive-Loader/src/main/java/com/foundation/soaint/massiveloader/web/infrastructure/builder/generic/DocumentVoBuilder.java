@@ -22,6 +22,8 @@ public class DocumentVoBuilder implements Builder<DocumentVO> {
     private String dependenciaRemitenteInterno;
     private String sedeAdministrativaDestinatario;
     private String dependenciaDestinatario;
+    private String sede;
+    private String dependencia;
 
     public DocumentVoBuilder withNoRadicado(String noRadicado) {
         this.noRadicado = noRadicado;
@@ -102,6 +104,14 @@ public class DocumentVoBuilder implements Builder<DocumentVO> {
         this.dependenciaDestinatario = dependenciaDestinatario;
         return this;
     }
+    public DocumentVoBuilder withSede(String sede) {
+        this.sede = sede;
+        return this;
+    }
+    public DocumentVoBuilder withDependencia(String dependencia) {
+        this.dependencia = dependencia;
+        return this;
+    }
 
     public static DocumentVoBuilder newBuilder() {
         return new DocumentVoBuilder();
@@ -112,6 +122,6 @@ public class DocumentVoBuilder implements Builder<DocumentVO> {
         return new DocumentVO(noRadicado, fechaRadicacion, tipoComunicacion, tipologiaDocumental, noFolios, noAnexos,
                 asunto, requiereDigitalizar, requiereDistribucionFisica, personaRemite, razonSocial, nombre,
                 sedeAdministrativaRemitenteInterno, dependenciaRemitenteInterno, sedeAdministrativaDestinatario,
-                dependenciaDestinatario);
+                dependenciaDestinatario,sede, dependencia);
     }
 }

@@ -14,6 +14,7 @@ import co.com.foundation.soaint.infrastructure.common.MessageUtil;
 import co.com.foundation.soaint.infrastructure.exceptions.BusinessException;
 import co.com.foundation.soaint.infrastructure.exceptions.SystemException;
 import co.com.foundation.soaint.infrastructure.transformer.Transformer;
+import com.foundation.soaint.massiveloader.web.domain.DocumentVO;
 import com.foundation.soaint.massiveloader.web.infrastructure.common.*;
 import com.foundation.soaint.massiveloader.web.infrastructure.parser.DocumentParser;
 import com.foundation.soaint.massiveloader.web.infrastructure.parser.DocumentParserFactory;
@@ -79,7 +80,10 @@ public abstract class MassiveLoaderController<O, E> {
                 log.info ("Datos cargados exitosamente");
                 List <E> contextInfoList = new ArrayList <> ( );
                 records.stream ( ).forEach ((O vo) -> {
-                    MassiveRecordContext <ComunicacionOficialContainerDTO> data = (MassiveRecordContext <ComunicacionOficialContainerDTO>) massiveRecordTransformer.transform (vo);
+                    DocumentVO documentoSedDep=(DocumentVO) vo;
+                    documentoSedDep.setDependencia (codigoDependencia);
+                    documentoSedDep.setSede (codigoSede);
+                    MassiveRecordContext <ComunicacionOficialContainerDTO> data = (MassiveRecordContext <ComunicacionOficialContainerDTO>) massiveRecordTransformer.transform ((O)documentoSedDep);
                     data.getDomainItem ( ).getComunicacionOficialDTO ( ).getCorrespondencia ( ).setCodDependencia (codigoDependencia);
                     data.getDomainItem ( ).getComunicacionOficialDTO ( ).getCorrespondencia ( ).setCodSede (codigoSede);
                     contextInfoList.add ((E) data);

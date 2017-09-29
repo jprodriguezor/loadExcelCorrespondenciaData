@@ -44,7 +44,7 @@ public class MassiveLoaderRetry {
 
     static final String NOT_FOUND = "not_found";
     static final String FAILED_TO_CONNECT = "Failed to connect to any server. Servers tried:";
-    static final String JMS_MESSAGE = "jms fail";
+    static final String JMS_MESSAGE = "Failed to connect to any server. Servers tried:";
     static final String INTERNALERROR = ", Internal Server Error";
 
     @PersistenceContext
@@ -87,6 +87,7 @@ public class MassiveLoaderRetry {
                 actualizarEstadoExito(id);
                 log.info("Estado de la correspondencia con ID = " + id + " actualizado correctamente");
             } else if (mensajeERROR.contains(JMS_MESSAGE)) {
+                log.info("Se procede a encolar");
                 enviarMensajeColaJMS(mensajeJMS);
                 log.info("Mensaje encolado correctamente");
                 actualizarEstadoExito(id);

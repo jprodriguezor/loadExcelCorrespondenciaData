@@ -5,6 +5,6 @@ package co.com.foundation.soaint.documentmanager.persistence.entity.constants;
  */
 public enum RegistroCargaMasivaStatus {
 
-    COMPLETADO_CORRECTAMENTE,COMPLETADO_CON_ERRORES;
+    COMPLETADO_CORRECTAMENTE,COMPLETADO_CON_ERRORES,COMPLETADO_GUARDADO_BD,COMPLETADO_CON_ERROR_COLA;
 
 }

@@ -5,10 +5,6 @@ import co.com.foundation.soaint.documentmanager.persistence.entity.constants.Car
 import javax.persistence.*;
 import javax.persistence.TableGenerator;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**

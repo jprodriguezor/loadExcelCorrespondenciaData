@@ -136,7 +136,9 @@ public class MassiveLoaderRetry {
         documentVO.setSedeAdministrativaRemitenteInterno(parts[12].substring(parts[12].indexOf("=") + 1));
         documentVO.setDependenciaRemitenteInterno(parts[13].substring(parts[13].indexOf("=") + 1));
         documentVO.setSedeAdministrativaDestinatario(parts[14].substring(parts[14].indexOf("=") + 1));
-        documentVO.setDependenciaDestinatario(parts[15].substring(parts[15].indexOf("=") + 1,parts[15].indexOf(")")));
+        documentVO.setDependenciaDestinatario(parts[15].substring(parts[15].indexOf("=") + 1));
+        documentVO.setSede (parts[16].substring(parts[16].indexOf("=") + 1));
+        documentVO.setDependencia(parts[17].substring(parts[17].indexOf("=") + 1,parts[17].indexOf(")")));
         return documentVO;
     }
 

@@ -29,6 +29,7 @@ import javax.jms.JMSException;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.core.Response;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,8 +45,12 @@ public class MassiveLoaderRetry {
 
     static final String NOT_FOUND = "not_found";
     static final String FAILED_TO_CONNECT = "Failed to connect to any server. Servers tried:";
-    static final String JMS_MESSAGE = "Failed to connect to any server. Servers tried:";
+    static final String JMS_ERROR = "Failed to connect to any server. Servers tried:";
+    static final String JMS_SUCCESS = "Encolado correctamente";
     static final String INTERNALERROR = ", Internal Server Error";
+    static final String INSERTADO_BD="Registro guardado en base de datos";
+    static final String ERROR_BD="Error insertando en BD";
+
 
     @PersistenceContext
     protected EntityManager em;
@@ -78,30 +83,37 @@ public class MassiveLoaderRetry {
             log.info("Entrada proceso JSON: " + comunicacionOficialContainerDTO.getEntradaProcesoDTO().toString());
             String mensajeJMS = gson.toJson(comunicacionOficialContainerDTO.getEntradaProcesoDTO());
 
-            if (mensajeERROR.contains(NOT_FOUND)) {
+            if (mensajeERROR.contains(NOT_FOUND)&&(!mensajeERROR.contains (INSERTADO_BD))) {
                 log.info("Se llama nuevamente al servicio para realizar la carga masiva");
-                correspondenciaClient.radicar(comunicacionOficialContainerDTO.getComunicacionOficialDTO());
-                log.info("Correspondencia radicada correctamente con ID = " + id);
-                enviarMensajeColaJMS(mensajeJMS);
-                log.info("Mensaje encolado correctamente");
-                actualizarEstadoExito(id,"Insertado BD");
-                log.info("Estado de la correspondencia con ID = " + id + " actualizado correctamente");
-            } else if (mensajeERROR.contains(JMS_MESSAGE)) {
+                if(correspondenciaClient.radicar(comunicacionOficialContainerDTO.getComunicacionOficialDTO()).getStatus ()==Response.Status.OK.getStatusCode()){
+                    log.info("Correspondencia radicada correctamente con ID = " + id);
+                    //Se actualiza el estado a Insertado en Base de Datos
+                    actualizarEstadoExito(id,INSERTADO_BD);
+                    //El metodo que encola llama a actualizar estado, para indicar que se encolo correctamente
+                    enviarMensajeColaJMS(id,mensajeJMS);
+                }
+                else
+                {
+                    actualizarEstadoExito(id,ERROR_BD);
+                }
+            } else if (mensajeERROR.contains(JMS_ERROR)&&(!mensajeERROR.contains (JMS_SUCCESS))) {
                 log.info("Se procede a encolar");
-                enviarMensajeColaJMS(mensajeJMS);
-                log.info("Mensaje encolado correctamente");
-                actualizarEstadoExito(id, "Encolado");
-                log.info("Estado de la correspondencia con ID = " + id + " actualizado correctamente");
+                enviarMensajeColaJMS(id,mensajeJMS);
             }
         }
     }
 
-    public void enviarMensajeColaJMS(String mensaje) throws JMSException, NamingException {
+    public void enviarMensajeColaJMS(int id, String mensaje) throws JMSException, NamingException {
         log.info("Mensaje a encolar: " + mensaje);
-        wildFlyJmsQueueSender.init();
-        wildFlyJmsQueueSender.send(mensaje);
-        wildFlyJmsQueueSender.close();
-
+        try{
+            wildFlyJmsQueueSender.init();
+            wildFlyJmsQueueSender.send(mensaje);
+            wildFlyJmsQueueSender.close();
+            log.info("Mensaje encolado correctamente");
+            actualizarEstadoExito(id,JMS_SUCCESS);
+        }catch (JMSException e){
+            actualizarEstadoExito(id,JMS_ERROR);
+        }
     }
 
 

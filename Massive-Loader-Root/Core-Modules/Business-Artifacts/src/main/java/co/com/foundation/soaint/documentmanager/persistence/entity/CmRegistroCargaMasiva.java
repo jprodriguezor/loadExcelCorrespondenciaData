@@ -28,8 +28,8 @@ import java.io.Serializable;
                                 + "Not c.mensajes=:MENSAJE"),
                 @NamedQuery(name= "CmRegistroCargaMasiva.updateEstadoRegistroCargaMasiva",
                         query = "Update CmRegistroCargaMasiva c SET"
-                                        + " c.estado=:ESTADO, "
-                                        + "c.mensajes=:MENSAJE"
+                                        + " c.estado=:ESTADO,"
+                                        + " c.mensajes=:MENSAJE"
                                         + " Where c.id=:ID")
 
 })

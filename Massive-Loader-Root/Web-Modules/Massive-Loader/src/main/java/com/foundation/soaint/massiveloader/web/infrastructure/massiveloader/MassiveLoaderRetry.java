@@ -84,13 +84,13 @@ public class MassiveLoaderRetry {
                 log.info("Correspondencia radicada correctamente con ID = " + id);
                 enviarMensajeColaJMS(mensajeJMS);
                 log.info("Mensaje encolado correctamente");
-                actualizarEstadoExito(id);
+                actualizarEstadoExito(id,"Insertado BD");
                 log.info("Estado de la correspondencia con ID = " + id + " actualizado correctamente");
             } else if (mensajeERROR.contains(JMS_MESSAGE)) {
                 log.info("Se procede a encolar");
                 enviarMensajeColaJMS(mensajeJMS);
                 log.info("Mensaje encolado correctamente");
-                actualizarEstadoExito(id);
+                actualizarEstadoExito(id, "Encolado");
                 log.info("Estado de la correspondencia con ID = " + id + " actualizado correctamente");
             }
         }
@@ -144,12 +144,13 @@ public class MassiveLoaderRetry {
 
     @Modifying
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    protected void actualizarEstadoExito(int id) {
+    protected void actualizarEstadoExito(int id, String mensaje) {
         log.info("Iniciando actualizarEstado con ESTADO = " + RegistroCargaMasivaStatus.COMPLETADO_CORRECTAMENTE);
         StatusMassiveLoaderProcessResponseDTO response;
         em.createNamedQuery("CmRegistroCargaMasiva.updateEstadoRegistroCargaMasiva")
                 .setParameter("ESTADO", RegistroCargaMasivaStatus.COMPLETADO_CORRECTAMENTE)
                 .setParameter("ID", Long.valueOf(id))
+                .setParameter ("MENSAJES",mensaje)
                 .executeUpdate();
     }
 

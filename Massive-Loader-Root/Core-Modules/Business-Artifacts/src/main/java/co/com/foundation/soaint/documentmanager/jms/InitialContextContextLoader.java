@@ -40,6 +40,7 @@ public class InitialContextContextLoader {
             props.put(Context.SECURITY_CREDENTIALS, jmsPassword);
             props.put("jboss.naming.client.connect.options.org.xnio.Options.SASL_POLICY_NOPLAINTEXT", "false");
             //props.put("jboss.naming.client.ejb.context", true);
+            props.put("jboss.naming.client.connect.timeout", "15000");
             context = new InitialContext(props);
             System.out.println("\n\tGot initial Context: " + context);
         } catch (Exception e) {

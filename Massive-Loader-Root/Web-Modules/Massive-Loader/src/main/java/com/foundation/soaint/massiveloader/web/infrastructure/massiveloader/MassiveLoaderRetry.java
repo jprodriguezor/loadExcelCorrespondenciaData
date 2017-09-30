@@ -1,11 +1,7 @@
 package com.foundation.soaint.massiveloader.web.infrastructure.massiveloader;
 
 import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.CorrespondenciaClient;
-import co.com.foundation.soaint.documentmanager.business.comunicacionoficial.interfaces.ComOficialMgtProxy;
 import co.com.foundation.soaint.documentmanager.domain.ComunicacionOficialContainerDTO;
-import co.com.foundation.soaint.documentmanager.domain.bd.ComunicacionOficialDTO;
-import co.com.foundation.soaint.documentmanager.domain.bpm.EntradaProcesoDTO;
-import co.com.foundation.soaint.documentmanager.infrastructure.builder.massiveloader.CallerContextBuilder;
 import co.com.foundation.soaint.documentmanager.infrastructure.massiveloader.domain.MassiveRecordContext;
 import co.com.foundation.soaint.documentmanager.jms.WildFlyJmsQueueSender;
 import co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva;
@@ -19,10 +15,7 @@ import com.foundation.soaint.massiveloader.web.infrastructure.transformer.massiv
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.jms.JMSException;
@@ -48,17 +41,17 @@ public class MassiveLoaderRetry {
     static final String INTERNALERROR = ", Internal Server Error";
 
     @PersistenceContext
-    protected EntityManager em;
+    public EntityManager em;
 
     @Autowired
-    protected DocToComOficTransf documentToComunicacionOficialTransformer;
+    public DocToComOficTransf documentToComunicacionOficialTransformer;
 
     @Autowired
-    WildFlyJmsQueueSender wildFlyJmsQueueSender;
+    public WildFlyJmsQueueSender wildFlyJmsQueueSender;
     @Autowired
-    protected CorrespondenciaClient correspondenciaClient;
+    public CorrespondenciaClient correspondenciaClient;
 
-    @Scheduled(fixedRate = 30000, initialDelay = 10000)
+    //@Scheduled(fixedRate = 30000, initialDelay = 10000)
     public void retryCall() throws ParseException, NamingException, JMSException, BusinessException, SystemException {
         log.info("Se inicia el procesamiento de los mensajes con errores");
 
@@ -139,18 +132,9 @@ public class MassiveLoaderRetry {
         return documentVO;
     }
 
-    @Modifying
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    protected void actualizarEstadoExito(int id) {
-        log.info("Iniciando actualizarEstado con ESTADO = " + RegistroCargaMasivaStatus.COMPLETADO_CORRECTAMENTE);
-        StatusMassiveLoaderProcessResponseDTO response;
-        em.createNamedQuery("CmRegistroCargaMasiva.updateEstadoRegistroCargaMasiva")
-                .setParameter("ESTADO", RegistroCargaMasivaStatus.COMPLETADO_CORRECTAMENTE)
-                .setParameter("ID", Long.valueOf(id))
-                .executeUpdate();
-    }
 
-    protected List<RegistroCargaMasivaDTO> obtenerDataEstadoCargaMasivaCOmpletadoConErrores() {
+
+    public List<RegistroCargaMasivaDTO> obtenerDataEstadoCargaMasivaCOmpletadoConErrores() {
         log.info("Iniciando obtenerDataEstadoCargaMasivabyEstado con ESTADO = " + RegistroCargaMasivaStatus.COMPLETADO_CON_ERRORES);
         List<RegistroCargaMasivaDTO> listreponse = new ArrayList<>();
         List<CmRegistroCargaMasiva> cmRegistroCargaMasivas = em.createNamedQuery("CmRegistroCargaMasiva.findbyEstado", CmRegistroCargaMasiva.class)

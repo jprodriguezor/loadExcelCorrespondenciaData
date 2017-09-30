@@ -33,6 +33,7 @@
     <context:component-scan
             base-package="com.foundation.soaint.massiveloader.web.infrastructure.transformer.massiveloader"/>
     <context:component-scan base-package="com.foundation.soaint.massiveloader.web.rest"/>
+    <context:component-scan base-package="com.foundation.soaint.massiveloader.web.infrastructure.massiveloader"/>
 
     <!-- activates annotation driven binding -->
     <mvc:annotation-driven>
@@ -53,7 +54,7 @@
     <beans>
         <task:scheduler id="taskScheduler" pool-size="10"/>
         <task:annotation-driven scheduler="taskScheduler"/>
-        <bean id="massiveLoaderRetry" class="com.foundation.soaint.massiveloader.web.infrastructure.massiveloader.MassiveLoaderRetry"/>
+        <bean id="classRetryTest" class="com.foundation.soaint.massiveloader.web.infrastructure.massiveloader.ClassRetryTest"/>
         <!--task:scheduled-tasks scheduler="taskScheduler">
             <task:scheduled ref="massiveLoaderRetry" method="retryCall"/>
         </task:scheduled-tasks-->

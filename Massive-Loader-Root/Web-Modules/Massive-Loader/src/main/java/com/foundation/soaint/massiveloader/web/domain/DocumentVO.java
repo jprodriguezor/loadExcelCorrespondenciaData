@@ -45,6 +45,13 @@ public class DocumentVO {
     @NotNull
     @Size(min = 1, message = "El campo requiereDistribucionFisica no puede estar vacio")
     String requiereDistribucionFisica;
+//    @NotNull
+//    @Size(min = 1, message = "El campo requiereDistribucionFisica no puede estar vacio")
+//    String sede;
+//    @NotNull
+//    @Size(min = 1, message = "El campo requiereDistribucionFisica no puede estar vacio")
+//    String dependencia;
+
 
     //Remitente externo
     String personaRemite;
@@ -59,11 +66,15 @@ public class DocumentVO {
     String sedeAdministrativaDestinatario;
     String dependenciaDestinatario;
 
+    //Sede y depenencia
+    String sede;
+    String dependencia;
+
     public DocumentVO(String noRadicado, Date fechaRadicacion, String tipoComunicacion, String tipologiaDocumental,
                       Double noFolios, Double noAnexos, String asunto, String requiereDigitalizar,
                       String requiereDistribucionFisica, String personaRemite, String razonSocial, String nombre,
                       String sedeAdministrativaRemitenteInterno, String dependenciaRemitenteInterno,
-                      String sedeAdministrativaDestinatario, String dependenciaDestinatario) {
+                      String sedeAdministrativaDestinatario, String dependenciaDestinatario, String sede, String dependencia) {
         this.noRadicado = noRadicado;
         this.fechaRadicacion = fechaRadicacion;
         this.tipoComunicacion = tipoComunicacion;
@@ -80,5 +91,7 @@ public class DocumentVO {
         this.dependenciaRemitenteInterno = dependenciaRemitenteInterno;
         this.sedeAdministrativaDestinatario = sedeAdministrativaDestinatario;
         this.dependenciaDestinatario = dependenciaDestinatario;
+        this.sede = sede;
+        this.dependencia = dependencia;
     }
 }

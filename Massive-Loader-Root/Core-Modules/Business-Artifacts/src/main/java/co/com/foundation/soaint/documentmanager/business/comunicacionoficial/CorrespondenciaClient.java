@@ -30,7 +30,7 @@ public class CorrespondenciaClient {
         log.info("Inicio invocacion servicio correspondencia");
         endpoint = System.getProperty("correspondencia.endpoint.url");
         log.info("Endpoint a consultar para el servicio de correspondencia " + endpoint);
-        log.info("Se inserta radicado con numero = " + comunicacionOficialDTO.getCorrespondencia().getNroRadicado());
+        log.info("Se procede a radicar = " + comunicacionOficialDTO.getCorrespondencia().getNroRadicado());
         WebTarget wt = ClientBuilder.newClient().target(endpoint);
 
         Response response = wt.path("/correspondencia-web-api/correspondencia")

@@ -54,7 +54,7 @@
     <beans>
         <task:scheduler id="taskScheduler" pool-size="10"/>
         <task:annotation-driven scheduler="taskScheduler"/>
-        <bean id="classRetryTest" class="com.foundation.soaint.massiveloader.web.infrastructure.massiveloader.ScheduleMassiveLoader"/>
+        <bean id="classRetryTest" class="co.com.soaint.correspondencia.massiveloader.web.infrastructure.massiveloader.ScheduleMassiveLoader"/>
         <!--task:scheduled-tasks scheduler="taskScheduler">
             <task:scheduled ref="massiveLoaderRetry" method="retryCall"/>
         </task:scheduled-tasks-->

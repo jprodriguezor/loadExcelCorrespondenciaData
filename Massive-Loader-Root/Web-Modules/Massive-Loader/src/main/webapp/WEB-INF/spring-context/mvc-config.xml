@@ -31,9 +31,9 @@
     </bean>
 
     <context:component-scan
-            base-package="com.foundation.soaint.massiveloader.web.infrastructure.transformer.massiveloader"/>
-    <context:component-scan base-package="com.foundation.soaint.massiveloader.web.rest"/>
-    <context:component-scan base-package="com.foundation.soaint.massiveloader.web.infrastructure.massiveloader"/>
+            base-package="co.com.soaint.correspondencia.massiveloader.web.infrastructure.transformer.massiveloader"/>
+    <context:component-scan base-package="co.com.soaint.correspondencia.massiveloader.web.rest"/>
+    <context:component-scan base-package="co.com.soaint.correspondencia.massiveloader.web.infrastructure.massiveloader"/>
 
     <!-- activates annotation driven binding -->
     <mvc:annotation-driven>

@@ -1,8 +1,8 @@
-package com.foundation.soaint.massiveloader.web.infrastructure.transformer.massiveloader;
+package co.com.soaint.correspondencia.massiveloader.web.infrastructure.transformer.massiveloader;
 
-import co.com.foundation.soaint.infrastructure.transformer.Transformer;
-import com.foundation.soaint.massiveloader.web.domain.DocumentVO;
-import com.foundation.soaint.massiveloader.web.infrastructure.builder.generic.DocumentVoBuilder;
+import co.com.soaint.correspondencia.massiveloader.web.domain.DocumentVO;
+import co.com.soaint.correspondencia.massiveloader.web.infrastructure.builder.generic.DocumentVoBuilder;
+import co.com.soaint.foundation.infrastructure.transformer.Transformer;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Component;

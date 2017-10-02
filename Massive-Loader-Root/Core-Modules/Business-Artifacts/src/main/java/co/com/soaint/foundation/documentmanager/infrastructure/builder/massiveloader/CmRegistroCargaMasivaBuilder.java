@@ -1,9 +1,10 @@
-package co.com.foundation.soaint.documentmanager.infrastructure.builder.massiveloader;
+package co.com.soaint.foundation.documentmanager.infrastructure.builder.massiveloader;
 
-import co.com.foundation.soaint.documentmanager.persistence.entity.CmCargaMasiva;
-import co.com.foundation.soaint.documentmanager.persistence.entity.CmRegistroCargaMasiva;
-import co.com.foundation.soaint.documentmanager.persistence.entity.constants.RegistroCargaMasivaStatus;
-import co.com.foundation.soaint.infrastructure.builder.Builder;
+
+import co.com.soaint.foundation.documentmanager.persistence.entity.CmCargaMasiva;
+import co.com.soaint.foundation.documentmanager.persistence.entity.CmRegistroCargaMasiva;
+import co.com.soaint.foundation.documentmanager.persistence.entity.constants.RegistroCargaMasivaStatus;
+import co.com.soaint.foundation.infrastructure.builder.Builder;
 
 /**
  * Created by administrador_1 on 04/10/2016.

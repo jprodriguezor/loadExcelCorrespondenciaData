@@ -17,7 +17,7 @@ public class SwaggerConfig {
     @Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .select().apis(RequestHandlerSelectors.basePackage("com.foundation.soaint.massiveloader.web.rest"))
+                .select().apis(RequestHandlerSelectors.basePackage("co.com.soaint.correspondencia.massiveloader.web.rest"))
                 .paths(PathSelectors.any())
                 .build();
     }

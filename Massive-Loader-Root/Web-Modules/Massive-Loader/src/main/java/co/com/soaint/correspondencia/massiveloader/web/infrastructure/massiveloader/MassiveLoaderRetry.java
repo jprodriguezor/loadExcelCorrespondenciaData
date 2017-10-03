@@ -1,6 +1,8 @@
 package co.com.soaint.correspondencia.massiveloader.web.infrastructure.massiveloader;
 
 import co.com.soaint.correspondencia.massiveloader.web.domain.DocumentVO;
+import co.com.soaint.correspondencia.massiveloader.web.infrastructure.common.RegistroCargaMasivaDTO;
+import co.com.soaint.correspondencia.massiveloader.web.infrastructure.transformer.massiveloader.DocToComOficTransf;
 import co.com.soaint.foundation.documentmanager.business.comunicacionoficial.CorrespondenciaClient;
 import co.com.soaint.foundation.documentmanager.business.comunicacionoficial.RetryMassiveLoader;
 import co.com.soaint.foundation.documentmanager.domain.ComunicacionOficialContainerDTO;
@@ -8,10 +10,7 @@ import co.com.soaint.foundation.documentmanager.infrastructure.massiveloader.dom
 import co.com.soaint.foundation.documentmanager.jms.WildFlyJmsQueueSender;
 import co.com.soaint.foundation.documentmanager.persistence.entity.CmRegistroCargaMasiva;
 import co.com.soaint.foundation.documentmanager.persistence.entity.constants.RegistroCargaMasivaStatus;
-import co.com.soaint.foundation.infrastructure.exceptions.BusinessException;
 import co.com.soaint.foundation.infrastructure.exceptions.SystemException;
-import co.com.soaint.correspondencia.massiveloader.web.infrastructure.common.RegistroCargaMasivaDTO;
-import co.com.soaint.correspondencia.massiveloader.web.infrastructure.transformer.massiveloader.DocToComOficTransf;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ import java.util.Locale;
 public class MassiveLoaderRetry {
 
 
-    static final String NOT_FOUND = "not_found";
+    static final String NOT_FOUND = "Not Found";
     static final String JMS_ERROR = "Failed to connect to any server. Servers tried:";
     static final String INTERNALERROR = ", Internal Server Error";
 
@@ -54,7 +53,8 @@ public class MassiveLoaderRetry {
     @Autowired
     RetryMassiveLoader retryMassiveLoader;
 
-    public void retryCall() throws ParseException, NamingException, JMSException, BusinessException, SystemException {
+
+    public void retryCall() throws SystemException, NamingException, JMSException, ParseException {
         log.info("Se inicia el procesamiento de los mensajes con errores");
 
         //TODO en caso de que se realice correctamente
@@ -110,35 +110,35 @@ public class MassiveLoaderRetry {
 
         String[] parts = datos.split(",");
 
-        documentVO.setNoRadicado(parts[0].substring(parts[0].indexOf("=") + 1));
+        documentVO.setNoRadicado(parts[0].substring(parts[0].indexOf('=') + 1));
 
         DateFormat format = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.ENGLISH);
         Date date = new Date();
         try {
-            date = format.parse(parts[1].substring(parts[1].indexOf("=") + 1));
+            date = format.parse(parts[1].substring(parts[1].indexOf('=') + 1));
         } catch (ParseException e) {
             log.info("Error dando formato a la fecha");
         }
 
         documentVO.setFechaRadicacion(date);
-        documentVO.setTipoComunicacion(parts[2].substring(parts[2].indexOf("=") + 1));
-        documentVO.setTipologiaDocumental(parts[3].substring(parts[3].indexOf("=") + 1));
-        double noFolios = Double.parseDouble(parts[4].substring(parts[4].indexOf("=") + 1));
+        documentVO.setTipoComunicacion(parts[2].substring(parts[2].indexOf('=') + 1));
+        documentVO.setTipologiaDocumental(parts[3].substring(parts[3].indexOf('=') + 1));
+        double noFolios = Double.parseDouble(parts[4].substring(parts[4].indexOf('=') + 1));
         documentVO.setNoFolios(noFolios);
-        double noAnexos = Double.parseDouble(parts[5].substring(parts[5].indexOf("=") + 1));
+        double noAnexos = Double.parseDouble(parts[5].substring(parts[5].indexOf('=') + 1));
         documentVO.setNoAnexos(noAnexos);
-        documentVO.setAsunto(parts[6].substring(parts[6].indexOf("=") + 1));
-        documentVO.setRequiereDigitalizar(parts[7].substring(parts[7].indexOf("=") + 1));
-        documentVO.setRequiereDistribucionFisica(parts[8].substring(parts[8].indexOf("=") + 1));
-        documentVO.setPersonaRemite(parts[9].substring(parts[9].indexOf("=") + 1));
-        documentVO.setRazonSocial(parts[10].substring(parts[10].indexOf("=") + 1));
-        documentVO.setNombre(parts[11].substring(parts[11].indexOf("=") + 1));
-        documentVO.setSedeAdministrativaRemitenteInterno(parts[12].substring(parts[12].indexOf("=") + 1));
-        documentVO.setDependenciaRemitenteInterno(parts[13].substring(parts[13].indexOf("=") + 1));
-        documentVO.setSedeAdministrativaDestinatario(parts[14].substring(parts[14].indexOf("=") + 1));
-        documentVO.setDependenciaDestinatario(parts[15].substring(parts[15].indexOf("=") + 1));
-        documentVO.setSede(parts[16].substring(parts[16].indexOf("=") + 1));
-        documentVO.setDependencia(parts[17].substring(parts[17].indexOf("=") + 1, parts[17].indexOf(")")));
+        documentVO.setAsunto(parts[6].substring(parts[6].indexOf('=') + 1));
+        documentVO.setRequiereDigitalizar(parts[7].substring(parts[7].indexOf('=') + 1));
+        documentVO.setRequiereDistribucionFisica(parts[8].substring(parts[8].indexOf('=') + 1));
+        documentVO.setPersonaRemite(parts[9].substring(parts[9].indexOf('=') + 1));
+        documentVO.setRazonSocial(parts[10].substring(parts[10].indexOf('=') + 1));
+        documentVO.setNombre(parts[11].substring(parts[11].indexOf('=') + 1));
+        documentVO.setSedeAdministrativaRemitenteInterno(parts[12].substring(parts[12].indexOf('=') + 1));
+        documentVO.setDependenciaRemitenteInterno(parts[13].substring(parts[13].indexOf('=') + 1));
+        documentVO.setSedeAdministrativaDestinatario(parts[14].substring(parts[14].indexOf('=') + 1));
+        documentVO.setDependenciaDestinatario(parts[15].substring(parts[15].indexOf('=') + 1));
+        documentVO.setSede(parts[16].substring(parts[16].indexOf('=') + 1));
+        documentVO.setDependencia(parts[17].substring(parts[17].indexOf('=') + 1, parts[17].indexOf(')')));
         return documentVO;
     }
 

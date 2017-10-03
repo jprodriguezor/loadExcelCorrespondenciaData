@@ -3,16 +3,14 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:task="http://www.springframework.org/schema/task"
-       xsi:schemaLocation="
-   http://www.springframework.org/schema/beans
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans.xsd
    http://www.springframework.org/schema/mvc
    http://www.springframework.org/schema/mvc/spring-mvc.xsd
    http://www.springframework.org/schema/context
-   http://www.springframework.org/schema/context/spring-context.xsd
-   http://www.springframework.org/schema/task
-   http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+   http://www.springframework.org/schema/context/spring-context.xsd">
+
+
 
     <!-- Enables the Spring MVC @Controller programming model -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -30,8 +28,9 @@
 
     </bean>
 
-    <context:component-scan
-            base-package="co.com.soaint.correspondencia.massiveloader.web.infrastructure.transformer.massiveloader"/>
+
+
+    <context:component-scan base-package="co.com.soaint.correspondencia.massiveloader.web.infrastructure.transformer.massiveloader"/>
     <context:component-scan base-package="co.com.soaint.correspondencia.massiveloader.web.rest"/>
     <context:component-scan base-package="co.com.soaint.correspondencia.massiveloader.web.infrastructure.massiveloader"/>
 
@@ -51,13 +50,10 @@
                    location="classpath:/META-INF/resources/webjars/" />
 
 
-    <beans>
+    <!--beans>
         <task:scheduler id="taskScheduler" pool-size="10"/>
         <task:annotation-driven scheduler="taskScheduler"/>
         <bean id="classRetryTest" class="co.com.soaint.correspondencia.massiveloader.web.infrastructure.massiveloader.ScheduleMassiveLoader"/>
-        <!--task:scheduled-tasks scheduler="taskScheduler">
-            <task:scheduled ref="massiveLoaderRetry" method="retryCall"/>
-        </task:scheduled-tasks-->
-    </beans>
+    </beans-->
 
 </beans>

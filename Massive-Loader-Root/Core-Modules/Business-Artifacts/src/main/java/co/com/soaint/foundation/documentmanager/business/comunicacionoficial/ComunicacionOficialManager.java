@@ -4,11 +4,14 @@ import co.com.soaint.foundation.documentmanager.business.comunicacionoficial.int
 import co.com.soaint.foundation.documentmanager.domain.ComunicacionOficialContainerDTO;
 import co.com.soaint.foundation.documentmanager.jms.WildFlyJmsQueueSender;
 import co.com.soaint.foundation.infrastructure.annotations.BusinessBoundary;
-import co.com.soaint.foundation.infrastructure.exceptions.BusinessException;
 import co.com.soaint.foundation.infrastructure.exceptions.SystemException;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.EnableRetry;
+import org.springframework.retry.annotation.Retryable;
 
 import javax.jms.JMSException;
 import javax.naming.NamingException;
@@ -19,6 +22,8 @@ import javax.naming.NamingException;
 
 @BusinessBoundary
 @Log4j2
+@Configuration
+@EnableRetry
 public class ComunicacionOficialManager implements ComOficialMgtProxy {
 
     // [fields] -----------------------------------
@@ -30,7 +35,8 @@ public class ComunicacionOficialManager implements ComOficialMgtProxy {
     WildFlyJmsQueueSender wildFlyJmsQueueSender;
 
     @Override
-    public void gestionarComunicacionOficial(ComunicacionOficialContainerDTO comunicacionOficialContainerDTO) throws SystemException, BusinessException, JMSException, NamingException {
+    @Retryable(value = {SystemException.class, NamingException.class, JMSException.class}, maxAttempts = 5, backoff = @Backoff(5000))
+    public void gestionarComunicacionOficial(ComunicacionOficialContainerDTO comunicacionOficialContainerDTO) throws SystemException, NamingException, JMSException {
         log.debug("Gestionando la comunicacion");
         correspondenciaClient.radicar(comunicacionOficialContainerDTO.getComunicacionOficialDTO());
         Gson gson = new Gson();

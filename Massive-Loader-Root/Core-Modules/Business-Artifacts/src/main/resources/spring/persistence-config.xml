@@ -44,7 +44,7 @@
                 <prop key="javax.persistence.sharedCache.mode">ENABLE_SELECTIVE</prop>
             </props>
         </property>
-        <property name="packagesToScan" value="co.com.foundation.soaint.documentmanager.persistence.entity"/>
+        <property name="packagesToScan" value="co.com.soaint.foundation.documentmanager.persistence.entity"/>
         <property name="sharedCacheMode" value="ENABLE_SELECTIVE"/>
         <property name="validationMode" value="AUTO"/>
     </bean>

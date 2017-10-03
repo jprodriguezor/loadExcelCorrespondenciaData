@@ -1,6 +1,10 @@
 package co.com.soaint.correspondencia.massiveloader.web.infrastructure.massiveloader;
 
 import co.com.soaint.correspondencia.massiveloader.web.domain.DocumentVO;
+import co.com.soaint.correspondencia.massiveloader.web.infrastructure.common.*;
+import co.com.soaint.correspondencia.massiveloader.web.infrastructure.parser.DocumentParser;
+import co.com.soaint.correspondencia.massiveloader.web.infrastructure.parser.DocumentParserFactory;
+import co.com.soaint.correspondencia.massiveloader.web.infrastructure.transformer.massiveloader.DocToComOficTransf;
 import co.com.soaint.foundation.documentmanager.business.comunicacionoficial.CorrespondenciaClient;
 import co.com.soaint.foundation.documentmanager.domain.ComunicacionOficialContainerDTO;
 import co.com.soaint.foundation.documentmanager.infrastructure.massiveloader.LoaderAsyncWorker;
@@ -13,25 +17,17 @@ import co.com.soaint.foundation.documentmanager.persistence.entity.CmCargaMasiva
 import co.com.soaint.foundation.documentmanager.persistence.entity.CmRegistroCargaMasiva;
 import co.com.soaint.foundation.infrastructure.common.MessageUtil;
 import co.com.soaint.foundation.infrastructure.exceptions.BusinessException;
-import co.com.soaint.foundation.infrastructure.exceptions.SystemException;
 import co.com.soaint.foundation.infrastructure.transformer.Transformer;
-import co.com.soaint.correspondencia.massiveloader.web.infrastructure.common.*;
-import co.com.soaint.correspondencia.massiveloader.web.infrastructure.parser.DocumentParser;
-import co.com.soaint.correspondencia.massiveloader.web.infrastructure.parser.DocumentParserFactory;
-import co.com.soaint.correspondencia.massiveloader.web.infrastructure.transformer.massiveloader.DocToComOficTransf;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.jms.JMSException;
-import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -136,13 +132,6 @@ public abstract class MassiveLoaderController<O, E> {
         return response;
     }
 
-    protected String obtenerDataEstadoCargaMasivabyIDAA(int idCarga) throws SystemException, JMSException, BusinessException, ParseException, NamingException {
-        log.info ("Iniciando obtenerDataEstadoCargaMasivabyID con ID = " + idCarga);
-//        retryCall ();
-
-        return "AAAAA";
-    }
-
 
     protected ListadoCargasMasivasDTO obtenerDataListadoCargaMasiva() {
         log.info ("Iniciando obtenerDataListadoCargaMasiva");
@@ -214,20 +203,6 @@ public abstract class MassiveLoaderController<O, E> {
         return response;
     }
 
-    private StatusMassiveLoaderProcessResponseDTO getResponse(CmCargaMasiva cmcargamasiva) {
-        StatusMassiveLoaderProcessResponseDTO response = new StatusMassiveLoaderProcessResponseDTO ( );
-        if (cmcargamasiva != null) {
-            response = transformListCargaMasivaToStatusMassiveLoaderProcessResponseDTO (cmcargamasiva);
-            if (response != null) {
-                List <CmRegistroCargaMasiva> listadoCMRegistros = em.createNamedQuery ("CmRegistroCargaMasiva.findbyIDCarga", CmRegistroCargaMasiva.class)
-                        .setParameter ("ID_CARGA", Long.valueOf (response.getCorrespondencia ( ).getIdCargaMasiva ( )))
-                        .getResultList ( );
-                List <RegistroCargaMasivaDTO> registros = transformCMRegistrosToRegistroCargaMasivaDTO (listadoCMRegistros);
-                response.getCorrespondencia ( ).setRegistrosCargaMasiva (registros);
-            }
-        }
-        return response;
-    }
     //[validate] ------------------------------
 
     protected String validate(List <O> csvDomainList) {

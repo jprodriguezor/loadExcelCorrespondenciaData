@@ -2,6 +2,7 @@ package co.com.soaint.correspondencia.massiveloader.web.infrastructure.transform
 
 import co.com.soaint.correspondencia.massiveloader.web.domain.DocumentVO;
 import co.com.soaint.correspondencia.massiveloader.web.infrastructure.builder.generic.ComunicacionOficialContainerDTOBuilder;
+import co.com.soaint.correspondencia.massiveloader.web.rest.ClienteReglaMedioRecepcion;
 import co.com.soaint.foundation.documentmanager.domain.ComunicacionOficialContainerDTO;
 import co.com.soaint.foundation.documentmanager.domain.bd.AgenteDTO;
 import co.com.soaint.foundation.documentmanager.domain.bd.ComunicacionOficialDTO;
@@ -11,16 +12,19 @@ import co.com.soaint.foundation.documentmanager.domain.bpm.EntradaProcesoDTO;
 import co.com.soaint.foundation.documentmanager.infrastructure.massiveloader.domain.MassiveRecordContext;
 import co.com.soaint.correspondencia.massiveloader.web.infrastructure.builder.generic.ComunicacionOficialDTOBuilder;
 import co.com.soaint.foundation.infrastructure.transformer.Transformer;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Jorge on 01/09/2017.
  */
 @Component
+@Log4j2
 public class DocToComOficTransf implements Transformer<DocumentVO, MassiveRecordContext<ComunicacionOficialContainerDTO>> {
     private static final String BEFORE = "before";
     private static final String AFTER = "after";
@@ -97,12 +101,15 @@ public class DocToComOficTransf implements Transformer<DocumentVO, MassiveRecord
         correspondenciaDTO.setNroRadicado(documentVO.getNoRadicado());
         correspondenciaDTO.setFecRadicado(documentVO.getFechaRadicacion());
         correspondenciaDTO.setCodTipoCmc(this.getValueStringCode(documentVO.getTipoComunicacion(), BEFORE));
-        correspondenciaDTO.setCodTipoDoc(this.getValueStringCode(documentVO.getTipologiaDocumental(), BEFORE));
+        String tipologiaDoc = this.getValueStringCode(documentVO.getTipologiaDocumental(), BEFORE);
+        correspondenciaDTO.setCodTipoDoc(tipologiaDoc);
 
         //TODO: aqui se debe invocar a la regla para llenar los 3 campos debajo
-        correspondenciaDTO.setTiempoRespuesta("27");
-        correspondenciaDTO.setCodUnidadTiempo("UNID-TIH");
-        correspondenciaDTO.setInicioConteo("DHR");
+        log.info("Inicio de la invocacion de la regla para obtener los tiempos con data de entrada: " + tipologiaDoc);
+        Map<String, String> dataMAP = ClienteReglaMedioRecepcion.getmetricasTiempoDrools(tipologiaDoc);
+        correspondenciaDTO.setTiempoRespuesta(dataMAP.get("tiempoRespuesta"));
+        correspondenciaDTO.setCodUnidadTiempo(dataMAP.get("codUnidaTiempo"));
+        correspondenciaDTO.setInicioConteo(dataMAP.get("inicioConteo"));
 
         if ("TRUE".equalsIgnoreCase(documentVO.getRequiereDigitalizar())) {
             correspondenciaDTO.setReqDigita("1");

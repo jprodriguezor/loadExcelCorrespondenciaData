@@ -35,6 +35,7 @@ public class ClienteReglaMedioRecepcion {
         String payload = "{\"lookup\":\"ksession-rules\",\"commands\": [{\"insert\": { \"return-object\": true,\"out-identifier\":\"MedioRecepcion\",\"object\":{\"co.com.soaint.sgd.model.MedioRecepcion\":{\"COD_MEDIO_RECEPCION\":";
         payload = payload + '"' + code + '"';
         payload = payload + "}}}},{\"fire-all-rules\":\"\"}]}";
+        log.info("PAYLOAD de Entrada = " + payload);
         log.info("**************************Invocando al Servicio: " + droolsEndpoint + REGLA + "**************************");
         WebTarget wt = ClientBuilder.newClient().target(droolsEndpoint);
         Response response = wt.path(REGLA)
@@ -48,15 +49,16 @@ public class ClienteReglaMedioRecepcion {
         JSONObject data = null;
         try {
             JSONObject jsonObject = new JSONObject(response.readEntity(String.class));
+            log.info("PAYLOAD de salida = " + jsonObject.toString());
             JSONObject result = jsonObject.getJSONObject("result");
             JSONObject executionresults = result.getJSONObject("execution-results");
             JSONArray results = executionresults.getJSONArray("results");
             data = results.getJSONObject(0);
             JSONObject dataFinal = data.getJSONObject("value").getJSONObject("co.com.soaint.sgd.model.MedioRecepcion");
-            log.info(COD_MEDIO_RECEPCION + dataFinal.getString(COD_MEDIO_RECEPCION));
-            log.info(TIEMPO_RESPUESTA + dataFinal.getString(TIEMPO_RESPUESTA));
-            log.info(COD_UNIDA_TIEMPO + dataFinal.getString(COD_UNIDA_TIEMPO));
-            log.info(INICIO_CONTEO + dataFinal.getString(INICIO_CONTEO));
+            log.info(COD_MEDIO_RECEPCION + "=" +  dataFinal.getString(COD_MEDIO_RECEPCION));
+            log.info(TIEMPO_RESPUESTA + "=" +dataFinal.getString(TIEMPO_RESPUESTA));
+            log.info(COD_UNIDA_TIEMPO + "=" +dataFinal.getString(COD_UNIDA_TIEMPO));
+            log.info(INICIO_CONTEO + "=" +dataFinal.getString(INICIO_CONTEO));
 
             datos.put(COD_MEDIO_RECEPCION, dataFinal.getString(COD_MEDIO_RECEPCION));
             datos.put(TIEMPO_RESPUESTA, dataFinal.getString(TIEMPO_RESPUESTA));

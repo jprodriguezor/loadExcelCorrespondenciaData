@@ -51,7 +51,8 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
      */
     @CrossOrigin
     @RequestMapping(value = "/cargar-fichero", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public MasiveLoaderResponse cargarFichero(@RequestPart("file") MultipartFile file, @RequestParam("codigoSede") String codigoSede, @RequestParam("codigoDependencia") String codigoDependencia) {
+    public MasiveLoaderResponse cargarFichero(@RequestPart("file") MultipartFile file, @RequestParam("codigoSede") String codigoSede, @RequestParam("codigoDependencia") String codigoDependencia,
+                                              @RequestParam("codfunRadica") String codfunRadica) {
         log.info ("Cargando el fichero");
         CallerContextBuilder ccBuilder = CallerContextBuilder.newBuilder ( );
         ccBuilder.withBeanName ("comunicacionOficialManager");
@@ -59,7 +60,7 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
         ccBuilder.withServiceInterface (ComOficialMgtProxy.class);
 
         return processGenericLoad (file, genericExecutor, MassiveLoaderType.COMUNICACION_OFICIAL, voTransformer,
-                massiveRecordTransformer, ccBuilder.build ( ), codigoSede, codigoDependencia);
+                massiveRecordTransformer, ccBuilder.build ( ), codigoSede, codigoDependencia,codfunRadica);
     }
 
     /**

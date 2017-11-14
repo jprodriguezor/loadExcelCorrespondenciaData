@@ -60,7 +60,7 @@ public abstract class MassiveLoaderController<O, E> {
                                                       final MassiveLoaderType type,
                                                       final Transformer voTransformer,
                                                       final Transformer <O, E> massiveRecordTransformer,
-                                                      final CallerContext callerContext, String codigoSede, String codigoDependencia) {
+                                                      final CallerContext callerContext, String codigoSede, String codigoDependencia, String codfunRadica) {
 
         MasiveLoaderResponse response;
 
@@ -82,6 +82,7 @@ public abstract class MassiveLoaderController<O, E> {
                     MassiveRecordContext<ComunicacionOficialContainerDTO> data = (MassiveRecordContext <ComunicacionOficialContainerDTO>) massiveRecordTransformer.transform ((O)documentoSedDep);
                     data.getDomainItem ( ).getComunicacionOficialDTO ( ).getCorrespondencia ( ).setCodDependencia (codigoDependencia);
                     data.getDomainItem ( ).getComunicacionOficialDTO ( ).getCorrespondencia ( ).setCodSede (codigoSede);
+                    data.getDomainItem ( ).getComunicacionOficialDTO ( ).getCorrespondencia ( ).setCodFuncRadica (codfunRadica);
                     contextInfoList.add ((E) data);
                 });
                 log.info ("Inicio del procesamiento en hilos");

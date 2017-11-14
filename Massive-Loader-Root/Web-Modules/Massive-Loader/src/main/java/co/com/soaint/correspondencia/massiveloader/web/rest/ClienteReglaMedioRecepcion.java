@@ -32,7 +32,7 @@ public class ClienteReglaMedioRecepcion {
 
     public static Map<String, String> getmetricasTiempoDrools(String code) {
         Map<String, String> datos = new HashMap<>();
-        String payload = "{\"lookup\":\"ksession-rules\",\"commands\": [{\"insert\": { \"return-object\": true,\"out-identifier\":\"MedioRecepcion\",\"object\":{\"co.com.soaint.sgd.model.MedioRecepcion\":{\"COD_MEDIO_RECEPCION\":";
+        String payload = "{\"lookup\":\"ksession-rules\",\"commands\": [{\"insert\": { \"return-object\": true,\"out-identifier\":\"MedioRecepcion\",\"object\":{\"co.com.soaint.sgd.model.MedioRecepcion\":{\"codMedioRecepcion\":";
         payload = payload + '"' + code + '"';
         payload = payload + "}}}},{\"fire-all-rules\":\"\"}]}";
         log.info("PAYLOAD de Entrada = " + payload);

@@ -69,7 +69,7 @@ public abstract class MassiveLoaderController<O, E> {
 
         try {
 
-            log.info ("Iniciando procesamiento masivo del excel: " + file.getName ( ) + " extraccion de informacion");
+            log.info ("Iniciando procesamiento masivo del excel: " + file.getOriginalFilename() + " extraccion de informacion");
             List <O> records = documentParser.parse (file, voTransformer);
             response = MasiveLoaderResponse.newInstance (validate (records));
             if (response.isSuccess ( )) {
@@ -86,7 +86,7 @@ public abstract class MassiveLoaderController<O, E> {
                     contextInfoList.add ((E) data);
                 });
                 log.info ("Inicio del procesamiento en hilos");
-                loaderAsyncWorker.process (executor, contextInfoList, type, callerContext);
+                loaderAsyncWorker.process (executor, contextInfoList, file.getOriginalFilename(), callerContext);
             }
 
         } catch (BusinessException be) {

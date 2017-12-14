@@ -29,12 +29,12 @@ public abstract class LoaderExecutor<E> {
     // [execute service] -----------------------------------
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void execute(List<E> inputs, MassiveLoaderType type, CallerContext callerContext) {
+    public void execute(List<E> inputs, String docName, CallerContext callerContext) {
 
-        log.info("Ejecutando la carga  para: " + type);
+        log.info("Ejecutando la carga  para: " + docName);
         int totalRecords = inputs.size();
 
-        CmCargaMasiva cm = new CmCargaMasiva(type.name(), new Date(), totalRecords,0, 0, CargaMasivaStatus.EN_PROCESO);
+        CmCargaMasiva cm = new CmCargaMasiva(docName, new Date(), totalRecords,0, 0, CargaMasivaStatus.EN_PROCESO);
         em.persist(cm);
 
         inputs.stream()
@@ -46,7 +46,7 @@ public abstract class LoaderExecutor<E> {
         cm.setEstado(CargaMasivaStatus.COMPLETADO);
         cm.setTotalRegistrosError(totalRecords - cm.getTotalRegistrosExitosos());
 
-        log.info("Terminando la carga para: " + type);
+        log.info("Terminando la carga para: " + docName);
     }
 
 

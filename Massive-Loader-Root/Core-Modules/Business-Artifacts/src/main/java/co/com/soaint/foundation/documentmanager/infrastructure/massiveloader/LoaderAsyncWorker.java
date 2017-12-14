@@ -22,9 +22,9 @@ public class LoaderAsyncWorker<E> {
 
     @Async
     public void process(final LoaderExecutor<E> executor, final List<E> domainList,
-                        final MassiveLoaderType type, CallerContext callerContext) {
+                        final String docName, CallerContext callerContext) {
         log.info("starting async processing");
-        executor.execute(domainList, type, callerContext);
+        executor.execute(domainList, docName, callerContext);
     }
 
 }

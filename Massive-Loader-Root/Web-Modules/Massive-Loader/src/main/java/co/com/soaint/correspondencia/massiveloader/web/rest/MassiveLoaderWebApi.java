@@ -59,7 +59,7 @@ public class MassiveLoaderWebApi extends MassiveLoaderController<DocumentVO, Mas
         ccBuilder.withMethodName ("gestionarComunicacionOficial");
         ccBuilder.withServiceInterface (ComOficialMgtProxy.class);
 
-        return processGenericLoad (file, genericExecutor, MassiveLoaderType.COMUNICACION_OFICIAL, voTransformer,
+        return processGenericLoad (file, genericExecutor,    MassiveLoaderType.COMUNICACION_OFICIAL, voTransformer,
                 massiveRecordTransformer, ccBuilder.build ( ), codigoSede, codigoDependencia,codfunRadica);
     }
 

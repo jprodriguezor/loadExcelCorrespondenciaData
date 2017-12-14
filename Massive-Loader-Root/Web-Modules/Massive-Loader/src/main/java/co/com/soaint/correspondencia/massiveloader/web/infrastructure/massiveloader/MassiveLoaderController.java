@@ -57,7 +57,6 @@ public abstract class MassiveLoaderController<O, E> {
     //[generic load processing] ------------------------------
 
     protected MasiveLoaderResponse processGenericLoad(final MultipartFile file, final LoaderExecutor<E> executor,
-                                                      final MassiveLoaderType type,
                                                       final Transformer voTransformer,
                                                       final Transformer <O, E> massiveRecordTransformer,
                                                       final CallerContext callerContext, String codigoSede, String codigoDependencia, String codfunRadica) {

@@ -14,6 +14,7 @@ import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.retry.annotation.Retryable;
 
 import javax.jms.JMSException;
+import javax.naming.NameNotFoundException;
 import javax.naming.NamingException;
 
 /**
@@ -35,10 +36,21 @@ public class ComunicacionOficialManager implements ComOficialMgtProxy {
     WildFlyJmsQueueSender wildFlyJmsQueueSender;
 
     @Override
-    @Retryable(value = {SystemException.class, NamingException.class, JMSException.class}, maxAttempts = 5, backoff = @Backoff(5000))
     public void gestionarComunicacionOficial(ComunicacionOficialContainerDTO comunicacionOficialContainerDTO) throws SystemException, NamingException, JMSException {
+        log.debug("Enviando a radicar");
+        radicar(comunicacionOficialContainerDTO);
+        log.debug("Enviando a la cola");
+        enviarCola(comunicacionOficialContainerDTO);
+    }
+
+    @Retryable(value = {SystemException.class, NamingException.class, JMSException.class}, maxAttempts = 5, backoff = @Backoff(5000))
+    private void radicar(ComunicacionOficialContainerDTO comunicacionOficialContainerDTO) throws SystemException, NamingException, JMSException {
         log.debug("Gestionando la comunicacion");
         correspondenciaClient.radicar(comunicacionOficialContainerDTO.getComunicacionOficialDTO());
+    }
+
+    @Retryable(value = {SystemException.class, NamingException.class, JMSException.class, NameNotFoundException.class}, maxAttempts = 5, backoff = @Backoff(5000))
+    private void enviarCola(ComunicacionOficialContainerDTO comunicacionOficialContainerDTO) throws SystemException, NamingException, JMSException {
         Gson gson = new Gson();
         String message = gson.toJson(comunicacionOficialContainerDTO.getEntradaProcesoDTO());
         log.info("Mensaje a encolar: " + message);

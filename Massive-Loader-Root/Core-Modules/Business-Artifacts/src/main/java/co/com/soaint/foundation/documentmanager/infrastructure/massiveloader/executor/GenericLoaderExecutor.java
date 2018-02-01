@@ -47,12 +47,12 @@ public class GenericLoaderExecutor<T> extends LoaderExecutor<MassiveRecordContex
             builder.withEstadoError();
             builder.withMensajes(e.getMessage());
             success = false;
-            log.error("Data con error en el procesamiento: " + e.getMessage());
+            log.error("Data con error en el procesamiento: ", e);
         } catch (Exception e) {
             builder.withEstadoError();
             builder.withMensajes(getExceptionMessage(e,"",0));
             success = false;
-            log.error("Data con error en el procesamiento: " + e.getMessage());
+            log.error("Data con error en el procesamiento: ", e);
         }
 
         em.persist(builder.build());

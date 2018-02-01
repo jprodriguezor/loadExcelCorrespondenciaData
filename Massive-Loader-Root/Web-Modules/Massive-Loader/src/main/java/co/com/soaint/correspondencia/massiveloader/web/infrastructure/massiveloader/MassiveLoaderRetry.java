@@ -57,7 +57,6 @@ public class MassiveLoaderRetry {
     public void retryCall() throws SystemException, NamingException, JMSException, ParseException {
         log.info("Se inicia el procesamiento de los mensajes con errores");
 
-        //TODO en caso de que se realice correctamente
         for (RegistroCargaMasivaDTO registro : obtenerDataEstadoCargaMasivaCOmpletadoConErrores()
                 ) {
             String mensajeERROR = registro.getMensajes();
@@ -100,6 +99,7 @@ public class MassiveLoaderRetry {
             log.info("Mensaje encolado correctamente");
             retryMassiveLoader.actualizarEstadoExito(id, RegistroCargaMasivaStatus.COMPLETADO_CORRECTAMENTE, null);
         } catch (JMSException e) {
+            log.info("Excepcion generada al enviar mensaje a la cola", e);
             retryMassiveLoader.actualizarEstadoExito(id, RegistroCargaMasivaStatus.COMPLETADO_CON_ERROR_COLA, e.toString());
         }
     }
